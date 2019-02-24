@@ -1,0 +1,20 @@
+{
+  "name": "send-it-react",
+  "version": "1.0.0",
+  "description": "SendIT is a delivery service that allow users to send parcels to different destinations.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teepha/send-it-react.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/teepha/send-it-react/issues"
+  },
+  "homepage": "https://github.com/teepha/send-it-react#readme"
+}
