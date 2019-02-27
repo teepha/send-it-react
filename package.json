@@ -4,6 +4,7 @@
   "description": "SendIT is a delivery service that allow users to send parcels to different destinations.",
   "main": "index.js",
   "scripts": {
+    "start": "webpack-dev-server --config ./webpack.config.js --mode development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -11,10 +12,24 @@
     "url": "git+https://github.com/teepha/send-it-react.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "teepha",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/teepha/send-it-react/issues"
   },
-  "homepage": "https://github.com/teepha/send-it-react#readme"
+  "homepage": "https://github.com/teepha/send-it-react#readme",
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "react-hot-loader": "^4.7.1",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1"
+  },
+  "dependencies": {
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3"
+  }
 }
