@@ -1,0 +1,14 @@
+# Dependency directory
+node_modules
+
+# dist folder
+dist
+
+# Test files
+#spec
+
+# nyc output
+#.nyc_output
+
+# Coverage
+#coverage
