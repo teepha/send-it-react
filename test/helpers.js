@@ -1,9 +1,9 @@
-import sinon from 'sinon';
-import { expect } from 'chai';
+import sinon from "sinon";
+import { expect } from "chai";
 import {
   mount, render, shallow, configure,
-} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+} from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
 
 configure({ adpater: new Adapter() });
 
