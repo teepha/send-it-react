@@ -1,32 +1,32 @@
-const webpack = require('webpack');
+const webpack = require("webpack");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-  entry: './src/index.js',
+  entry: "./src/index.js",
+  output: {
+    path: `${__dirname}/dist`,
+    filename: "bundle.js",
+  },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader'],
-      },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: ['babel-loader', 'eslint-loader'],
+        use: ["babel-loader"],
       },
     ],
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ["*", ".js", ".jsx"],
   },
-  output: {
-    path: `${__dirname}/dist`,
-    publicPath: '/',
-    filename: 'bundle.js',
-  },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new CopyPlugin([
+      { from: "./index.html", to: "./index.html" },
+    ]),
+  ],
   devServer: {
-    contentBase: './dist',
+    contentBase: "./dist",
     hot: true,
   },
 };

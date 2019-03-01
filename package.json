@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.config.js --mode development",
+    "build": "webpack --config ./webpack.config.js --mode production",
     "test:unit": "mocha --require '@babel/register, ./test/helpers.js, ./test/dom.js, ignore-styles' 'src/**/*.spec.js'",
     "test:watch": "npm run test:unit -- --watch",
-    "lint": "eslint . --fix --ignore-path .eslintignore",
-    "m": "mocha -h"
+    "lint": "eslint . --fix --ignore-path .eslintignore"
   },
   "repository": {
     "type": "git",
@@ -22,18 +22,18 @@
   },
   "homepage": "https://github.com/teepha/send-it-react#readme",
   "devDependencies": {
-    "@babel/core": "^7.3.4",
+    "@babel/core": "^7.0.0-0",
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "chai": "^4.2.0",
+    "copy-webpack-plugin": "^5.0.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.10.0",
     "eslint": "^5.14.1",
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-airbnb-base": "^13.1.0",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
@@ -41,7 +41,6 @@
     "ignore-styles": "^5.0.1",
     "jsdom": "^13.2.0",
     "mocha": "^6.0.2",
-    "react-hot-loader": "^4.7.1",
     "sinon": "^7.2.5",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3",
@@ -50,6 +49,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "react": "^16.8.3",
-    "react-dom": "^16.8.3"
+    "react-dom": "^16.8.3",
+    "react-router-dom": "^4.3.1"
   }
 }

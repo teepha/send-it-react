@@ -1,6 +1,13 @@
 {
+  "extends": ["airbnb-base"],
   "parserOptions": {
-    "ecmaVersion": 2018
+    "ecmaVersion": 2018,
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "globals": {
+    // "React": true
   },
   "env": {
     "node": true,
@@ -10,6 +17,9 @@
   "parser": "babel-eslint",
   "plugins": ["react"],
   "rules": {
-  },
-  "extends": ["airbnb-base"]
+    "no-unused-vars": 0,
+    "class-methods-use-this": 1,
+    "quotes": [2, "double"],
+    "no-undef": 0
+  }
 }
