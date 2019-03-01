@@ -6,11 +6,12 @@ import HomePage from "./HomePage";
 import Login from "./Login";
 
 const Routes = () => (
-    <div>
-      <NavBar />
-      <Route path="/" component={HomePage} />
-      <Footer />
-    </div>
+  <div>
+    <NavBar />
+    <Route path="/" component={HomePage} />
+    <Route path="/login" component={Login} />
+    <Footer />
+  </div>
 );
 
 export default Routes;
