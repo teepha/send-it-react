@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => (
   <div className="wrapper">
@@ -32,16 +33,16 @@ const Footer = () => (
         <h4>More Info</h4>
       </li>
       <li>
-        <a href="#">Careers</a>
+        <Link to="#">Careers</Link>
       </li>
       <li>
-        <a href="#"> Help Center</a>
+        <Link to="#"> Help Center</Link>
       </li>
       <li>
-        <a href="#">Terms&Conditions</a>
+        <Link to="#">Terms&Conditions</Link>
       </li>
       <li>
-        <a href="#">Privacy Policy</a>
+        <Link to="#">Privacy Policy</Link>
       </li>
     </ul>
     <div id="copyright">Copyright &copy; 2018 SendIT. All rights reserved.</div>
