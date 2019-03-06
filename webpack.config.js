@@ -14,6 +14,16 @@ module.exports = {
         exclude: /node_modules/,
         use: ["babel-loader"],
       },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          "file-loader",
+        ],
+      },
     ],
   },
   resolve: {
@@ -21,12 +31,11 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new CopyPlugin([
-      { from: "./index.html", to: "./index.html" },
-    ]),
+    new CopyPlugin([{ from: "./index.html", to: "./index.html" }]),
   ],
   devServer: {
     contentBase: "./dist",
     hot: true,
+    historyApiFallback: true,
   },
 };
