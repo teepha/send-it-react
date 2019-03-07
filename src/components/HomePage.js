@@ -1,6 +1,4 @@
 import React from "react";
-import Footer from "./shared/Footer";
-import "../css/styles.css";
 import BackgroundImage from "../images/bcg-0.jpg";
 
 const Homepage = () => (

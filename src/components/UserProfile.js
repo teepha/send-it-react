@@ -1,21 +1,8 @@
 /* eslint-disable class-methods-use-this */
-import React, {Fragment} from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 const BASE_API_URL = "https://teepha-send-it.herokuapp.com";
-
-// // Count number of user orders
-// const status1 = data.filter(val => val.status === "ready_for_pickup").length;
-// document.querySelector("#pickup-status").innerHTML = status1;
-
-// const status2 = data.filter(val => val.status === "in_transit").length;
-// document.querySelector("#transit-status").innerHTML = status2;
-
-// const status3 = data.filter(val => val.status === "delivered").length;
-// document.querySelector("#deliver-status").innerHTML = status3;
-
-// const status4 = data.filter(val => val.status === "cancelled").length;
-// document.querySelector("#cancel-status").innerHTML = status4;
 
 class UserProfile extends React.Component {
   constructor(props) {
@@ -24,7 +11,8 @@ class UserProfile extends React.Component {
     this.state = {
       parcels: [],
       errMsg: "",
-      pickupStatus: "",
+      search: "",
+      parcelsCopy: [],
     };
   }
 
@@ -39,36 +27,70 @@ class UserProfile extends React.Component {
       .then((data) => {
         console.log("some data", data, "status", data[0].status);
         if (!data.length) {
-          this.setState({ errMsg: "You do not have any Parcel delivery order yet!" });
+          this.setState({
+            errMsg: "You do not have any Parcel delivery order yet!",
+          });
         } else {
-          data.sort((a, b) => a.id - b.id);
-          this.setState({ parcels: data });
-          // this.setState({ pickupStatus: data.status });
+          data.sort((a, b) => a.id - b.id); // research why we cant reassign value in sort
+          this.setState({ parcels: data, parcelsCopy: data });
         }
       })
       .catch(err => console.log("err occured", err));
   }
 
+  handleInputChange = (e) => {
+    const { parcelsCopy } = this.state;
+    const value = e.target.value.trim().toLowerCase();
+    const filteredParcels = parcelsCopy.filter(parcel => parcel.recipient_name.toLowerCase().includes(value));
+    this.setState({ parcels: filteredParcels, search: value });
+  };
+
   render() {
+    const { errMsg, parcels } = this.state;
     return (
       <div>
-        {this.state.errMsg ? (
-          <h1 id="error-msg">{this.state.errMsg}</h1>
+        {errMsg ? (
+          <h1 id="error-msg">{errMsg}</h1>
         ) : (
           <div className="main-content">
             <div className="user-profile-wrapper">
               <div className="order-count">
                 <div>
-                  Ready for Pickup: <span id="pickup-status">{this.state.pickupStatus}</span>
+                  Ready for Pickup:
+                  <span id="pickup-status">
+                    {
+                      parcels.filter(
+                        parcel => parcel.status === "ready_for_pickup",
+                      ).length
+                    }
+                  </span>
                 </div>
                 <div className="status-count">
-                  In-Transit: <span id="transit-status" />
+                  In-Transit:
+                  <span id="transit-status">
+                    {
+                      parcels.filter(parcel => parcel.status === "in_transit")
+                        .length
+                    }
+                  </span>
                 </div>
                 <div className="status-count">
-                  Delivered: <span id="deliver-status" />
+                  Delivered:
+                  <span id="deliver-status">
+                    {
+                      parcels.filter(parcel => parcel.status === "delivered")
+                        .length
+                    }
+                  </span>
                 </div>
                 <div className="status-count">
-                  Cancelled: <span id="cancel-status" />
+                  Cancelled:
+                  <span id="cancel-status">
+                    {
+                      parcels.filter(parcel => parcel.status === "cancelled")
+                        .length
+                    }
+                  </span>
                 </div>
               </div>
 
@@ -84,10 +106,9 @@ class UserProfile extends React.Component {
                     type="text"
                     placeholder="Enter Recipient Name..."
                     name="search"
+                    value={this.state.search}
+                    onChange={this.handleInputChange}
                   />
-                  <button className="btn" type="submit">
-                    <i className="fa fa-search" />
-                  </button>
                 </div>
               </div>
 
@@ -112,18 +133,36 @@ class UserProfile extends React.Component {
                   </tr>
                 </thead>
                 <tbody className="orders-data">
-                  {this.state.parcels.map((parcel, i) => (
-                      <tr key={i}>
-                        <td>{parcel.id}</td>
-                        <td className="remove-second">{parcel.date.slice(0, 10)}</td>
-                        <td className="remove-first">{parcel.pickup_location}</td>
-                        <td className="remove-second">{parcel.destination}</td>
-                        <td>{parcel.recipient_name}</td>
-                        <td>{parcel.status.replace(/_/g, " ")}</td>
-                        <td className="view"><i id={parcel.id} className="far fa-eye"></i></td>
-                        <td>{parcel.status !== "cancelled" ? <Link to="#"><i id={parcel.id} className="far fa-edit"></i></Link> : ""}</td>
-                        <td className="cancel">{parcel.status !== "cancelled" ? <i id={parcel.id} className="fas fa-times"></i> : ""}</td>
-                      </tr>
+                  {parcels.map((parcel, i) => (
+                    <tr key={i}>
+                      <td>{parcel.id}</td>
+                      <td className="remove-second">
+                        {parcel.date.slice(0, 10)}
+                      </td>
+                      <td className="remove-first">{parcel.pickup_location}</td>
+                      <td className="remove-second">{parcel.destination}</td>
+                      <td>{parcel.recipient_name}</td>
+                      <td>{parcel.status.replace(/_/g, " ")}</td>
+                      <td className="view">
+                        <i id={parcel.id} className="far fa-eye" />
+                      </td>
+                      <td>
+                        {parcel.status !== "cancelled" ? (
+                          <Link to="#">
+                            <i id={parcel.id} className="far fa-edit" />
+                          </Link>
+                        ) : (
+                          ""
+                        )}
+                      </td>
+                      <td className="cancel">
+                        {parcel.status !== "cancelled" ? (
+                          <i id={parcel.id} className="fas fa-times" />
+                        ) : (
+                          ""
+                        )}
+                      </td>
+                    </tr>
                   ))}
                 </tbody>
               </table>

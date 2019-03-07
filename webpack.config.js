@@ -20,18 +20,19 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: [
-          "file-loader",
-        ],
+        use: ["file-loader"],
       },
     ],
   },
   resolve: {
-    extensions: ["*", ".js", ".jsx"],
+    extensions: [".js", ".jsx"],
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new CopyPlugin([{ from: "./index.html", to: "./index.html" }]),
+    new CopyPlugin([
+      { from: "./index.html", to: "./index.html" },
+      { from: "./server.js", to: "./server.js" },
+    ]),
   ],
   devServer: {
     contentBase: "./dist",

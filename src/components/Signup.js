@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../css/styles.css";
 
 const BASE_API_URL = "https://teepha-send-it.herokuapp.com";
 
