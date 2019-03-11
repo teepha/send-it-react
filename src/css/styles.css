@@ -1,0 +1,589 @@
+/* HOMEPAGE */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  margin: 0;
+  width: 100%;
+  background: whitesmoke;
+}
+
+.wrapper {
+  width: 96%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2%;
+}
+
+header {
+  background: whitesmoke;
+  padding: 12px 30px;
+  border-bottom: 3px solid rgb(47, 28, 158);
+}
+
+div#logo {
+  display: inline;
+  padding: 10px;
+}
+
+h1.logo {
+  display: inline;
+  font-family: cursive;
+}
+
+h1.logo a {
+  text-decoration: none;
+  color: rgb(47, 28, 158);
+  font-size: 32px;
+}
+
+header nav {
+  float: right;
+}
+
+header nav li {
+  float: left;
+  list-style-type: none;
+  margin: 8px 20px;
+}
+
+header nav li a {
+  text-decoration: none;
+  color: rgb(47, 28, 158);
+  font-size: 20px;
+}
+
+header nav li a:hover {
+  color: purple;
+  padding: 3px;
+}
+
+#main-image {
+  display: flex;
+  position: relative;
+  text-align: center;
+}
+
+#main-image img {
+  width: 100%;
+  height: 100%;
+}
+
+#main-image h2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(30, 8, 152);
+  font-family: Trebuchet MS, Arial, "Helvetica", sans-serif;
+}
+
+footer {
+  background: #3b3b3b;
+  padding: 20px 10px;
+  border-top: 8px solid #202020;
+}
+
+footer:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+footer h4 {
+  margin: 0;
+  color: #555;
+  text-transform: uppercase;
+  font-size: 18px;
+}
+
+footer ul:nth-child(odd) {
+  float: left;
+  padding: 0;
+  list-style-type: none;
+  width: 27%;
+  margin-left: 2%;
+  font-size: 16px;
+}
+
+footer ul:nth-child(even) {
+  float: left;
+  padding: 0;
+  list-style-type: none;
+  width: 19%;
+  margin-left: 2%;
+  font-size: 16px;
+}
+
+footer li {
+  margin: 10px 0;
+  color: whitesmoke;
+}
+
+footer a {
+  color: whitesmoke;
+  text-decoration: none;
+}
+
+#copyright {
+  clear: both;
+  padding: 20px 0 10px;
+  margin: 15px auto;
+  width: 100%;
+  text-align: center;
+  border-top: 2px solid #555;
+  color: whitesmoke;
+  font-size: 16px;
+}
+
+
+/* LOGIN and ADMIN LOGIN PAGES */
+
+div.main-page {
+  display: flex;
+  position: relative;
+  height: 450px;
+}
+
+div.login-wrapper {
+  margin: 0 auto;
+  position: relative;
+  padding: 4% 0;
+  align-self: center;
+}
+
+div.login-page {
+  margin: 0 auto;
+  width: 370px;
+  padding: 5px 20px 20px;
+  background: white;
+}
+
+.fas,
+.far {
+  color: rgb(47, 28, 158);
+}
+
+#error-msg,
+#location-error-msg,
+#cancel-error-msg {
+  color: red;
+  text-align: center;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+div.login-page h1 {
+  text-align: center;
+  margin: 0 auto;
+  padding: 0;
+  border-bottom: 1px solid #3b3b3b;
+}
+
+label {
+  font-size: 17px;
+  display: grid;
+  width: 50%;
+}
+input {
+  width: 100%;
+  padding: 7px;
+  margin: 5px 20px 10px 5px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  box-sizing: border-box;
+  background: whitesmoke;
+}
+
+form {
+  padding-top: 10px;
+}
+
+form .button {
+  background: blue;
+  color: white;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 21px;
+  border: none;
+  border-radius: 7px;
+  padding: 12px 24px;
+  margin: 2px auto;
+  display: block;
+  width: 100%;
+}
+
+form .button:hover {
+  background: rgb(43, 10, 210);
+}
+
+.signup-login-btn a {
+  background: white;
+  color: blue;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 21px;
+  border: 1px solid blue;
+  border-radius: 7px;
+  padding: 12px 24px;
+  margin: 0 auto;
+  display: block;
+  text-decoration: none;
+  text-align: center;
+}
+
+.signup-login-btn a:hover {
+  background: whitesmoke;
+}
+
+.signup-login-btn span {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  font-size: 17px;
+}
+
+
+/* SIGNUP PAGE */
+
+div.main-signup-page {
+  display: flex;
+  position: relative;
+  height: 100%;
+}
+
+div.sign-up-wrapper {
+  margin: 0 auto;
+  position: relative;
+  padding: 4% 0;
+  align-self: center;
+}
+
+div.sign-up-page {
+  margin: 0 auto;
+  width: 500px;
+  padding: 6px 20px 20px;
+  background: white;
+}
+
+div.sign-up-page h1 {
+  text-align: center;
+  margin: 0 auto;
+  padding: 0;
+  border-bottom: 1px solid #3b3b3b;
+}
+
+div.sign-up-page label {
+  font-size: 17px;
+  display: inline-block;
+  width: 120px;
+}
+
+div.sign-up-page input {
+  width: 70%;
+  margin: 7px auto;
+}
+
+
+/* CREATE ORDER PAGE */
+
+div.main-create-order-page {
+  display: flex;
+  position: relative;
+  height: 100%;
+}
+
+div.create-order-wrapper {
+  margin: 0 auto;
+  position: relative;
+  padding: 4% 0;
+  align-self: center;
+}
+
+div.create-order-page {
+  margin: 0 auto;
+  width: 480px;
+  padding: 7px 20px 25px;
+  background: white;
+}
+
+div.create-order-page h1 {
+  text-align: center;
+  margin: 0 auto;
+  padding: 0;
+  border-bottom: 1px solid #3b3b3b;
+}
+
+div.create-order-page form {
+  padding: 20px 10px 5px;
+}
+
+
+/* EDIT ORDER PAGE */
+
+div.main-edit-order-page {
+  display: flex;
+  position: relative;
+  height: 100%;
+}
+
+div.edit-order-wrapper {
+  margin: 0 auto;
+  position: relative;
+  padding: 4% 0;
+  align-self: center;
+}
+
+div.edit-order-page {
+  margin: 0 auto;
+  width: 480px;
+  padding: 7px 20px 25px;
+  background: white;
+}
+
+div.edit-order-page h1 {
+  text-align: center;
+  margin: 0 auto;
+  padding: 0;
+  border-bottom: 1px solid #3b3b3b;
+}
+
+div.edit-order-page form {
+  padding: 20px 10px 5px;
+}
+
+
+/* USER PROFILE PAGE */
+
+div.main-content {
+  background: white;
+  display: flex;
+  position: relative;
+  height: 100%;
+}
+
+div.user-profile-wrapper {
+  width: 100%;
+  padding: 1% 2% 2%;
+  margin: 10px;
+}
+
+div.order-count {
+  display: inline-block;
+  height: 105px;
+  border: 2px solid #555;
+  padding: 5px;
+  margin: 2px 2px 5px 5px;
+  font-size: 19px;
+}
+
+div.status-count {
+  border-top: 1px solid #ccc;
+}
+
+.create-order-btn a {
+  background: whitesmoke;
+  color: rgb(47, 28, 158);
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 21px;
+  border: 2px solid rgb(47, 28, 158);
+  border-radius: 7px;
+  padding: 10px 18px;
+  margin-bottom: 3%;
+  float: right;
+  text-decoration: none;
+  text-align: center;
+}
+
+.create-order-btn a:hover {
+  background: white;
+}
+
+div.table-top {
+  clear: right;
+  border: 2px solid #aaa;
+  border-bottom: none;
+  width: 100%;
+  padding: 14px 20px 21px;
+}
+
+div.table-top span {
+  font-size: 20px;
+  padding: 0 10%;
+  font-weight: bold;
+}
+
+div.search-bar {
+  float: right;
+  width: 35%;
+}
+
+div.search-bar .fa-search {
+  font-size: 16px;
+}
+
+div.table-top input {
+  width: 80%;
+  font-size: 16px;
+  padding: 7px;
+  margin: 0 2px 10px;
+}
+
+div.table-top .btn {
+  display: inline;
+  position: relative;
+  padding: 6px;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 2px solid #aaa;
+}
+
+th,
+td {
+  text-align: center;
+}
+
+th {
+  font-size: 17px;
+  background-color: #ddd;
+  border: 1px solid rgb(209, 205, 205);
+  padding: 6px;
+}
+
+td {
+  font-size: 14px;
+  border: 1px solid #ddd;
+  padding: 9px 5px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+
+/* VIEW MODAL POPUP */
+
+div.main-view-modal-wrapper {
+  display: none;
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.view-modal-content {
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #aaa;
+  width: 50%;
+  align-self: center;
+}
+
+.view-close {
+  float: right;
+  font-size: 45px;
+  font-weight: bold;
+  transform: rotate(45deg);
+}
+
+.view-close:hover {
+  color: red;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.view-modal-content h3 {
+  font-size: 21px;
+}
+
+.view-details {
+  padding: 10px;
+}
+
+.view-details p {
+  font-size: 18px;
+  padding: 2px;
+}
+
+
+/* CANCEL MODAL POPUP */
+
+div.main-cancel-modal-wrapper {
+  display: none;
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.cancel-modal-content {
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #aaa;
+  width: 50%;
+  align-self: center;
+}
+
+.cancel-close {
+  float: right;
+  font-size: 45px;
+  font-weight: bold;
+  transform: rotate(45deg);
+}
+
+.cancel-close:hover {
+  color: red;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cancel-modal-content h3 {
+  font-size: 21px;
+  margin: 10px;
+}
+
+.cancel-details form {
+  padding: 5px;
+}
+
+.cancel-details p {
+  font-size: 18px;
+  padding: 2px;
+  margin: 5px;
+}
+
+.cancel-button {
+  background: blue;
+  color: white;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 20px;
+  border: none;
+  border-radius: 7px;
+  padding: 12px 24px;
+  margin: 2px auto;
+  display: block;
+  width: 50%;
+}
