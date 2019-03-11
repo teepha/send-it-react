@@ -45,6 +45,8 @@ class UserProfile extends React.Component {
     this.setState({ parcels: filteredParcels, search: value });
   };
 
+  capitalizeStatus = string => string.charAt(0).toUpperCase() + string.slice(1);
+
   render() {
     const { errMsg, parcels } = this.state;
     return (
