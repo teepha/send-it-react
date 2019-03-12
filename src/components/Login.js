@@ -3,6 +3,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 import { loginUser } from "../actions/userActions";
 
 class Login extends React.Component {
@@ -18,15 +19,20 @@ class Login extends React.Component {
   handleLogin = (e) => {
     e.preventDefault();
     const { email, password } = this.state;
-    this.props.loginUser(email, password).then((res) => {
-      if (res.msg) {
-        // display msg
-      } else {
-        res.role === "member" ? this.props.history.replace("/user-profile") : this.props.history.push("/admin-profile");
-      }
-    }).catch((err) => {
-      // display err msg
-    });
+    this.props
+      .loginUser(email, password)
+      .then((res) => {
+        if (res.msg) {
+          toast.warn(res.msg);
+        } else {
+          res.role === "member"
+            ? this.props.history.replace("/user-profile")
+            : this.props.history.push("/admin-profile");
+        }
+      })
+      .catch((err) => {
+        toast.error("Sorry a server error occured!");
+      });
   };
 
   handleInputChange = (e) => {
@@ -45,6 +51,7 @@ class Login extends React.Component {
             <form onSubmit={this.handleLogin} id="login-form">
               <label>Email address </label>
               <input
+                required
                 type="email"
                 name="email"
                 id="email"
@@ -54,6 +61,7 @@ class Login extends React.Component {
               <br />
               <label>Password </label>
               <input
+                required
                 name="password"
                 type="password"
                 id="password"

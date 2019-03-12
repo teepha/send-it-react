@@ -1,58 +1,53 @@
 /* eslint-disable class-methods-use-this */
 import React from "react";
 import { Link } from "react-router-dom";
-
-const BASE_API_URL = "https://teepha-send-it.herokuapp.com";
+import { connect } from "react-redux";
+import { getParcels } from "../actions/parcelsActions";
+import { capitalizeStatus } from "../utils";
 
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
-
+    console.log("I am inside Constructor");
     this.state = {
       parcels: [],
-      errMsg: "",
+      noParcelsErrMsg: "",
       search: "",
       parcelsCopy: [],
     };
   }
 
   componentDidMount() {
-    const userId = localStorage.getItem("userId");
-    fetch(`${BASE_API_URL}/api/v1/users/${userId}/parcels`, {
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    })
-      .then(res => res.json())
-      .then((data) => {
-        console.log("some data", data, "status", data[0].status);
-        if (!data.length) {
-          this.setState({
-            errMsg: "You do not have any Parcel delivery order yet!",
-          });
-        } else {
-          data.sort((a, b) => a.id - b.id); // research why we cant reassign value in sort
-          this.setState({ parcels: data, parcelsCopy: data });
-        }
-      })
-      .catch(err => console.log("err occured", err));
+    console.log("I am inside DidMount");
+    this.props.getParcels();
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("I am inside shouldComponentUpdate current props", this.props);
+    console.log("I am inside shouldComponentUpdate", nextProps);
+    if (this.props !== nextProps) {
+      this.setState({ parcels: nextProps.parcels, parcelsCopy: nextProps.parcels });
+    }
+    return true;
   }
 
   handleInputChange = (e) => {
     const { parcelsCopy } = this.state;
     const value = e.target.value.trim().toLowerCase();
-    const filteredParcels = parcelsCopy.filter(parcel => parcel.recipient_name.toLowerCase().includes(value));
+    console.log("value", value);
+    const filteredParcels = parcelsCopy.filter(
+      parcel => parcel.recipient_name.toLowerCase().includes(value),
+    );
     this.setState({ parcels: filteredParcels, search: value });
   };
 
-  capitalizeStatus = string => string.charAt(0).toUpperCase() + string.slice(1);
-
   render() {
-    const { errMsg, parcels } = this.state;
+    console.log("inside renderr", this.state.parcels);
+    const { noParcelsErrMsg, parcels } = this.state;
     return (
       <div>
-        {errMsg ? (
-          <h1 id="error-msg">{errMsg}</h1>
+        {noParcelsErrMsg ? (
+          <h1 id="error-msg">{noParcelsErrMsg}</h1>
         ) : (
           <div className="main-content">
             <div className="user-profile-wrapper">
@@ -144,7 +139,7 @@ class UserProfile extends React.Component {
                       <td className="remove-first">{parcel.pickup_location}</td>
                       <td className="remove-second">{parcel.destination}</td>
                       <td>{parcel.recipient_name}</td>
-                      <td>{parcel.status.replace(/_/g, " ")}</td>
+                      <td>{capitalizeStatus(parcel.status.replace(/_/g, " "))}</td>
                       <td className="view">
                         <i id={parcel.id} className="far fa-eye" />
                       </td>
@@ -176,4 +171,15 @@ class UserProfile extends React.Component {
   }
 }
 
-export default UserProfile;
+const mapStateToProps = (state) => {
+  console.log("mappping", state.parcels);
+  return {
+    parcels: state.parcels,
+  };
+};
+
+const mapDispatchToProps = () => ({
+  getParcels,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps())(UserProfile);

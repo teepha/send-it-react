@@ -1,6 +1,11 @@
+import { toast } from "react-toastify";
 import { BASE_API_URL } from "../config";
+import { capitalizeStatus } from "../utils";
 import {
-  LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, SIGNUP_USER_SUCCESS, SIGNUP_USER_FAILURE,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_FAILURE,
+  SIGNUP_USER_SUCCESS,
+  SIGNUP_USER_FAILURE,
 } from "./actionTypes";
 
 const loginUserSuccess = userInfo => ({
@@ -37,11 +42,12 @@ export const loginUser = (email, password) => (dispatch) => {
     .then(res => res.json())
     .then((loginRes) => {
       if (!loginRes.token) {
-        loginUserFailure(err);
+        dispatch(loginUserFailure(loginRes));
         return loginRes;
       }
       localStorage.setItem("token", loginRes.token);
       localStorage.setItem("userId", loginRes.userId);
+      toast.success(loginRes.msg);
 
       return fetch(`${BASE_API_URL}/api/v1/me`, {
         headers: {
@@ -50,16 +56,18 @@ export const loginUser = (email, password) => (dispatch) => {
       })
         .then(res => res.json())
         .then((data) => {
-          loginUserSuccess(data);
+          dispatch(loginUserSuccess(data));
           return data;
         })
         .catch((err) => {
-          loginUserFailure(err);
+          dispatch(loginUserFailure(err));
+          toast.error("Sorry a server error occured!");
           return err;
         });
     })
     .catch((err) => {
-      loginUserFailure(err);
+      dispatch(loginUserFailure(err));
+      toast.error("Sorry a server error occured!");
       return err;
     });
 };
@@ -88,13 +96,16 @@ export const registerUser = (
     .then((res) => {
       if (!res.token) {
         signupUserFailure(res);
+        toast.warn(`${capitalizeStatus(res.errors[0].param)} ${res.errors[0].msg}`);
         return res;
       }
       signupUserSuccess(res);
+      toast.success(res.msg);
       return res;
     })
     .catch((err) => {
       signupUserFailure(err);
+      toast.error("Sorry a server error occured!");
       return err;
     });
 };

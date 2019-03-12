@@ -1,5 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import NavBar from "./shared/NavBar";
 import Footer from "./shared/Footer";
 import HomePage from "./HomePage";
@@ -14,6 +16,7 @@ const Routes = () => (
     <Route path="/login" component={Login} />
     <Route path="/register" component={Signup} />
     <Route path="/user-profile" component={UserProfile} />
+    <ToastContainer autoClose={4000} />
     <Footer />
   </div>
 );
