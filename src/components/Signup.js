@@ -1,12 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-const BASE_API_URL = "https://teepha-send-it.herokuapp.com";
+import { connect } from "react-redux";
+import { registerUser } from "../actions/userActions";
 
 class Signup extends React.Component {
   constructor(props) {
     super(props);
-    this.handleSignup = this.handleSignup.bind(this);
 
     this.state = {
       firstName: "",
@@ -17,28 +16,24 @@ class Signup extends React.Component {
     };
   }
 
-  handleSignup(e) {
+  handleSignup = (e) => {
     e.preventDefault();
-
-    fetch(`${BASE_API_URL}/api/v1/auth/signup`, {
-      method: "POST",
-      body: JSON.stringify({
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        phoneNumber: this.state.phoneNumber,
-        email: this.state.email,
-        password: this.state.password,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then(res => res.json())
+    const {
+      firstName, lastName, phoneNumber, email, password,
+    } = this.state;
+    this.props
+      .registerUser(firstName, lastName, phoneNumber, email, password)
       .then((res) => {
+        if (!res.token) {
+          return res;
+        }
         this.props.history.push("/");
+        return res;
       })
-      .catch(err => console.log("err occured", err));
-  }
+      .catch((err) => {
+        return err;
+      });
+  };
 
   handleInputChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -50,7 +45,9 @@ class Signup extends React.Component {
         <div className="main-signup-page">
           <div className="sign-up-wrapper">
             <div className="sign-up-page">
-              <Link to="/"><i className="fas fa-arrow-left"></i></Link>
+              <Link to="/">
+                <i className="fas fa-arrow-left" />
+              </Link>
               <h1>SignUp</h1>
               <form onSubmit={this.handleSignup} id="sign-up-form">
                 <label>First Name </label>
@@ -113,4 +110,15 @@ class Signup extends React.Component {
   }
 }
 
-export default Signup;
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+const mapDispatchToProps = () => ({
+  registerUser,
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps(),
+)(Signup);
