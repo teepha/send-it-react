@@ -41,7 +41,9 @@ class UserProfile extends React.Component {
   handleInputChange = (e) => {
     const { parcelsCopy } = this.state;
     const value = e.target.value.trim().toLowerCase();
-    const filteredParcels = parcelsCopy.filter(parcel => parcel.recipient_name.toLowerCase().includes(value),);
+    const filteredParcels = parcelsCopy.filter(
+      parcel => parcel.recipient_name.toLowerCase().includes(value),
+    );
     this.setState({ parcels: filteredParcels, search: value });
   };
 

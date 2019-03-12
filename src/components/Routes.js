@@ -8,6 +8,7 @@ import HomePage from "./HomePage";
 import Login from "./Login";
 import Signup from "./Signup";
 import UserProfile from "./UserProfile";
+import AdminProfile from "./AdminProfile";
 
 const Routes = () => (
   <div>
@@ -16,6 +17,7 @@ const Routes = () => (
     <Route path="/login" component={Login} />
     <Route path="/register" component={Signup} />
     <Route path="/user-profile" component={UserProfile} />
+    <Route path="/admin-profile" component={AdminProfile} />
     <ToastContainer autoClose={3000} />
     <Footer />
   </div>
