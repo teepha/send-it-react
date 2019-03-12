@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
-import { getParcels } from "../actions/parcelsActions";
+import { getUserParcels } from "../actions/parcelsActions";
 import { capitalizeStatus } from "../utils";
 
 class UserProfile extends React.Component {
@@ -19,7 +19,7 @@ class UserProfile extends React.Component {
 
   componentDidMount() {
     this.props
-      .getParcels()
+      .getUserParcels()
       .then((res) => {
         this.setState({ noParcelsErrMsg: res.msg });
       })
@@ -41,9 +41,7 @@ class UserProfile extends React.Component {
   handleInputChange = (e) => {
     const { parcelsCopy } = this.state;
     const value = e.target.value.trim().toLowerCase();
-    const filteredParcels = parcelsCopy.filter(
-      parcel => parcel.recipient_name.toLowerCase().includes(value),
-    );
+    const filteredParcels = parcelsCopy.filter(parcel => parcel.recipient_name.toLowerCase().includes(value));
     this.setState({ parcels: filteredParcels, search: value });
   };
 
@@ -188,7 +186,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = () => ({
-  getParcels,
+  getUserParcels,
 });
 
 export default connect(

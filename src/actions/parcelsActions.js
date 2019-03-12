@@ -12,7 +12,7 @@ const getParcelsFailure = err => ({
   payload: err,
 });
 
-export const getParcels = () => (dispatch) => {
+export const getUserParcels = () => (dispatch) => {
   const userId = localStorage.getItem("userId");
   return fetch(`${BASE_API_URL}/api/v1/users/${userId}/parcels`, {
     headers: {
@@ -31,4 +31,42 @@ export const getParcels = () => (dispatch) => {
     .catch((err) => {
       dispatch(getParcelsFailure(err));
     });
+};
+
+export const getAllParcels = () => (dispatch) => {
+  return fetch(`${BASE_API_URL}/api/v1/parcels`, {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  })
+    .then(res => res.json())
+    .then((data) => {
+      console.log("some data", data, "status");
+      if (!data.length) {
+        console.log("some data messages", data);
+        return data;
+      }
+      data.sort((a, b) => a.id - b.id);
+      dispatch(getParcelsSuccess(data));
+      return data;
+    })
+    .catch((err) => {
+      dispatch(getParcelsFailure(err));
+    });
+};
+
+export const updateParcelStatus = (id, value) => (dispatch) => {
+  return fetch(`${BASE_API_URL}/api/v1/parcels/${id}/status`, {
+    method: "PUT",
+    body: JSON.stringify({
+      status: value,
+    }),
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  }).then(res => res.json())
+    .then((res) => {
+      console("updateresss", res);
+      // window.location.href = "./admin-profile.html";
+    }).catch(err => console.log("err occured", err));
 };

@@ -1,40 +1,60 @@
 /* eslint-disable class-methods-use-this */
 import React from "react";
-import { Link } from "react-router-dom";
-
-const BASE_API_URL = "https://teepha-send-it.herokuapp.com";
+import { connect } from "react-redux";
+import { toast } from "react-toastify";
+import { getAllParcels, updateParcelStatus } from "../actions/parcelsActions";
+import { capitalizeStatus } from "../utils";
 
 class AdminProfile extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       parcels: [],
       noParcelsErrMsg: "",
       search: "",
       parcelsCopy: [],
+      // value: ,
     };
   }
 
   componentDidMount() {
-    fetch(`${BASE_API_URL}/api/v1/parcels`, {
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    })
-      .then(res => res.json())
-      .then((data) => {
-        console.log("some data", data, "status");
-        if (!data.length) {
-          this.setState({
-            noParcelsErrMsg: "There are no Parcel delivery order yet!",
-          });
-        } else {
-          data.sort((a, b) => a.id - b.id);
-          this.setState({ parcels: data, parcelsCopy: data });
-        }
+    this.props
+      .getAllParcels()
+      .then((res) => {
+        this.setState({ noParcelsErrMsg: res.msg });
       })
-      .catch(err => console.log("err occured", err));
+      .catch((err) => {
+        toast.error("Sorry a server error occured!");
+      });
+
+    // fetch(`${BASE_API_URL}/api/v1/parcels`, {
+    //   headers: {
+    //     Authorization: localStorage.getItem("token"),
+    //   },
+    // })
+    //   .then(res => res.json())
+    //   .then((data) => {
+    //     console.log("some data", data, "status");
+    //     if (!data.length) {
+    //       this.setState({
+    //         noParcelsErrMsg: "There are no Parcel delivery order yet!",
+    //       });
+    //     } else {
+    //       data.sort((a, b) => a.id - b.id);
+    //       this.setState({ parcels: data, parcelsCopy: data });
+    //     }
+    //   })
+    //   .catch(err => console.log("err occured", err));
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props !== nextProps) {
+      this.setState({
+        parcels: nextProps.parcels,
+        parcelsCopy: nextProps.parcels,
+      });
+    }
+    return true;
   }
 
   handleInputChange = (e) => {
@@ -42,6 +62,13 @@ class AdminProfile extends React.Component {
     const value = e.target.value.trim();
     const filteredParcels = parcelsCopy.filter(parcel => parcel.user_id.toString().includes(value));
     this.setState({ parcels: filteredParcels, search: value });
+  };
+
+  handleStatusChange = (e) => {
+    const { id, value } = e.target;
+    console.log("selection made", id, value);
+    this.props.updateParcelStatus(id, value);
+    // this.setState({ value: e.target.value });
   };
 
   render() {
@@ -148,6 +175,7 @@ class AdminProfile extends React.Component {
                           defaultValue={parcel.status}
                           name="status"
                           className="status"
+                          onChange={this.handleStatusChange}
                         >
                           <option disabled value="cancelled">
                             Cancelled
@@ -178,4 +206,18 @@ class AdminProfile extends React.Component {
   }
 }
 
-export default AdminProfile;
+const mapStateToProps = (state) => {
+  return {
+    parcels: state.parcels,
+  };
+};
+
+const mapDispatchToProps = () => ({
+  getAllParcels,
+  updateParcelStatus,
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps(),
+)(AdminProfile);
