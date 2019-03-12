@@ -16,7 +16,7 @@ const Routes = () => (
     <Route path="/login" component={Login} />
     <Route path="/register" component={Signup} />
     <Route path="/user-profile" component={UserProfile} />
-    <ToastContainer autoClose={4000} />
+    <ToastContainer autoClose={3000} />
     <Footer />
   </div>
 );

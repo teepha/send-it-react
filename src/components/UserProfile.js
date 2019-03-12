@@ -2,13 +2,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 import { getParcels } from "../actions/parcelsActions";
 import { capitalizeStatus } from "../utils";
 
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
-    console.log("I am inside Constructor");
     this.state = {
       parcels: [],
       noParcelsErrMsg: "",
@@ -18,15 +18,22 @@ class UserProfile extends React.Component {
   }
 
   componentDidMount() {
-    console.log("I am inside DidMount");
-    this.props.getParcels();
+    this.props
+      .getParcels()
+      .then((res) => {
+        this.setState({ noParcelsErrMsg: res.msg });
+      })
+      .catch((err) => {
+        toast.error("Sorry a server error occured!");
+      });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log("I am inside shouldComponentUpdate current props", this.props);
-    console.log("I am inside shouldComponentUpdate", nextProps);
     if (this.props !== nextProps) {
-      this.setState({ parcels: nextProps.parcels, parcelsCopy: nextProps.parcels });
+      this.setState({
+        parcels: nextProps.parcels,
+        parcelsCopy: nextProps.parcels,
+      });
     }
     return true;
   }
@@ -34,145 +41,145 @@ class UserProfile extends React.Component {
   handleInputChange = (e) => {
     const { parcelsCopy } = this.state;
     const value = e.target.value.trim().toLowerCase();
-    console.log("value", value);
-    const filteredParcels = parcelsCopy.filter(
-      parcel => parcel.recipient_name.toLowerCase().includes(value),
-    );
+    const filteredParcels = parcelsCopy.filter(parcel => parcel.recipient_name.toLowerCase().includes(value),);
     this.setState({ parcels: filteredParcels, search: value });
   };
 
   render() {
-    console.log("inside renderr", this.state.parcels);
     const { noParcelsErrMsg, parcels } = this.state;
     return (
       <div>
-        {noParcelsErrMsg ? (
-          <h1 id="error-msg">{noParcelsErrMsg}</h1>
-        ) : (
-          <div className="main-content">
-            <div className="user-profile-wrapper">
-              <div className="order-count">
-                <div>
-                  Ready for Pickup:
-                  <span id="pickup-status">
-                    {
-                      parcels.filter(
-                        parcel => parcel.status === "ready_for_pickup",
-                      ).length
-                    }
-                  </span>
-                </div>
-                <div className="status-count">
-                  In-Transit:
-                  <span id="transit-status">
-                    {
-                      parcels.filter(parcel => parcel.status === "in_transit")
-                        .length
-                    }
-                  </span>
-                </div>
-                <div className="status-count">
-                  Delivered:
-                  <span id="deliver-status">
-                    {
-                      parcels.filter(parcel => parcel.status === "delivered")
-                        .length
-                    }
-                  </span>
-                </div>
-                <div className="status-count">
-                  Cancelled:
-                  <span id="cancel-status">
-                    {
-                      parcels.filter(parcel => parcel.status === "cancelled")
-                        .length
-                    }
-                  </span>
-                </div>
+        <div className="main-content">
+          <div className="user-profile-wrapper">
+            <div className="order-count">
+              <div>
+                Ready for Pickup:
+                <span id="pickup-status">
+                  {
+                    parcels.filter(
+                      parcel => parcel.status === "ready_for_pickup",
+                    ).length
+                  }
+                </span>
               </div>
-
-              <div className="create-order-btn">
-                <Link to="#">Create New Order</Link>
+              <div className="status-count">
+                In-Transit:
+                <span id="transit-status">
+                  {
+                    parcels.filter(parcel => parcel.status === "in_transit")
+                      .length
+                  }
+                </span>
               </div>
-
-              <div className="table-top">
-                <span className="table-title">My Orders</span>
-                <div className="search-bar">
-                  <input
-                    id="search-name"
-                    type="text"
-                    placeholder="Enter Recipient Name..."
-                    name="search"
-                    value={this.state.search}
-                    onChange={this.handleInputChange}
-                  />
-                </div>
+              <div className="status-count">
+                Delivered:
+                <span id="deliver-status">
+                  {
+                    parcels.filter(parcel => parcel.status === "delivered")
+                      .length
+                  }
+                </span>
               </div>
-
-              <table className="orders">
-                <thead>
-                  <tr>
-                    <th scope="row">ID</th>
-                    <th scope="row" className="remove-second">
-                      Date
-                    </th>
-                    <th scope="row" className="remove-first">
-                      Pick Up Location
-                    </th>
-                    <th scope="row" className="remove-second">
-                      Destination
-                    </th>
-                    <th scope="row">Recipient Name</th>
-                    <th scope="row">Status</th>
-                    <th scope="row" />
-                    <th scope="row" />
-                    <th scope="row" />
-                  </tr>
-                </thead>
-                <tbody className="orders-data">
-                  {parcels.map((parcel, i) => (
-                    <tr key={i}>
-                      <td>{parcel.id}</td>
-                      <td className="remove-second">
-                        {parcel.date.slice(0, 10)}
-                      </td>
-                      <td className="remove-first">{parcel.pickup_location}</td>
-                      <td className="remove-second">{parcel.destination}</td>
-                      <td>{parcel.recipient_name}</td>
-                      <td>{capitalizeStatus(parcel.status.replace(/_/g, " "))}</td>
-                      <td className="view">
-                        <i id={parcel.id} className="far fa-eye" />
-                      </td>
-                      <td>
-                        {parcel.status !== "cancelled" ? (
-                          <Link to="#">
-                            <i id={parcel.id} className="far fa-edit" />
-                          </Link>
-                        ) : (
-                          ""
-                        )}
-                      </td>
-                      <td className="cancel">
-                        {parcel.status !== "cancelled" ? (
-                          <i id={parcel.id} className="fas fa-times" />
-                        ) : (
-                          ""
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className="status-count">
+                Cancelled:
+                <span id="cancel-status">
+                  {
+                    parcels.filter(parcel => parcel.status === "cancelled")
+                      .length
+                  }
+                </span>
+              </div>
             </div>
+
+            <div className="create-order-btn">
+              <Link to="#">Create New Order</Link>
+            </div>
+            {noParcelsErrMsg ? (
+              <h1 id="error-msg">{noParcelsErrMsg}</h1>
+            ) : (
+              <div>
+                <div className="table-top">
+                  <span className="table-title">My Orders</span>
+                  <div className="search-bar">
+                    <input
+                      id="search-name"
+                      type="text"
+                      placeholder="Enter Recipient Name..."
+                      name="search"
+                      value={this.state.search}
+                      onChange={this.handleInputChange}
+                    />
+                  </div>
+                </div>
+
+                <table className="orders">
+                  <thead>
+                    <tr>
+                      <th scope="row">ID</th>
+                      <th scope="row" className="remove-second">
+                        Date
+                      </th>
+                      <th scope="row" className="remove-first">
+                        Pick Up Location
+                      </th>
+                      <th scope="row" className="remove-second">
+                        Destination
+                      </th>
+                      <th scope="row">Recipient Name</th>
+                      <th scope="row">Status</th>
+                      <th scope="row" />
+                      <th scope="row" />
+                      <th scope="row" />
+                    </tr>
+                  </thead>
+                  <tbody className="orders-data">
+                    {parcels.map((parcel, i) => (
+                      <tr key={i}>
+                        <td>{parcel.id}</td>
+                        <td className="remove-second">
+                          {parcel.date.slice(0, 10)}
+                        </td>
+                        <td className="remove-first">
+                          {parcel.pickup_location}
+                        </td>
+                        <td className="remove-second">{parcel.destination}</td>
+                        <td>{parcel.recipient_name}</td>
+                        <td>
+                          {capitalizeStatus(parcel.status.replace(/_/g, " "))}
+                        </td>
+                        <td className="view">
+                          <i id={parcel.id} className="far fa-eye" />
+                        </td>
+                        <td>
+                          {parcel.status !== "cancelled" ? (
+                            <Link to="#">
+                              <i id={parcel.id} className="far fa-edit" />
+                            </Link>
+                          ) : (
+                            ""
+                          )}
+                        </td>
+                        <td className="cancel">
+                          {parcel.status !== "cancelled" ? (
+                            <i id={parcel.id} className="fas fa-times" />
+                          ) : (
+                            ""
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  console.log("mappping", state.parcels);
   return {
     parcels: state.parcels,
   };
@@ -182,4 +189,7 @@ const mapDispatchToProps = () => ({
   getParcels,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps())(UserProfile);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps(),
+)(UserProfile);
