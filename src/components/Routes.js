@@ -9,6 +9,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import UserProfile from "./UserProfile";
 import AdminProfile from "./AdminProfile";
+import CreateOrder from "./CreateOrder";
 
 const Routes = () => (
   <div>
@@ -18,6 +19,7 @@ const Routes = () => (
     <Route path="/register" component={Signup} />
     <Route path="/user-profile" component={UserProfile} />
     <Route path="/admin-profile" component={AdminProfile} />
+    <Route path="/create-order" component={CreateOrder} />
     <ToastContainer autoClose={3000} />
     <Footer />
   </div>
