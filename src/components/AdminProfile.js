@@ -3,7 +3,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import { getAllParcels, updateParcelStatus } from "../actions/parcelsActions";
-import { capitalizeStatus } from "../utils";
 
 class AdminProfile extends React.Component {
   constructor(props) {
@@ -13,7 +12,6 @@ class AdminProfile extends React.Component {
       noParcelsErrMsg: "",
       search: "",
       parcelsCopy: [],
-      // value: ,
     };
   }
 
@@ -26,25 +24,6 @@ class AdminProfile extends React.Component {
       .catch((err) => {
         toast.error("Sorry a server error occured!");
       });
-
-    // fetch(`${BASE_API_URL}/api/v1/parcels`, {
-    //   headers: {
-    //     Authorization: localStorage.getItem("token"),
-    //   },
-    // })
-    //   .then(res => res.json())
-    //   .then((data) => {
-    //     console.log("some data", data, "status");
-    //     if (!data.length) {
-    //       this.setState({
-    //         noParcelsErrMsg: "There are no Parcel delivery order yet!",
-    //       });
-    //     } else {
-    //       data.sort((a, b) => a.id - b.id);
-    //       this.setState({ parcels: data, parcelsCopy: data });
-    //     }
-    //   })
-    //   .catch(err => console.log("err occured", err));
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -66,9 +45,7 @@ class AdminProfile extends React.Component {
 
   handleStatusChange = (e) => {
     const { id, value } = e.target;
-    console.log("selection made", id, value);
     this.props.updateParcelStatus(id, value);
-    // this.setState({ value: e.target.value });
   };
 
   render() {

@@ -1,6 +1,12 @@
 /* eslint-disable import/prefer-default-export */
+import { toast } from "react-toastify";
 import { BASE_API_URL } from "../config";
-import { GET_PARCEL_SUCCESS, GET_PARCEL_FAILURE } from "./actionTypes";
+import {
+  GET_PARCEL_SUCCESS,
+  GET_PARCEL_FAILURE,
+  UPDATE_STATUS_SUCCESS,
+  UPDATE_STATUS_FAILURE,
+} from "./actionTypes";
 
 const getParcelsSuccess = parcels => ({
   type: GET_PARCEL_SUCCESS,
@@ -9,6 +15,16 @@ const getParcelsSuccess = parcels => ({
 
 const getParcelsFailure = err => ({
   type: GET_PARCEL_FAILURE,
+  payload: err,
+});
+
+const updateStatusSucess = parcel => ({
+  type: UPDATE_STATUS_SUCCESS,
+  payload: parcel,
+});
+
+const updateStatusFailure = err => ({
+  type: UPDATE_STATUS_FAILURE,
   payload: err,
 });
 
@@ -41,9 +57,7 @@ export const getAllParcels = () => (dispatch) => {
   })
     .then(res => res.json())
     .then((data) => {
-      console.log("some data", data, "status");
       if (!data.length) {
-        console.log("some data messages", data);
         return data;
       }
       data.sort((a, b) => a.id - b.id);
@@ -62,11 +76,23 @@ export const updateParcelStatus = (id, value) => (dispatch) => {
       status: value,
     }),
     headers: {
+      "Content-Type": "application/json",
       Authorization: localStorage.getItem("token"),
     },
-  }).then(res => res.json())
+  })
+    .then(res => res.json())
     .then((res) => {
-      console("updateresss", res);
-      // window.location.href = "./admin-profile.html";
-    }).catch(err => console.log("err occured", err));
+      if (!res.id) {
+        toast.warn(res.msg);
+        return res;
+      }
+      dispatch(updateStatusSucess(res));
+      toast.success("Status Updated Successfully!");
+      return res;
+    })
+    .catch((err) => {
+      dispatch(updateStatusFailure(err));
+      toast.err("Sorry a server error occured!");
+      return err;
+    });
 };
