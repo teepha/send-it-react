@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-expressions */
-/* eslint-disable no-shadow */
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";

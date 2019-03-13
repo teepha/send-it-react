@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -92,7 +91,7 @@ class UserProfile extends React.Component {
             </div>
 
             <div className="create-order-btn">
-              <Link to="#">Create New Order</Link>
+              <Link to="/create-order">Create New Order</Link>
             </div>
             {noParcelsErrMsg ? (
               <h1 id="error-msg">{noParcelsErrMsg}</h1>

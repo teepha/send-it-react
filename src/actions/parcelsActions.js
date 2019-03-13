@@ -1,12 +1,24 @@
-/* eslint-disable import/prefer-default-export */
 import { toast } from "react-toastify";
 import { BASE_API_URL } from "../config";
+import { capitalizeStatus } from "../utils";
 import {
+  CREATE_PARCEL_SUCCESS,
+  CREATE_PARCEL_FAILURE,
   GET_PARCEL_SUCCESS,
   GET_PARCEL_FAILURE,
   UPDATE_STATUS_SUCCESS,
   UPDATE_STATUS_FAILURE,
 } from "./actionTypes";
+
+const createParcelSuccess = parcel => ({
+  type: CREATE_PARCEL_SUCCESS,
+  payload: parcel,
+});
+
+const createParcelFailure = err => ({
+  type: CREATE_PARCEL_FAILURE,
+  payload: err,
+});
 
 const getParcelsSuccess = parcels => ({
   type: GET_PARCEL_SUCCESS,
@@ -28,6 +40,47 @@ const updateStatusFailure = err => ({
   payload: err,
 });
 
+export const createParcelOrder = (
+  pickupLocation,
+  destination,
+  recipientName,
+  recipientPhone,
+) => (dispatch) => {
+  const userId = localStorage.getItem("userId");
+  return fetch(`${BASE_API_URL}/api/v1/parcels`, {
+    method: "POST",
+    body: JSON.stringify({
+      userId,
+      pickupLocation,
+      destination,
+      recipientName,
+      recipientPhone,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("token"),
+    },
+  })
+    .then(res => res.json())
+    .then((res) => {
+      if (!res.id) {
+        createParcelFailure(res);
+        toast.warn(
+          `${capitalizeStatus(res.errors[0].param)} ${res.errors[0].msg}`,
+        );
+        return res;
+      }
+      createParcelSuccess(res);
+      toast.success("Parcel Order Created Successfully!");
+      return res;
+    })
+    .catch((err) => {
+      createParcelFailure(err);
+      toast.error("Sorry a server error occured!");
+      return err;
+    });
+};
+
 export const getUserParcels = () => (dispatch) => {
   const userId = localStorage.getItem("userId");
   return fetch(`${BASE_API_URL}/api/v1/users/${userId}/parcels`, {
@@ -40,7 +93,7 @@ export const getUserParcels = () => (dispatch) => {
       if (!data.length) {
         return data;
       }
-      data.sort((a, b) => a.id - b.id); // research why we cant reassign value in sort
+      data.sort((a, b) => a.id - b.id);
       dispatch(getParcelsSuccess(data));
       return data;
     })
