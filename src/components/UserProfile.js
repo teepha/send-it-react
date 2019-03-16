@@ -151,7 +151,7 @@ class UserProfile extends React.Component {
                         </td>
                         <td>
                           {parcel.status !== "cancelled" ? (
-                            <Link to="#">
+                            <Link to={`/parcels/${parcel.id}`}>
                               <i id={parcel.id} className="far fa-edit" />
                             </Link>
                           ) : (

@@ -59,7 +59,6 @@ class CreateOrder extends React.Component {
               <label>Pick Up Location </label>
               <input
                 name="pickupLocation"
-                id="pickup_location"
                 type="text"
                 value={this.state.pickup_location}
                 onChange={this.handleInputChange}
@@ -68,7 +67,6 @@ class CreateOrder extends React.Component {
               <label>Destination </label>
               <input
                 name="destination"
-                id="destination"
                 type="text"
                 value={this.state.destination}
                 onChange={this.handleInputChange}
@@ -77,7 +75,6 @@ class CreateOrder extends React.Component {
               <label>Recipient Name </label>
               <input
                 name="recipientName"
-                id="recipient_name"
                 type="text"
                 value={this.state.recipient_name}
                 onChange={this.handleInputChange}
@@ -86,7 +83,6 @@ class CreateOrder extends React.Component {
               <label>Recipient Phone Number </label>
               <input
                 name="recipientPhone"
-                id="recipient_phone"
                 type="text"
                 value={this.state.recipient_phone}
                 onChange={this.handleInputChange}
