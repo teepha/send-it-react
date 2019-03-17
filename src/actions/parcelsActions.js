@@ -86,37 +86,39 @@ export const createParcelOrder = (
     .then(res => res.json())
     .then((res) => {
       if (!res.id) {
-        createParcelFailure(res);
-        toast.warn(
-          `${capitalizeStatus(res.errors[0].param)} ${res.errors[0].msg}`,
-        );
-        return res;
+        dispatch(createParcelFailure(res));
+        // console.log("parcelelllAcct", res);
+        // toast.warn(
+        //   `${capitalizeStatus(res.errors[0].param)} ${res.errors[0].msg}`,
+        // );
+        // return res;
       }
-      createParcelSuccess(res);
-      toast.success("Parcel Order Created Successfully!");
+      dispatch(createParcelSuccess(res));
+      console.log("parcelelllAcct", res);
+      // toast.success("Parcel Order Created Successfully!");
       return res;
     })
     .catch((err) => {
-      createParcelFailure(err);
-      toast.error("Sorry a server error occured!");
+      dispatch(createParcelFailure(err));
+      // toast.error("Sorry a server error occured!");
       return err;
     });
 };
 
 export const editParcelOrder = (
+  id,
   pickupLocation,
-  newDestination,
+  destination,
   recipientName,
   recipientPhone,
 ) => (dispatch) => {
   const userId = localStorage.getItem("userId");
-  // const id = localStorage.getItem("parcelToEdit");
   return fetch(`${BASE_API_URL}/api/v1/parcels/${id}`, {
     method: "PUT",
     body: JSON.stringify({
       userId,
       pickupLocation,
-      newDestination,
+      destination,
       recipientName,
       recipientPhone,
     }),
@@ -127,23 +129,23 @@ export const editParcelOrder = (
   })
     .then(res => res.json())
     .then((res) => {
-      console.log("resssss....", res);
-      // if (!res.id) {
-      //   editParcelFailure(res);
-      //   toast.warn(
-      //     `${capitalizeStatus(res.errors[0].param)} ${res.errors[0].msg}`,
-      //   );
-      //   return res;
-      // }
-      // editParcelSuccess(res);
+      // console.log("resssss....", res);
+      if (!res.id) {
+        dispatch(editParcelFailure(res));
+        // toast.warn(
+        //   `${capitalizeStatus(res.errors[0].param)} ${res.errors[0].msg}`,
+        // );
+        // return res;
+      }
+      dispatch(editParcelSuccess(res));
       // toast.success("Parcel Order Created Successfully!");
-      return res;
+      // return res;
     })
     .catch((err) => {
-      console.log("errrrrrr", err);
-      // editParcelFailure(err);
+      // console.log("errrrrrr", err);
+      dispatch(editParcelFailure(err));
       // toast.error("Sorry a server error occured!");
-      return err;
+      // return err;
     });
 };
 
@@ -160,7 +162,6 @@ export const getSingleParcel = id => (dispatch) => {
       return data;
     })
     .catch((err) => {
-      console.log("err occured", err);
       dispatch(getSingleParcelFailure(err));
       return err;
     });
