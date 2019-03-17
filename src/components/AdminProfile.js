@@ -16,22 +16,20 @@ class AdminProfile extends React.Component {
   }
 
   componentDidMount() {
-    this.props
-      .getAllParcels()
-      .then((res) => {
-        this.setState({ noParcelsErrMsg: res.msg });
-      })
-      .catch((err) => {
-        toast.error("Sorry a server error occured!");
-      });
+    this.props.getAllParcels();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props !== nextProps) {
-      this.setState({
-        parcels: nextProps.parcels,
-        parcelsCopy: nextProps.parcels,
-      });
+      if (nextProps.errors.length) {
+        const errorString = nextProps.errors.join("\n");
+        this.setState({ noParcelsErrMsg: errorString });
+      } else {
+        this.setState({
+          parcels: nextProps.parcels,
+          parcelsCopy: nextProps.parcels,
+        });
+      }
     }
     return true;
   }
@@ -39,13 +37,17 @@ class AdminProfile extends React.Component {
   handleInputChange = (e) => {
     const { parcelsCopy } = this.state;
     const value = e.target.value.trim();
-    const filteredParcels = parcelsCopy.filter(parcel => parcel.user_id.toString().includes(value));
+    const filteredParcels = parcelsCopy.filter(
+      parcel => parcel.user_id.toString().includes(value),
+    );
     this.setState({ parcels: filteredParcels, search: value });
   };
 
   handleStatusChange = (e) => {
     const { id, value } = e.target;
     this.props.updateParcelStatus(id, value);
+    toast.success("Parcel Status Updated Successfully!");
+    this.props.history.push("/admin-profile");
   };
 
   render() {
@@ -148,7 +150,7 @@ class AdminProfile extends React.Component {
                       <td>
                         <select
                           id={parcel.id}
-                          disabled={parcel.status === "cancelled"}
+                          disabled={parcel.status === "cancelled" || parcel.status === "delivered"}
                           defaultValue={parcel.status}
                           name="status"
                           className="status"
@@ -169,7 +171,12 @@ class AdminProfile extends React.Component {
                         <i id={parcel.id} className="far fa-eye" />
                       </td>
                       <td className="edit">
+                        {parcel.status !== "cancelled"
+                          && parcel.status !== "delivered" ? (
                         <i id={parcel.id} className="far fa-edit" />
+                          ) : (
+                            ""
+                          )}
                       </td>
                     </tr>
                   ))}
@@ -185,7 +192,8 @@ class AdminProfile extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    parcels: state.parcels,
+    parcels: state.parcels.data,
+    errors: state.parcels.errors,
   };
 };
 

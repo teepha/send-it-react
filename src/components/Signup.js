@@ -19,19 +19,14 @@ class Signup extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (this.props !== nextProps) {
-      if (nextProps.errors.length) {
-        console.log(">....eeee..>....>", nextProps.errors);
-        const errorString = nextProps.errors.join("\n");
-        // toast.warn(`${capitalizeStatus(res.errors[0].param)} ${res.errors[0].msg}`);
-        toast.warn(errorString);
-      } else {
-        console.log(">......>....>", nextProps);
-        toast.success("Registration Successful!hh");
-        nextProps.user.role === "member"
-          ? this.props.history.replace("/user-profile")
-          : this.props.history.push("/admin-profile");
-      }
+    if (nextProps.errors.length && this.props.errors !== nextProps.errors) {
+      const errorString = nextProps.errors.join("\n");
+      toast.warn(errorString);
+    } else if (this.props.user !== nextProps.user) {
+      toast.success("Registration Successful!");
+      nextProps.user.role === "member"
+        ? this.props.history.replace("/user-profile")
+        : this.props.history.push("/admin-profile");
     }
     return true;
   }
@@ -42,16 +37,6 @@ class Signup extends React.Component {
       firstName, lastName, phoneNumber, email, password,
     } = this.state;
     this.props.registerUser(firstName, lastName, phoneNumber, email, password);
-    // .then((res) => {
-    //   if (!res.token) {
-    //     return res;
-    //   }
-    //   this.props.history.push("/");
-    //   return res;
-    // })
-    // .catch((err) => {
-    //   return err;
-    // });
   };
 
   handleInputChange = (e) => {
@@ -140,10 +125,12 @@ class Signup extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.user.data,
-  errors: state.user.errors,
-});
+const mapStateToProps = (store) => {
+  return {
+    user: store.user.data,
+    errors: store.user.errors,
+  };
+};
 
 const mapDispatchToProps = () => ({
   registerUser,

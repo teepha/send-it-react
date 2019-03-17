@@ -1,15 +1,16 @@
-import { toast } from "react-toastify";
 import { BASE_API_URL } from "../config";
 import { capitalizeStatus } from "../utils";
 import {
   CREATE_PARCEL_SUCCESS,
   CREATE_PARCEL_FAILURE,
-  GET_PARCEL_SUCCESS,
-  GET_PARCEL_FAILURE,
+  GET_SINGLE_PARCEL_SUCCESS,
+  GET_SINGLE_PARCEL_FAILURE,
   UPDATE_STATUS_SUCCESS,
   UPDATE_STATUS_FAILURE,
-  EDIT_PARCEL_SUCCESS,
-  EDIT_PARCEL_FAILURE,
+  UPDATE_PARCEL_SUCCESS,
+  UPDATE_PARCEL_FAILURE,
+  GET_PARCELS_SUCCESS,
+  GET_PARCELS_FAILURE,
 } from "./actionTypes";
 
 const createParcelSuccess = parcel => ({
@@ -22,33 +23,33 @@ const createParcelFailure = err => ({
   payload: err,
 });
 
-const editParcelSuccess = parcel => ({
-  type: EDIT_PARCEL_SUCCESS,
+const updateParcelSuccess = parcel => ({
+  type: UPDATE_PARCEL_SUCCESS,
   payload: parcel,
 });
 
-const editParcelFailure = err => ({
-  type: EDIT_PARCEL_FAILURE,
+const updateParcelFailure = err => ({
+  type: UPDATE_PARCEL_FAILURE,
   payload: err,
 });
 
 const getParcelsSuccess = parcels => ({
-  type: GET_PARCEL_SUCCESS,
+  type: GET_PARCELS_SUCCESS,
   payload: parcels,
 });
 
 const getParcelsFailure = err => ({
-  type: GET_PARCEL_FAILURE,
+  type: GET_PARCELS_FAILURE,
   payload: err,
 });
 
 const getSingleParcelSuccess = parcel => ({
-  type: GET_PARCEL_SUCCESS,
+  type: GET_SINGLE_PARCEL_SUCCESS,
   payload: parcel,
 });
 
 const getSingleParcelFailure = err => ({
-  type: GET_PARCEL_FAILURE,
+  type: GET_SINGLE_PARCEL_FAILURE,
   payload: err,
 });
 
@@ -69,7 +70,7 @@ export const createParcelOrder = (
   recipientPhone,
 ) => (dispatch) => {
   const userId = localStorage.getItem("userId");
-  return fetch(`${BASE_API_URL}/api/v1/parcels`, {
+  fetch(`${BASE_API_URL}/api/v1/parcels`, {
     method: "POST",
     body: JSON.stringify({
       userId,
@@ -87,25 +88,16 @@ export const createParcelOrder = (
     .then((res) => {
       if (!res.id) {
         dispatch(createParcelFailure(res));
-        // console.log("parcelelllAcct", res);
-        // toast.warn(
-        //   `${capitalizeStatus(res.errors[0].param)} ${res.errors[0].msg}`,
-        // );
-        // return res;
+      } else {
+        dispatch(createParcelSuccess(res));
       }
-      dispatch(createParcelSuccess(res));
-      console.log("parcelelllAcct", res);
-      // toast.success("Parcel Order Created Successfully!");
-      return res;
     })
     .catch((err) => {
       dispatch(createParcelFailure(err));
-      // toast.error("Sorry a server error occured!");
-      return err;
     });
 };
 
-export const editParcelOrder = (
+export const updateParcelOrder = (
   id,
   pickupLocation,
   destination,
@@ -113,7 +105,7 @@ export const editParcelOrder = (
   recipientPhone,
 ) => (dispatch) => {
   const userId = localStorage.getItem("userId");
-  return fetch(`${BASE_API_URL}/api/v1/parcels/${id}`, {
+  fetch(`${BASE_API_URL}/api/v1/parcels/${id}`, {
     method: "PUT",
     body: JSON.stringify({
       userId,
@@ -129,47 +121,43 @@ export const editParcelOrder = (
   })
     .then(res => res.json())
     .then((res) => {
-      // console.log("resssss....", res);
+      // console.log("then res", res);
       if (!res.id) {
-        dispatch(editParcelFailure(res));
-        // toast.warn(
-        //   `${capitalizeStatus(res.errors[0].param)} ${res.errors[0].msg}`,
-        // );
-        // return res;
+        // console.log("if resss", res);
+        dispatch(updateParcelFailure(res));
+      } 
+      else {
+        // console.log("else resss", res);
+        dispatch(updateParcelSuccess(res));
       }
-      dispatch(editParcelSuccess(res));
-      // toast.success("Parcel Order Created Successfully!");
-      // return res;
     })
     .catch((err) => {
-      // console.log("errrrrrr", err);
-      dispatch(editParcelFailure(err));
-      // toast.error("Sorry a server error occured!");
-      // return err;
+      dispatch(updateParcelFailure(err));
     });
 };
 
 export const getSingleParcel = id => (dispatch) => {
-  // console.log()
-  return fetch(`${BASE_API_URL}/api/v1/parcels/${id}`, {
+  fetch(`${BASE_API_URL}/api/v1/parcels/${id}`, {
     headers: {
       Authorization: localStorage.getItem("token"),
     },
   })
     .then(res => res.json())
     .then((data) => {
-      dispatch(getSingleParcelSuccess(data));
-      return data;
+      if (!res.id) {
+        dispatch(getSingleParcelFailure(res));
+      } else {
+        dispatch(getSingleParcelSuccess(data));
+      }
     })
     .catch((err) => {
       dispatch(getSingleParcelFailure(err));
-      return err;
     });
 };
 
 export const getUserParcels = () => (dispatch) => {
   const userId = localStorage.getItem("userId");
-  return fetch(`${BASE_API_URL}/api/v1/users/${userId}/parcels`, {
+  fetch(`${BASE_API_URL}/api/v1/users/${userId}/parcels`, {
     headers: {
       Authorization: localStorage.getItem("token"),
     },
@@ -177,11 +165,11 @@ export const getUserParcels = () => (dispatch) => {
     .then(res => res.json())
     .then((data) => {
       if (!data.length) {
-        return data;
+        dispatch(getParcelsFailure(data));
+      } else {
+        data.sort((a, b) => a.id - b.id);
+        dispatch(getParcelsSuccess(data));
       }
-      data.sort((a, b) => a.id - b.id);
-      dispatch(getParcelsSuccess(data));
-      return data;
     })
     .catch((err) => {
       dispatch(getParcelsFailure(err));
@@ -189,7 +177,7 @@ export const getUserParcels = () => (dispatch) => {
 };
 
 export const getAllParcels = () => (dispatch) => {
-  return fetch(`${BASE_API_URL}/api/v1/parcels`, {
+  fetch(`${BASE_API_URL}/api/v1/parcels`, {
     headers: {
       Authorization: localStorage.getItem("token"),
     },
@@ -197,11 +185,11 @@ export const getAllParcels = () => (dispatch) => {
     .then(res => res.json())
     .then((data) => {
       if (!data.length) {
-        return data;
+        dispatch(getParcelsFailure(data));
+      } else {
+        data.sort((a, b) => a.id - b.id);
+        dispatch(getParcelsSuccess(data));
       }
-      data.sort((a, b) => a.id - b.id);
-      dispatch(getParcelsSuccess(data));
-      return data;
     })
     .catch((err) => {
       dispatch(getParcelsFailure(err));
@@ -209,7 +197,7 @@ export const getAllParcels = () => (dispatch) => {
 };
 
 export const updateParcelStatus = (id, value) => (dispatch) => {
-  return fetch(`${BASE_API_URL}/api/v1/parcels/${id}/status`, {
+  fetch(`${BASE_API_URL}/api/v1/parcels/${id}/status`, {
     method: "PUT",
     body: JSON.stringify({
       status: value,
@@ -222,16 +210,12 @@ export const updateParcelStatus = (id, value) => (dispatch) => {
     .then(res => res.json())
     .then((res) => {
       if (!res.id) {
-        toast.warn(res.msg);
-        return res;
+        dispatch(updateStatusFailure(res.msg));
+      } else {
+        dispatch(updateStatusSucess(res));
       }
-      dispatch(updateStatusSucess(res));
-      toast.success("Status Updated Successfully!");
-      return res;
     })
     .catch((err) => {
       dispatch(updateStatusFailure(err));
-      toast.err("Sorry a server error occured!");
-      return err;
     });
 };

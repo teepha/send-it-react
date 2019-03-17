@@ -87,22 +87,23 @@ export const registerUser = (
     .then((signupRes) => {
       if (!signupRes.token) {
         dispatch(signupUserFailure(signupRes));
-      }
-      localStorage.setItem("token", signupRes.token);
-      localStorage.setItem("userId", signupRes.userId);
+      } else {
+        localStorage.setItem("token", signupRes.token);
+        localStorage.setItem("userId", signupRes.userId);
 
-      fetch(`${BASE_API_URL}/api/v1/me`, {
-        headers: {
-          Authorization: signupRes.token,
-        },
-      })
-        .then(res => res.json())
-        .then((data) => {
-          dispatch(signupUserSuccess(data));
+        fetch(`${BASE_API_URL}/api/v1/me`, {
+          headers: {
+            Authorization: signupRes.token,
+          },
         })
-        .catch((err) => {
-          dispatch(signupUserFailure(err));
-        });
+          .then(res => res.json())
+          .then((data) => {
+            dispatch(signupUserSuccess(data));
+          })
+          .catch((err) => {
+            dispatch(signupUserFailure(err));
+          });
+      }
     })
     .catch((err) => {
       dispatch(signupUserFailure(err));

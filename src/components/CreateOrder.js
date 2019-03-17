@@ -17,7 +17,7 @@ class CreateOrder extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (this.props !== nextProps) {
+    if (this.props.parcels.length !== nextProps.parcels.length) {
       if (nextProps.errors.length) {
         const errorString = nextProps.errors.join("\n");
         toast.warn(errorString);
@@ -111,7 +111,7 @@ class CreateOrder extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  parcel: state.parcels.singleParcel,
+  parcels: state.parcels.data,
   errors: state.parcels.errors,
 });
 

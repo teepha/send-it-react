@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
-import { editParcelOrder, getSingleParcel } from "../actions/parcelsActions";
+import { updateParcelOrder, getSingleParcel } from "../actions/parcelsActions";
 
 class EditOrder extends React.Component {
   constructor(props) {
@@ -17,33 +17,28 @@ class EditOrder extends React.Component {
 
   componentDidMount() {
     this.props.getSingleParcel(this.props.match.params.id);
-    // .then((res) => {
-    //   //console.log("=====", this.props);
-    //   this.setState({
-    //     pickupLocation: res.pickup_location,
-    //     newDestination: res.destination,
-    //     recipientName: res.recipient_name,
-    //     recipientPhone: res.recipient_phone,
-    //   });
-    // }).catch((err) => {
-    //   toast.error("Sorry a server error occured!");
-    // });
   }
 
-  shouldComponentUpdate(nextProps) {
-    console.log("nexttt>>>", nextProps.errors);
-    if (this.props !== nextProps) {
-      console.log("nexttt>>>", nextProps.errors);
-    //   if (nextProps.errors.length) {
-    //     const errorString = nextProps.errors.join("\n");
-    //     toast.warn(errorString);
-    //   } else {
-    //     toast.success("Parcel Order Updated Successfully!");
-    //     this.props.history.push("/user-profile");
-    //   }
+  shouldComponentUpdate = (nextProps) => {
+    if (!this.state.pickupLocation) {
+      this.setState({
+        pickupLocation: nextProps.parcel.pickup_location,
+        newDestination: nextProps.parcel.destination,
+        recipientName: nextProps.parcel.recipient_name,
+        recipientPhone: nextProps.parcel.recipient_phone,
+      });
+    } else if (this.props.parcel !== nextProps.parcel) {
+      console.log("nextttprops", nextProps, "thissprops", this.props);
+      if (nextProps.parcel) {
+        toast.success("Parcel Order Updated Successfully!");
+        this.props.history.push("/user-profile");
+      } else {
+        const errorString = nextProps.errors.join("\n");
+        toast.warn(errorString);
+      }
     }
     return true;
-  }
+  };
 
   handleEditOrder = (e) => {
     const { id } = this.props.match.params;
@@ -54,28 +49,16 @@ class EditOrder extends React.Component {
       recipientName,
       recipientPhone,
     } = this.state;
-    this.props
-      .editParcelOrder(
-        id,
-        pickupLocation,
-        newDestination,
-        recipientName,
-        recipientPhone,
-      );
-      // .then((res) => {
-      //   if (!res.id) {
-      //     return res;
-      //   }
-      //   this.props.history.push("/user-profile");
-      //   return res;
-      // })
-      // .catch((err) => {
-      //   return err;
-      // });
+    this.props.updateParcelOrder(
+      id,
+      pickupLocation,
+      newDestination,
+      recipientName,
+      recipientPhone,
+    );
   };
 
   handleInputChange = (e) => {
-    // console.log('dfsdfsd', typeof e.target.value)
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -84,7 +67,7 @@ class EditOrder extends React.Component {
       <div className="main-edit-order-page">
         <div className="edit-order-wrapper">
           <div className="edit-order-page">
-            <Link to="./user-profile">
+            <Link to="/user-profile">
               <i className="fas fa-arrow-left" />
             </Link>
             <h1>Edit Order</h1>
@@ -92,7 +75,7 @@ class EditOrder extends React.Component {
             <form onSubmit={this.handleEditOrder} id="edit-order-form">
               <label>Pick Up Location </label>
               <input
-                // required
+                required
                 name="pickupLocation"
                 type="text"
                 minLength="10"
@@ -102,7 +85,7 @@ class EditOrder extends React.Component {
               <br />
               <label>New Destination </label>
               <input
-                // required
+                required
                 name="newDestination"
                 type="text"
                 minLength="10"
@@ -140,13 +123,16 @@ class EditOrder extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  parcel: state.parcels.singleParcel,
-  errors: state.parcels.errors,
-});
+const mapStateToProps = (store, ownProps) => {
+  const props = parseInt(ownProps.match.params.id, 10);
+  return {
+    parcel: store.parcels.data.find(parcel => parcel.id === props),
+    errors: store.parcels.errors,
+  };
+};
 
 const mapDispatchToProps = id => ({
-  editParcelOrder,
+  updateParcelOrder,
   getSingleParcel,
 });
 

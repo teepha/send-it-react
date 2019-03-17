@@ -84,9 +84,9 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.user.data,
-  errors: state.user.errors,
+const mapStateToProps = store => ({
+  user: store.user.data,
+  errors: store.user.errors,
 });
 
 const mapDispatchToProps = () => ({
