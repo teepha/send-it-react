@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 import { createParcelOrder } from "../actions/parcelsActions";
 
 class CreateOrder extends React.Component {
@@ -15,6 +16,19 @@ class CreateOrder extends React.Component {
     };
   }
 
+  shouldComponentUpdate(nextProps) {
+    if (this.props !== nextProps) {
+      if (nextProps.errors.length) {
+        const errorString = nextProps.errors.join("\n");
+        toast.warn(errorString);
+      } else {
+        toast.success("Parcel Order Created Successfully!");
+        this.props.history.push("/user-profile");
+      }
+    }
+    return true;
+  }
+
   handleCreateOrder = (e) => {
     e.preventDefault();
     const {
@@ -23,23 +37,12 @@ class CreateOrder extends React.Component {
       recipientName,
       recipientPhone,
     } = this.state;
-    this.props
-      .createParcelOrder(
-        pickupLocation,
-        destination,
-        recipientName,
-        recipientPhone,
-      )
-      .then((res) => {
-        if (!res.id) {
-          return res;
-        }
-        this.props.history.push("/user-profile");
-        return res;
-      })
-      .catch((err) => {
-        return err;
-      });
+    this.props.createParcelOrder(
+      pickupLocation,
+      destination,
+      recipientName,
+      recipientPhone,
+    );
   };
 
   handleInputChange = (e) => {
@@ -58,6 +61,9 @@ class CreateOrder extends React.Component {
             <form onSubmit={this.handleCreateOrder} id="create-order-form">
               <label>Pick Up Location </label>
               <input
+                required
+                pattern="[a-zA-Z0-9_&-]+([ ]?[a-zA-Z0-9_&-]+)*"
+                minLength="10"
                 name="pickupLocation"
                 type="text"
                 value={this.state.pickup_location}
@@ -66,6 +72,9 @@ class CreateOrder extends React.Component {
               <br />
               <label>Destination </label>
               <input
+                required
+                pattern="[a-zA-Z0-9_&-]+([ ]?[a-zA-Z0-9_&-]+)*"
+                minLength="10"
                 name="destination"
                 type="text"
                 value={this.state.destination}
@@ -74,6 +83,8 @@ class CreateOrder extends React.Component {
               <br />
               <label>Recipient Name </label>
               <input
+                required
+                pattern="^[A-Za-z]+$"
                 name="recipientName"
                 type="text"
                 value={this.state.recipient_name}
@@ -82,6 +93,7 @@ class CreateOrder extends React.Component {
               <br />
               <label>Recipient Phone Number </label>
               <input
+                required
                 name="recipientPhone"
                 type="text"
                 value={this.state.recipient_phone}
@@ -99,7 +111,8 @@ class CreateOrder extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  parcel: state.parcel,
+  parcel: state.parcels.singleParcel,
+  errors: state.parcels.errors,
 });
 
 const mapDispatchToProps = {

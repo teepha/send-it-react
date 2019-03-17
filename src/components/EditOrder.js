@@ -7,7 +7,6 @@ import { editParcelOrder, getSingleParcel } from "../actions/parcelsActions";
 class EditOrder extends React.Component {
   constructor(props) {
     super(props);
-    console.log("got hereeee");
     this.state = {
       pickupLocation: "",
       newDestination: "",
@@ -17,21 +16,37 @@ class EditOrder extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getSingleParcel(this.props.match.params.id)
-      .then((res) => {
-        console.log("====didmount", res);
-        this.setState({
-          pickupLocation: res.pickup_location,
-          newDestination: res.destination,
-          recipientName: res.recipient_name,
-          recipientPhone: res.recipient_phone,
-        });
-      }).catch((err) => {
-        toast.error("Sorry a server error occured!");
-      });
+    this.props.getSingleParcel(this.props.match.params.id);
+    // .then((res) => {
+    //   //console.log("=====", this.props);
+    //   this.setState({
+    //     pickupLocation: res.pickup_location,
+    //     newDestination: res.destination,
+    //     recipientName: res.recipient_name,
+    //     recipientPhone: res.recipient_phone,
+    //   });
+    // }).catch((err) => {
+    //   toast.error("Sorry a server error occured!");
+    // });
+  }
+
+  shouldComponentUpdate(nextProps) {
+    console.log("nexttt>>>", nextProps.errors);
+    if (this.props !== nextProps) {
+      console.log("nexttt>>>", nextProps.errors);
+    //   if (nextProps.errors.length) {
+    //     const errorString = nextProps.errors.join("\n");
+    //     toast.warn(errorString);
+    //   } else {
+    //     toast.success("Parcel Order Updated Successfully!");
+    //     this.props.history.push("/user-profile");
+    //   }
+    }
+    return true;
   }
 
   handleEditOrder = (e) => {
+    const { id } = this.props.match.params;
     e.preventDefault();
     const {
       pickupLocation,
@@ -39,26 +54,28 @@ class EditOrder extends React.Component {
       recipientName,
       recipientPhone,
     } = this.state;
-    this.props.editParcelOrder(
-      pickupLocation,
-      newDestination,
-      recipientName,
-      recipientPhone,
-    );
-    // .then((res) => {
-    //   if (!res.id) {
-    //     return res;
-    //   }
-    //   this.props.history.push("/user-profile");
-    //   return res;
-    // })
-    // .catch((err) => {
-    //   return err;
-    // });
+    this.props
+      .editParcelOrder(
+        id,
+        pickupLocation,
+        newDestination,
+        recipientName,
+        recipientPhone,
+      );
+      // .then((res) => {
+      //   if (!res.id) {
+      //     return res;
+      //   }
+      //   this.props.history.push("/user-profile");
+      //   return res;
+      // })
+      // .catch((err) => {
+      //   return err;
+      // });
   };
 
   handleInputChange = (e) => {
-    console.log("eeee", e.target.value);
+    // console.log('dfsdfsd', typeof e.target.value)
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -75,32 +92,40 @@ class EditOrder extends React.Component {
             <form onSubmit={this.handleEditOrder} id="edit-order-form">
               <label>Pick Up Location </label>
               <input
+                // required
                 name="pickupLocation"
                 type="text"
+                minLength="10"
                 value={this.state.pickupLocation}
                 onChange={this.handleInputChange}
               />
               <br />
               <label>New Destination </label>
               <input
+                // required
                 name="newDestination"
                 type="text"
+                minLength="10"
                 value={this.state.newDestination}
                 onChange={this.handleInputChange}
               />
               <br />
               <label>Recipient Name </label>
               <input
-                ame="recipientName"
+                required
+                name="recipientName"
                 type="text"
+                pattern="^[A-Za-z]+$"
                 value={this.state.recipientName}
                 onChange={this.handleInputChange}
               />
               <br />
               <label>Recipient Phone Number </label>
               <input
+                required
                 name="recipientPhone"
                 type="text"
+                minLength="10"
                 value={this.state.recipientPhone}
                 onChange={this.handleInputChange}
               />
@@ -116,7 +141,8 @@ class EditOrder extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  parcel: state.parcel,
+  parcel: state.parcels.singleParcel,
+  errors: state.parcels.errors,
 });
 
 const mapDispatchToProps = id => ({
