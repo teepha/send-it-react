@@ -121,13 +121,10 @@ export const updateParcelOrder = (
   })
     .then(res => res.json())
     .then((res) => {
-      // console.log("then res", res);
       if (!res.id) {
-        // console.log("if resss", res);
         dispatch(updateParcelFailure(res));
       } 
       else {
-        // console.log("else resss", res);
         dispatch(updateParcelSuccess(res));
       }
     })

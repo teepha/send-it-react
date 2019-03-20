@@ -28,7 +28,6 @@ class EditOrder extends React.Component {
         recipientPhone: nextProps.parcel.recipient_phone,
       });
     } else if (this.props.parcel !== nextProps.parcel) {
-      console.log("nextttprops", nextProps, "thissprops", this.props);
       if (nextProps.parcel) {
         toast.success("Parcel Order Updated Successfully!");
         this.props.history.push("/user-profile");
