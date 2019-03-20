@@ -15,23 +15,25 @@ class Login extends React.Component {
     };
   }
 
+  shouldComponentUpdate(nextProps) {
+    if (this.props !== nextProps) {
+      if (nextProps.errors.length) {
+        const errorString = nextProps.errors.join("\n");
+        toast.warn(errorString);
+      } else {
+        toast.success("Login Successful!");
+        nextProps.user.role === "member"
+          ? this.props.history.replace("/user-profile")
+          : this.props.history.push("/admin-profile");
+      }
+    }
+    return true;
+  }
+
   handleLogin = (e) => {
     e.preventDefault();
     const { email, password } = this.state;
-    this.props
-      .loginUser(email, password)
-      .then((res) => {
-        if (res.msg) {
-          toast.warn(res.msg);
-        } else {
-          res.role === "member"
-            ? this.props.history.replace("/user-profile")
-            : this.props.history.push("/admin-profile");
-        }
-      })
-      .catch((err) => {
-        toast.error("Sorry a server error occured!");
-      });
+    this.props.loginUser(email, password);
   };
 
   handleInputChange = (e) => {
@@ -82,8 +84,9 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.user,
+const mapStateToProps = store => ({
+  user: store.user.data,
+  errors: store.user.errors,
 });
 
 const mapDispatchToProps = () => ({

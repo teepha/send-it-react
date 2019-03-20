@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { toast } from "react-toastify";
 import { getUserParcels } from "../actions/parcelsActions";
 import { capitalizeStatus } from "../utils";
 
@@ -17,18 +16,14 @@ class UserProfile extends React.Component {
   }
 
   componentDidMount() {
-    this.props
-      .getUserParcels()
-      .then((res) => {
-        this.setState({ noParcelsErrMsg: res.msg });
-      })
-      .catch((err) => {
-        toast.error("Sorry a server error occured!");
-      });
+    this.props.getUserParcels();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.props !== nextProps) {
+    if (nextProps.errors.length && this.props.errors !== nextProps.errors) {
+      const errorString = nextProps.errors.join("\n");
+      this.setState({ noParcelsErrMsg: errorString });
+    } else if (this.props.parcels !== nextProps.parcels) {
       this.setState({
         parcels: nextProps.parcels,
         parcelsCopy: nextProps.parcels,
@@ -40,7 +35,9 @@ class UserProfile extends React.Component {
   handleInputChange = (e) => {
     const { parcelsCopy } = this.state;
     const value = e.target.value.trim().toLowerCase();
-    const filteredParcels = parcelsCopy.filter(parcel => parcel.recipient_name.toLowerCase().includes(value));
+    const filteredParcels = parcelsCopy.filter(
+      parcel => parcel.recipient_name.toLowerCase().includes(value),
+    );
     this.setState({ parcels: filteredParcels, search: value });
   };
 
@@ -141,29 +138,35 @@ class UserProfile extends React.Component {
                         <td className="remove-first">
                           {parcel.pickup_location}
                         </td>
-                        <td className="remove-second">{parcel.destination}</td>
+                        <td className="remove-second">
+                          {parcel.destination}
+                        </td>
                         <td>{parcel.recipient_name}</td>
                         <td>
-                          {capitalizeStatus(parcel.status.replace(/_/g, " "))}
+                          {capitalizeStatus(
+                            parcel.status.replace(/_/g, " "),
+                          )}
                         </td>
                         <td className="view">
                           <i id={parcel.id} className="far fa-eye" />
                         </td>
                         <td>
-                          {parcel.status !== "cancelled" ? (
-                            <Link to="#">
+                          {parcel.status !== "cancelled"
+                          && parcel.status !== "delivered" ? (
+                            <Link to={`/parcels/${parcel.id}`}>
                               <i id={parcel.id} className="far fa-edit" />
                             </Link>
-                          ) : (
-                            ""
-                          )}
+                            ) : (
+                              ""
+                            )}
                         </td>
                         <td className="cancel">
-                          {parcel.status !== "cancelled" ? (
+                          {parcel.status !== "cancelled"
+                          && parcel.status !== "delivered" ? (
                             <i id={parcel.id} className="fas fa-times" />
-                          ) : (
-                            ""
-                          )}
+                            ) : (
+                              ""
+                            )}
                         </td>
                       </tr>
                     ))}
@@ -178,9 +181,10 @@ class UserProfile extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (store) => {
   return {
-    parcels: state.parcels,
+    parcels: store.parcels.data,
+    errors: store.parcels.errors,
   };
 };
 

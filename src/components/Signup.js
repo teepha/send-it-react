@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-expressions */
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 import { registerUser } from "../actions/userActions";
 
 class Signup extends React.Component {
@@ -16,23 +18,25 @@ class Signup extends React.Component {
     };
   }
 
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.errors.length && this.props.errors !== nextProps.errors) {
+      const errorString = nextProps.errors.join("\n");
+      toast.warn(errorString);
+    } else if (this.props.user !== nextProps.user) {
+      toast.success("Registration Successful!");
+      nextProps.user.role === "member"
+        ? this.props.history.replace("/user-profile")
+        : this.props.history.push("/admin-profile");
+    }
+    return true;
+  }
+
   handleSignup = (e) => {
     e.preventDefault();
     const {
       firstName, lastName, phoneNumber, email, password,
     } = this.state;
-    this.props
-      .registerUser(firstName, lastName, phoneNumber, email, password)
-      .then((res) => {
-        if (!res.token) {
-          return res;
-        }
-        this.props.history.push("/");
-        return res;
-      })
-      .catch((err) => {
-        return err;
-      });
+    this.props.registerUser(firstName, lastName, phoneNumber, email, password);
   };
 
   handleInputChange = (e) => {
@@ -52,6 +56,9 @@ class Signup extends React.Component {
               <form onSubmit={this.handleSignup} id="sign-up-form">
                 <label>First Name </label>
                 <input
+                  required
+                  pattern="^[A-Za-z]+$"
+                  minLength="2"
                   name="firstName"
                   id="first_name"
                   type="text"
@@ -61,6 +68,9 @@ class Signup extends React.Component {
                 <br />
                 <label>Last Name </label>
                 <input
+                  required
+                  pattern="^[A-Za-z]+$"
+                  minLength="2"
                   name="lastName"
                   id="last_name"
                   type="text"
@@ -70,6 +80,8 @@ class Signup extends React.Component {
                 <br />
                 <label>Phone Number </label>
                 <input
+                  required
+                  minLength="11"
                   name="phoneNumber"
                   id="phone_number"
                   type="text"
@@ -79,6 +91,7 @@ class Signup extends React.Component {
                 <br />
                 <label>Email address </label>
                 <input
+                  required
                   type="email"
                   name="email"
                   id="email"
@@ -88,6 +101,8 @@ class Signup extends React.Component {
                 <br />
                 <label>Password </label>
                 <input
+                  required
+                  minLength="4"
                   name="password"
                   type="password"
                   id="password"
@@ -110,9 +125,12 @@ class Signup extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.user,
-});
+const mapStateToProps = (store) => {
+  return {
+    user: store.user.data,
+    errors: store.user.errors,
+  };
+};
 
 const mapDispatchToProps = () => ({
   registerUser,

@@ -10,6 +10,7 @@ import Signup from "./Signup";
 import UserProfile from "./UserProfile";
 import AdminProfile from "./AdminProfile";
 import CreateOrder from "./CreateOrder";
+import EditOrder from "./EditOrder";
 
 const Routes = () => (
   <div>
@@ -20,7 +21,8 @@ const Routes = () => (
     <Route path="/user-profile" component={UserProfile} />
     <Route path="/admin-profile" component={AdminProfile} />
     <Route path="/create-order" component={CreateOrder} />
-    <ToastContainer autoClose={3000} />
+    <Route path="/parcels/:id" component={EditOrder} />
+    <ToastContainer autoClose={2500} />
     <Footer />
   </div>
 );
