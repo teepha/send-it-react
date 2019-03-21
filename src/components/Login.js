@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import { loginUser } from "../actions/userActions";
@@ -16,16 +16,14 @@ class Login extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (this.props !== nextProps) {
-      if (nextProps.errors.length) {
-        const errorString = nextProps.errors.join("\n");
-        toast.warn(errorString);
-      } else {
-        toast.success("Login Successful!");
-        nextProps.user.role === "member"
-          ? this.props.history.replace("/user-profile")
-          : this.props.history.push("/admin-profile");
-      }
+    if (this.props.errors !== nextProps.errors && nextProps.errors.length) {
+      const errorString = nextProps.errors.join("\n");
+      toast.warn(errorString);
+    } else if (this.props.user !== nextProps.user) {
+      toast.success("Login Successful!");
+      nextProps.user.role === "member"
+        ? this.props.history.replace("/user-profile")
+        : this.props.history.push("/admin-profile");
     }
     return true;
   }
@@ -93,7 +91,7 @@ const mapDispatchToProps = () => ({
   loginUser,
 });
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps(),
-)(Login);
+)(Login));

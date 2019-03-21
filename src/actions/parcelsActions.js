@@ -1,5 +1,4 @@
 import { BASE_API_URL } from "../config";
-import { capitalizeStatus } from "../utils";
 import {
   CREATE_PARCEL_SUCCESS,
   CREATE_PARCEL_FAILURE,
@@ -11,6 +10,8 @@ import {
   UPDATE_PARCEL_FAILURE,
   GET_PARCELS_SUCCESS,
   GET_PARCELS_FAILURE,
+  CANCEL_PARCEL_SUCCESS,
+  CANCEL_PARCEL_FAILURE,
 } from "./actionTypes";
 
 const createParcelSuccess = parcel => ({
@@ -59,6 +60,16 @@ const updateStatusSucess = parcel => ({
 });
 
 const updateStatusFailure = err => ({
+  type: UPDATE_STATUS_FAILURE,
+  payload: err,
+});
+
+const cancelParcelSuccess = parcel => ({
+  type: UPDATE_STATUS_SUCCESS,
+  payload: parcel,
+});
+
+const cancelParcelFailure = err => ({
   type: UPDATE_STATUS_FAILURE,
   payload: err,
 });
@@ -215,3 +226,23 @@ export const updateParcelStatus = (id, value) => (dispatch) => {
       dispatch(updateStatusFailure(err));
     });
 };
+
+export const cancelParcelOrder = id => (dispatch) => {
+  fetch(`${BASE_API_URL}/api/v1/parcels/${id}/cancel`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    }
+  }).then(res => res.json())
+    .then(res => {
+      if (!res.id) {
+        dispatch(cancelParcelFailure(res));
+      } else {
+        dispatch(cancelParcelSuccess(res))
+      }
+    })
+    .catch((err) => {
+      dispatch(cancelParcelFailure(err))
+    })
+}

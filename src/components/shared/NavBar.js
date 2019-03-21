@@ -2,67 +2,73 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../images/logo0.png";
 
-const NavBar = () => (
-  <div>
-    <header>
-      <div className="wrapper">
-        <div id="logo">
-          <Link className="logo" to="/">
-            <img src={Logo} />
-          </Link>
-          <h1 className="logo">
-            <Link to="/" className="sendIT">
-              SendIT
+const NavBar = () => {
+  const role = localStorage.getItem("role");
+  const token = localStorage.getItem("token");
+  
+  return (
+    <div>
+      <header>
+        <div className="wrapper">
+          <div id="logo">
+            <Link className="logo" to="/">
+              <img src={Logo} />
             </Link>
-          </h1>
-        </div>
+            <h1 className="logo">
+              <Link to="/" className="sendIT">
+                SendIT
+            </Link>
+            </h1>
+          </div>
 
-        <nav>
-          <ul className="navigation">
-            {localStorage.getItem("token") ? (
-              <Fragment>
-                <li>
-                  <Link className="navigation-link" to="/user-profile">
-                    My Profile
+          <nav>
+            <ul className="navigation">
+              {token ? (
+                <Fragment>
+                  <li>
+                    <Link className="navigation-link" to={role === "member" ? "/user-profile" : "/admin-profile"}>
+                      My Profile
                   </Link>
-                </li>
-                <li>
-                  <Link
-                    className="navigation-link"
-                    onClick={() => localStorage.clear()}
-                    to="/"
-                  >
-                    Logout
+                  </li>
+                  <li>
+                    <Link
+                      className="navigation-link"
+                      onClick={() => localStorage.clear()}
+                      to="/"
+                    >
+                      Logout
                   </Link>
-                </li>
-              </Fragment>
-            ) : (
-              <Fragment>
-                <li>
-                  <Link className="navigation-link" to="/login">
-                    Login
+                  </li>
+                </Fragment>
+              ) : (
+                  <Fragment>
+                    <li>
+                      <Link className="navigation-link" to="/login">
+                        Login
                   </Link>
-                </li>
-                <li>
-                  <Link className="navigation-link" to="/register">
-                    SignUp
+                    </li>
+                    <li>
+                      <Link className="navigation-link" to="/register">
+                        SignUp
                   </Link>
-                </li>
-              </Fragment>
-            )}
-          </ul>
-        </nav>
+                    </li>
+                  </Fragment>
+                )}
+            </ul>
+          </nav>
 
-        <div className="navbar__header">
-          <div className="navbar__btn">
-            <div className="bar bar1" />
-            <div className="bar bar2" />
-            <div className="bar bar3" />
+          <div className="navbar__header">
+            <div className="navbar__btn">
+              <div className="bar bar1" />
+              <div className="bar bar2" />
+              <div className="bar bar3" />
+            </div>
           </div>
         </div>
-      </div>
-    </header>
-  </div>
-);
+      </header>
+    </div>
+  );
+}
+
 
 export default NavBar;
