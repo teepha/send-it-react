@@ -123,8 +123,7 @@ export const updateParcelOrder = (
     .then((res) => {
       if (!res.id) {
         dispatch(updateParcelFailure(res));
-      } 
-      else {
+      } else {
         dispatch(updateParcelSuccess(res));
       }
     })
@@ -140,11 +139,11 @@ export const getSingleParcel = id => (dispatch) => {
     },
   })
     .then(res => res.json())
-    .then((data) => {
+    .then((res) => {
       if (!res.id) {
         dispatch(getSingleParcelFailure(res));
       } else {
-        dispatch(getSingleParcelSuccess(data));
+        dispatch(getSingleParcelSuccess(res));
       }
     })
     .catch((err) => {
