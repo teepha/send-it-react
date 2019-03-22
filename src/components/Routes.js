@@ -12,19 +12,24 @@ import AdminProfile from "./AdminProfile";
 import CreateOrder from "./CreateOrder";
 import EditOrder from "./EditOrder";
 
-const Routes = () => (
-  <div>
-    <NavBar />
-    <Route path="/" component={HomePage} exact />
-    <Route path="/login" component={Login} />
-    <Route path="/register" component={Signup} />
-    <Route path="/user-profile" component={UserProfile} />
-    <Route path="/admin-profile" component={AdminProfile} />
-    <Route path="/create-order" component={CreateOrder} />
-    <Route path="/parcels/:id" component={EditOrder} />
-    <ToastContainer autoClose={2500} />
-    <Footer />
-  </div>
-);
+const Routes = () => {
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+
+  return (
+    <div >
+      <NavBar />
+      <Route path="/" component={HomePage} exact />
+      <Route path="/login" render={() => token ? (role === "member" ? <UserProfile /> : <AdminProfile />) : <Login />} />
+      <Route path="/register" component={Signup} />
+      <Route path="/user-profile" component={UserProfile} />
+      <Route path="/admin-profile" component={AdminProfile} />
+      <Route path="/create-order" component={CreateOrder} />
+      <Route path="/parcels/:id" component={EditOrder} />
+      <ToastContainer autoClose={2500} />
+      <Footer />
+    </div >
+  )
+}
 
 export default Routes;

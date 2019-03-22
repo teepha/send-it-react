@@ -41,22 +41,24 @@ export const loginUser = (email, password) => (dispatch) => {
     .then((loginRes) => {
       if (!loginRes.token) {
         dispatch(loginUserFailure(loginRes));
-      }
-      localStorage.setItem("token", loginRes.token);
-      localStorage.setItem("userId", loginRes.userId);
+      } else {
+        localStorage.setItem("token", loginRes.token);
+        localStorage.setItem("userId", loginRes.userId);
 
-      fetch(`${BASE_API_URL}/api/v1/me`, {
-        headers: {
-          Authorization: loginRes.token,
-        },
-      })
-        .then(res => res.json())
-        .then((data) => {
-          dispatch(loginUserSuccess(data));
+        fetch(`${BASE_API_URL}/api/v1/me`, {
+          headers: {
+            Authorization: loginRes.token,
+          },
         })
-        .catch((err) => {
-          dispatch(loginUserFailure(err));
-        });
+          .then(res => res.json())
+          .then((data) => {
+            dispatch(loginUserSuccess(data));
+            localStorage.setItem("role", data.role);
+          })
+          .catch((err) => {
+            dispatch(loginUserFailure(err));
+          });
+      }
     })
     .catch((err) => {
       dispatch(loginUserFailure(err));
@@ -99,6 +101,7 @@ export const registerUser = (
           .then(res => res.json())
           .then((data) => {
             dispatch(signupUserSuccess(data));
+            // console.log(">>>>", data);
           })
           .catch((err) => {
             dispatch(signupUserFailure(err));

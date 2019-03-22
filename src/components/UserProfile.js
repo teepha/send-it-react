@@ -1,8 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Modal from "react-modal";
-import { getUserParcels, getSingleParcel } from "../actions/parcelsActions";
+import { toast } from "react-toastify";
+import { getUserParcels, getSingleParcel, cancelParcelOrder } from "../actions/parcelsActions";
 import { capitalizeStatus } from "../utils";
 
 Modal.setAppElement("#app");
@@ -13,11 +14,13 @@ class UserProfile extends React.Component {
     this.state = {
       parcels: [],
       noParcelsErrMsg: "",
+      cancelModalIsOpen: "",
       search: "",
       parcelsCopy: [],
       viewModalIsOpen: false,
+      parcelToView: {},
       cancelModalIsOpen: false,
-      parcelToView: {}
+      parcelToCancelId: "",
     };
   }
 
@@ -38,6 +41,7 @@ class UserProfile extends React.Component {
     return true;
   }
 
+
   handleInputChange = e => {
     const { parcelsCopy } = this.state;
     const value = e.target.value.trim().toLowerCase();
@@ -57,8 +61,27 @@ class UserProfile extends React.Component {
     this.setState({ viewModalIsOpen: false });
   };
 
+  handleCancelOrder = (e) => {
+    e.preventDefault();
+    this.props.cancelParcelOrder(this.state.parcelToCancelId);
+    this.setState({ cancelModalIsOpen: false })
+    toast.success("Parcel Order Cancelled Successfully!");
+  }
+
+  handleOpenCancelModal = event => {
+    const id = parseInt(event.target.id, 10);
+    this.setState({
+      cancelModalIsOpen: true,
+      parcelToCancelId: id,
+    });
+  };
+
+  handleCloseCancelModal = () => {
+    this.setState({ cancelModalIsOpen: false });
+  };
+
   render() {
-    const { noParcelsErrMsg, parcels, parcelToView } = this.state;
+    const { noParcelsErrMsg, cancelErrMsg, parcels, parcelToView } = this.state;
     return (
       <div>
         <div className="main-content">
@@ -179,7 +202,7 @@ class UserProfile extends React.Component {
                           <td className="cancel">
                             {parcel.status !== "cancelled" &&
                               parcel.status !== "delivered" ? (
-                                <i id={parcel.id} className="fas fa-times" />
+                                <i id={parcel.id} className="fas fa-times" onClick={this.handleOpenCancelModal} />
                               ) : (
                                 ""
                               )}
@@ -189,6 +212,7 @@ class UserProfile extends React.Component {
                     </tbody>
                   </table>
 
+                  {/* View Modal */}
                   <Modal
                     className="main-view-modal-wrapper"
                     isOpen={this.state.viewModalIsOpen}
@@ -225,6 +249,29 @@ class UserProfile extends React.Component {
                       </div>
                     )}
                   </Modal>
+
+                  {/* Cance Modal */}
+                  <Modal
+                    className="main-cancel-modal-wrapper"
+                    isOpen={this.state.cancelModalIsOpen}
+                    onRequestClose={this.handleCloseCancelModal}
+                  >
+                    {parcelToView && (
+                      <div className="cancel-modal-content">
+                        <div className="cancel-close" onClick={this.handleCloseCancelModal}>
+                          +
+                      </div>
+                        <h3>Cancel Order</h3>
+                        <div className="cancel-details">
+                          <form id="cancel-order-form" onSubmit={this.handleCancelOrder}>
+                            <p>This request will cancel the parcel order. Do you want to proceed?</p><br />
+                            <button className="cancel-button" id="cancel-btn">Proceed</button>
+                            <h4 id="cancel-error-msg">{cancelErrMsg}</h4>
+                          </form>
+                        </div>
+                      </div>
+                    )}
+                  </Modal>
                 </div>
               )}
           </div>
@@ -237,16 +284,17 @@ class UserProfile extends React.Component {
 const mapStateToProps = store => {
   return {
     parcels: store.parcels.data,
-    errors: store.parcels.errors
+    errors: store.parcels.errors,
   };
 };
 
 const mapDispatchToProps = () => ({
   getUserParcels,
-  getSingleParcel
+  getSingleParcel,
+  cancelParcelOrder,
 });
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps()
-)(UserProfile);
+)(UserProfile));

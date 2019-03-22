@@ -94,6 +94,7 @@ class CreateOrder extends React.Component {
               <label>Recipient Phone Number </label>
               <input
                 required
+                minLength="10"
                 name="recipientPhone"
                 type="text"
                 value={this.state.recipient_phone}
