@@ -10,8 +10,6 @@ import {
   UPDATE_PARCEL_FAILURE,
   GET_PARCELS_SUCCESS,
   GET_PARCELS_FAILURE,
-  CANCEL_PARCEL_SUCCESS,
-  CANCEL_PARCEL_FAILURE,
 } from "./actionTypes";
 
 const createParcelSuccess = parcel => ({
