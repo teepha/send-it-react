@@ -4,8 +4,6 @@ import {
   CREATE_PARCEL_FAILURE,
   GET_SINGLE_PARCEL_SUCCESS,
   GET_SINGLE_PARCEL_FAILURE,
-  UPDATE_STATUS_SUCCESS,
-  UPDATE_STATUS_FAILURE,
   UPDATE_PARCEL_SUCCESS,
   UPDATE_PARCEL_FAILURE,
   GET_PARCELS_SUCCESS,
@@ -53,22 +51,22 @@ const getSingleParcelFailure = err => ({
 });
 
 const updateStatusSucess = parcel => ({
-  type: UPDATE_STATUS_SUCCESS,
+  type: UPDATE_PARCEL_SUCCESS,
   payload: parcel,
 });
 
 const updateStatusFailure = err => ({
-  type: UPDATE_STATUS_FAILURE,
+  type: UPDATE_PARCEL_FAILURE,
   payload: err,
 });
 
 const cancelParcelSuccess = parcel => ({
-  type: UPDATE_STATUS_SUCCESS,
+  type: UPDATE_PARCEL_SUCCESS,
   payload: parcel,
 });
 
 const cancelParcelFailure = err => ({
-  type: UPDATE_STATUS_FAILURE,
+  type: UPDATE_PARCEL_FAILURE,
   payload: err,
 });
 
@@ -242,5 +240,23 @@ export const cancelParcelOrder = id => (dispatch) => {
     })
     .catch((err) => {
       dispatch(cancelParcelFailure(err))
+    })
+}
+
+export const updateParcelLocation = (id, newLocation )=> (dispatch) => {
+  fetch(`${BASE_API_URL}/api/v1/parcels/${id}/presentLocation`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      presentLocation: newLocation
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    }
+  }).then(res => res.json())
+    .then(res => {
+      dispatch(updateParcelSuccess(res));
+    }).catch((err) => {
+      dispatch(updateParcelFailure(err));
     })
 }

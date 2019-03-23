@@ -1,9 +1,8 @@
-/* eslint-disable class-methods-use-this */
 import React from "react";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
-import { getAllParcels, updateParcelStatus } from "../actions/parcelsActions";
+import { getAllParcels, updateParcelStatus, updateParcelLocation } from "../actions/parcelsActions";
 import { capitalizeStatus } from "../utils";
 
 Modal.setAppElement("#app");
@@ -17,7 +16,12 @@ class AdminProfile extends React.Component {
       search: "",
       parcelsCopy: [],
       viewModalIsOpen: false,
-      parcelToView: {}
+      parcelToView: {},
+      locationModalIsOpen: false,
+      parcelToUpdate: "",
+      parcelToUpdateId: "",
+      newLocation: "",
+      presentLocation: ""
     };
   }
 
@@ -26,15 +30,15 @@ class AdminProfile extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-      if (nextProps.errors.length && this.props.errors !== nextProps.errors) {
-        const errorString = nextProps.errors.join("\n");
-        this.setState({ noParcelsErrMsg: errorString });
-      } else if (this.props.parcels !== nextProps.parcels) {
-        this.setState({
-          parcels: nextProps.parcels,
-          parcelsCopy: nextProps.parcels,
-        });
-      }
+    if (nextProps.errors.length && this.props.errors !== nextProps.errors) {
+      const errorString = nextProps.errors.join("\n");
+      this.setState({ noParcelsErrMsg: errorString });
+    } else if (this.props.parcels !== nextProps.parcels) {
+      this.setState({
+        parcels: nextProps.parcels,
+        parcelsCopy: nextProps.parcels,
+      });
+    }
     return true;
   }
 
@@ -56,7 +60,6 @@ class AdminProfile extends React.Component {
 
   handleOpenViewModal = event => {
     const id = parseInt(event.target.id, 10);
-    console.log|("iddd", event, id);
     const findParcel = this.state.parcels.find(parcel => parcel.id === id);
     this.setState({ viewModalIsOpen: true, parcelToView: findParcel });
   };
@@ -65,8 +68,35 @@ class AdminProfile extends React.Component {
     this.setState({ viewModalIsOpen: false });
   };
 
+  handleOpenLocationModal = event => {
+    const id = parseInt(event.target.id, 10);
+    const findParcel = this.state.parcels.find(parcel => parcel.id === id)
+    this.setState({
+      locationModalIsOpen: true,
+      parcelToUpdate: findParcel,
+      parcelToUpdateId: id,
+    });
+  };
+
+  handleLocationInputChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleLocationUpdate = (e) => {
+    e.preventDefault();
+    const { parcelToUpdateId, newLocation } = this.state;
+    this.props.updateParcelLocation(parcelToUpdateId, newLocation);
+    this.setState({ locationModalIsOpen: false })
+    toast.success("Parcel Location Successfully Updated!");
+    this.props.history.push("/admin-profile");
+  }
+
+  handleCloseLocationModal = () => {
+    this.setState({ locationModalIsOpen: false });
+  };
+
   render() {
-    const { noParcelsErrMsg, parcels, parcelToView } = this.state;
+    const { noParcelsErrMsg, parcels, parcelToView, parcelToUpdate } = this.state;
     return (
       <div>
         {noParcelsErrMsg ? (
@@ -188,7 +218,7 @@ class AdminProfile extends React.Component {
                         <td className="edit">
                           {parcel.status !== "cancelled"
                             && parcel.status !== "delivered" ? (
-                              <i id={parcel.id} className="far fa-edit" />
+                              <i id={parcel.id} className="far fa-edit" onClick={this.handleOpenLocationModal} />
                             ) : (
                               ""
                             )}
@@ -234,6 +264,31 @@ class AdminProfile extends React.Component {
                     </div>
                   )}
                 </Modal>
+
+                {/* Update Location Modal */}
+
+                <Modal
+                  className="main-location-modal-wrapper"
+                  isOpen={this.state.locationModalIsOpen}
+                  onRequestClose={this.handleCloseLocationModal}
+                >
+                  {parcelToUpdate && (
+                    <div className="location-modal-content">
+                      <div className="location-close" onClick={this.handleCloseLocationModal}>
+                        +
+                      </div>
+                      <h3>Change Current Location</h3>
+                      <div className="cancel-details">
+                        <form onSubmit={this.handleLocationUpdate}>
+                          <input name="location" type="text" disabled value={!parcelToUpdate.present_location ? "" : parcelToUpdate.present_location} />
+                          <input name="newLocation" type="text" placeholder="New Location" onChange={this.handleLocationInputChange} />
+                          <button className="location-btn" id="location-button">Continue</button>
+                          <h4 id="location-error-msg"></h4>
+                        </form>
+                      </div>
+                    </div>
+                  )}
+                </Modal>
               </div>
             </div>
           )}
@@ -252,6 +307,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = () => ({
   getAllParcels,
   updateParcelStatus,
+  updateParcelLocation
 });
 
 export default connect(
