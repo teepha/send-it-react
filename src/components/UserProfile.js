@@ -250,7 +250,7 @@ class UserProfile extends React.Component {
                     )}
                   </Modal>
 
-                  {/* Cance Modal */}
+                  {/* Cancel Modal */}
                   <Modal
                     className="main-cancel-modal-wrapper"
                     isOpen={this.state.cancelModalIsOpen}
