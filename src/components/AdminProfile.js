@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
@@ -30,8 +31,8 @@ class AdminProfile extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.errors.length && this.props.errors !== nextProps.errors) {
-      const errorString = nextProps.errors.join("\n");
+    if (nextProps.error && this.props.error !== nextProps.error) {
+      const errorString = nextProps.error;
       this.setState({ noParcelsErrMsg: errorString });
     } else if (this.props.parcels !== nextProps.parcels) {
       this.setState({
@@ -300,7 +301,7 @@ class AdminProfile extends React.Component {
 const mapStateToProps = (state) => {
   return {
     parcels: state.parcels.data,
-    errors: state.parcels.errors,
+    errors: state.parcels.error,
   };
 };
 
@@ -310,7 +311,7 @@ const mapDispatchToProps = () => ({
   updateParcelLocation
 });
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps(),
-)(AdminProfile);
+)(AdminProfile));

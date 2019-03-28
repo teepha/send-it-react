@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import { registerUser } from "../actions/userActions";
@@ -19,10 +19,12 @@ class Signup extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (nextProps.errors.length && this.props.errors !== nextProps.errors) {
-      const errorString = nextProps.errors.join("\n");
+    // console.log(this.props, "be4ifnext", nextProps.user);
+    if (this.props.error !== nextProps.error) {
+      const errorString = nextProps.error;
       toast.warn(errorString);
     } else if (this.props.user !== nextProps.user) {
+      //  console.log("this",this.props, "succezs", nextProps);
       toast.success("Registration Successful!");
       nextProps.user.role === "member"
         ? this.props.history.replace("/user-profile")
@@ -127,8 +129,8 @@ class Signup extends React.Component {
 
 const mapStateToProps = (store) => {
   return {
-    user: store.user.data,
-    errors: store.user.errors,
+    user: store.user.userData,
+    error: store.user.userError,
   };
 };
 
@@ -136,7 +138,7 @@ const mapDispatchToProps = () => ({
   registerUser,
 });
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps(),
-)(Signup);
+)(Signup));

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -16,8 +15,8 @@ class Login extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (this.props.errors !== nextProps.errors && nextProps.errors.length) {
-      const errorString = nextProps.errors.join("\n");
+    if (this.props.error !== nextProps.error) {
+      const errorString = nextProps.error;
       toast.warn(errorString);
     } else if (this.props.user !== nextProps.user) {
       toast.success("Login Successful!");
@@ -83,8 +82,8 @@ class Login extends React.Component {
 }
 
 const mapStateToProps = store => ({
-  user: store.user.data,
-  errors: store.user.errors,
+  user: store.user.userData,
+  error: store.user.userError,
 });
 
 const mapDispatchToProps = () => ({

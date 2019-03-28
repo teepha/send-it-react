@@ -14,14 +14,14 @@ import EditOrder from "./EditOrder";
 
 const Routes = () => {
   const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
+  const user = JSON.parse(localStorage.getItem("user"));
 
   return (
     <div >
       <NavBar />
       <Route path="/" component={HomePage} exact />
-      <Route path="/login" render={() => token ? (role === "member" ? <UserProfile /> : <AdminProfile />) : <Login />} />
-      <Route path="/register" component={Signup} />
+      <Route path="/login" render={() => token ? (user.role === "member" ? <UserProfile /> : <AdminProfile />) : <Login />} />
+      <Route path="/register" render={() => token ? (user.role === "member" ? <UserProfile /> : <AdminProfile />) : <Signup />} />
       <Route path="/user-profile" component={UserProfile} />
       <Route path="/admin-profile" component={AdminProfile} />
       <Route path="/create-order" component={CreateOrder} />

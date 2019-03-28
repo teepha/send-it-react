@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import Logo from "../../images/logo0.png";
 
 const NavBar = () => {
-  const role = localStorage.getItem("role");
   const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
   
   return (
     <div>
@@ -26,7 +26,7 @@ const NavBar = () => {
               {token ? (
                 <Fragment>
                   <li>
-                    <Link className="navigation-link" to={role === "member" ? "/user-profile" : "/admin-profile"}>
+                    <Link className="navigation-link" to={user.role === "member" ? "/user-profile" : "/admin-profile"}>
                       My Profile
                   </Link>
                   </li>

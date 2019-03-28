@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import { createParcelOrder } from "../actions/parcelsActions";
@@ -18,8 +18,8 @@ class CreateOrder extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     if (this.props.parcels.length !== nextProps.parcels.length) {
-      if (nextProps.errors.length) {
-        const errorString = nextProps.errors.join("\n");
+      if (this.props.error !== nextProps.error) {
+        const errorString = nextProps.error;
         toast.warn(errorString);
       } else {
         toast.success("Parcel Order Created Successfully!");
@@ -113,14 +113,14 @@ class CreateOrder extends React.Component {
 
 const mapStateToProps = state => ({
   parcels: state.parcels.data,
-  errors: state.parcels.errors,
+  error: state.parcels.error,
 });
 
 const mapDispatchToProps = {
   createParcelOrder,
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(CreateOrder);
+)(CreateOrder));

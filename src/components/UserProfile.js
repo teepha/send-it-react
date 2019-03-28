@@ -29,8 +29,8 @@ class UserProfile extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.errors.length && this.props.errors !== nextProps.errors) {
-      const errorString = nextProps.errors.join("\n");
+    if (this.props.error !== nextProps.error) {
+      const errorString = nextProps.error;
       this.setState({ noParcelsErrMsg: errorString });
     } else if (this.props.parcels !== nextProps.parcels) {
       this.setState({
@@ -284,7 +284,7 @@ class UserProfile extends React.Component {
 const mapStateToProps = store => {
   return {
     parcels: store.parcels.data,
-    errors: store.parcels.errors,
+    error: store.parcels.error,
   };
 };
 
