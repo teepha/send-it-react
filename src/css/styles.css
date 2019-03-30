@@ -96,7 +96,7 @@ footer:after {
 
 footer h4 {
   margin: 0;
-  color: #555;
+  color: #888;
   text-transform: uppercase;
   font-size: 18px;
 }
@@ -415,94 +415,89 @@ form .button:hover {
 
 /* MEDIA QUERIES */
 
-@media screen and (max-width: 786px){
+@media screen and (max-width: 786px) {
+  div.main-page {
+    height: 100%;
+  }
 
-    div.main-page {
-        height: 100%
-    }
+  div.login-page {
+    width: 335px;
+    padding: 4px 20px 20px;
+  }
 
-    div.login-page{
-        width: 335px;
-        padding: 4px 20px 20px;
-    }
+  div.login-page h1 {
+    font-size: 25px;
+  }
 
-    div.login-page h1 {
-        font-size: 25px;
-    }
+  label {
+    font-size: 14.5px;
+  }
 
-    label {
-        font-size: 14.5px;
-    }
+  input {
+    width: 100%;
+    padding: 5px;
+    margin: 3px 5px 6px 4px;
+  }
 
-    input {
-        width: 100%;
-        padding: 5px;
-        margin: 3px 5px 6px 4px;
-    }
+  form .button {
+    font-size: 18px;
+    padding: 10px 20px;
+  }
 
-    form .button {
-        font-size: 18px;
-        padding: 10px 20px;
-    }
+  #error-msg {
+    font-size: 11.5px;
+  }
 
-    #error-msg{
-        font-size: 11.5px;
-    }
+  .signup-login-btn span {
+    padding: 0 0 7px;
+    font-size: 14.5px;
+  }
 
-    .signup-login-btn span {
-        padding: 0 0 7px;
-        font-size: 14.5px;
-    }
-
-    .signup-login-btn a {
-        padding: 11px 24px;
-        font-size: 18px;
-    }
-
+  .signup-login-btn a {
+    padding: 11px 24px;
+    font-size: 18px;
+  }
 }
 
-@media screen and (max-width:  470px){
+@media screen and (max-width: 470px) {
+  div.main-page {
+    height: 100%;
+  }
 
-    div.main-page {
-        height: 100%;
-    }
+  div.login-page {
+    width: 100%;
+    padding: 4px 20px 15px;
+  }
 
-    div.login-page{
-        width: 100%;
-        padding: 4px 20px 15px;
-    }
+  div.login-page h1 {
+    font-size: 20px;
+  }
 
-    div.login-page h1 {
-        font-size: 20px;
-    }
+  label {
+    font-size: 12.5px;
+  }
 
-    label {
-        font-size: 12.5px;
-    }
+  input {
+    width: 100%;
+    padding: 3.5px;
+    margin: 3px 5px 6px 4px;
+  }
 
-    input {
-        width: 100%;
-        padding: 3.5px;
-        margin: 3px 5px 6px 4px;
-    }
+  form .button {
+    font-size: 15.5px;
+    padding: 9px 17px;
+  }
 
-    form .button {
-        font-size: 15.5px;
-        padding: 9px 17px;
-    }
+  .signup-login-btn span {
+    padding: 0 0 7px;
+    font-size: 12.5px;
+  }
 
-    .signup-login-btn span {
-        padding: 0 0 7px;
-        font-size: 12.5px;
-    }
-
-    .signup-login-btn a {
-        padding: 8px 19px;
-        font-size: 15.5px;
-    }
-
+  .signup-login-btn a {
+    padding: 8px 19px;
+    font-size: 15.5px;
+  }
 }
-
 
 /* SIGNUP PAGE */
 
@@ -546,75 +541,70 @@ div.sign-up-page input {
 
 /* MEDIA QUERIES */
 
-@media screen and (max-width: 786px){
+@media screen and (max-width: 786px) {
+  div.main-signup-page {
+    height: 100%;
+  }
 
-    div.main-signup-page{
-        height: 100%
-    }
+  div.sign-up-page {
+    width: 430px;
+    padding: 4px 20px 15px;
+  }
 
-    div.sign-up-page{
-        width: 430px;
-        padding: 4px 20px 15px;
-    }
+  div.sign-up-page h1 {
+    font-size: 25px;
+  }
 
-    div.sign-up-page h1{
-        font-size: 25px;
-    }
+  div.sign-up-page label {
+    font-size: 14.5px;
+    width: 100px;
+  }
 
-    div.sign-up-page label{
-        font-size: 14.5px;
-        width: 100px;
-    }
-
-    div.sign-up-page input {
-        padding: 5px;
-        margin: 5px 4px 7px;
-    }
-
+  div.sign-up-page input {
+    padding: 5px;
+    margin: 5px 4px 7px;
+  }
 }
 
-@media screen and (max-width:  470px){
+@media screen and (max-width: 470px) {
+  div.main-signup-page {
+    height: 100%;
+  }
 
-    div.main-signup-page{
-        height: 100%;
-    }
+  div.sign-up-page {
+    width: 100%;
+  }
 
-    div.sign-up-page{
-        width: 100%;
-    }
+  div.sign-up-page h1 {
+    font-size: 20px;
+  }
 
-    div.sign-up-page h1{
-        font-size: 20px;
-    }
+  div.sign-up-page label {
+    font-size: 12.5px;
+    width: 85px;
+  }
 
-    div.sign-up-page label{
-        font-size: 12.5px;
-        width: 85px;
-    }
+  div.sign-up-page input {
+    width: 65%;
+    padding: 3.5px;
+    margin: 4px 3px 6px;
+  }
 
-    div.sign-up-page input {
-        width: 65%;
-        padding: 3.5px;
-        margin: 4px 3px 6px;
-    }
+  form .button {
+    font-size: 15.5px;
+    padding: 9px 17px;
+  }
 
-    form .button {
-        font-size: 15.5px;
-        padding: 9px 17px;
-    }
+  .signup-login-btn span {
+    padding: 0 0 7px;
+    font-size: 12.5px;
+  }
 
-    .signup-login-btn span {
-        padding: 0 0 7px;
-        font-size: 12.5px;
-    }
-
-    .signup-login-btn a {
-        padding: 8px 19px;
-        font-size: 15.5px;
-    }
-
+  .signup-login-btn a {
+    padding: 8px 19px;
+    font-size: 15.5px;
+  }
 }
-
 
 /* CREATE ORDER PAGE */
 
@@ -651,54 +641,49 @@ div.create-order-page form {
 
 /* MEDIA QUERIES */
 
-@media screen and (max-width: 786px){
+@media screen and (max-width: 786px) {
+  div.main-create-order-page {
+    height: 100%;
+  }
 
-    div.main-create-order-page{
-        height: 100%
-    }
+  div.create-order-page {
+    width: 410px;
+    padding: 6px 20px 20px;
+  }
 
-    div.create-order-page{
-        width: 410px;
-        padding: 6px 20px 20px;
-    }
+  div.create-order-page h1 {
+    font-size: 25px;
+  }
 
-    div.create-order-page h1{
-        font-size: 25px;
-    }
-
-    div.create-order-page input {
-        padding: 6px;
-        margin: 5px 4px 7px;
-    }
-
+  div.create-order-page input {
+    padding: 6px;
+    margin: 5px 4px 7px;
+  }
 }
 
-@media screen and (max-width:  470px){
+@media screen and (max-width: 470px) {
+  div.main-create-order-page {
+    height: 100%;
+  }
 
-    div.main-create-order-page{
-        height: 100%;
-    }
+  div.create-order-page {
+    width: 100%;
+    padding: 5px 20px 10px;
+  }
 
-    div.create-order-page{
-        width: 100%;
-        padding: 5px 20px 10px;
-    }
+  div.create-order-page h1 {
+    font-size: 20px;
+  }
 
-    div.create-order-page h1{
-        font-size: 20px;
-    }
+  div.create-order-page label {
+    width: 100%;
+  }
 
-    div.create-order-page label{
-        width: 100%;
-    }
-
-    div.create-order-page input{
-        padding: 4px;
-        margin: 4px 3px 6px;
-    }
-
+  div.create-order-page input {
+    padding: 4px;
+    margin: 4px 3px 6px;
+  }
 }
-
 
 /* EDIT ORDER PAGE */
 
@@ -735,54 +720,49 @@ div.edit-order-page form {
 
 /* MEDIA QUERIES */
 
-@media screen and (max-width: 786px){
+@media screen and (max-width: 786px) {
+  div.main-edit-order-page {
+    height: 100%;
+  }
 
-    div.main-edit-order-page{
-        height: 100%
-    }
+  div.edit-order-page {
+    width: 410px;
+    padding: 6px 20px 20px;
+  }
 
-    div.edit-order-page{
-        width: 410px;
-        padding: 6px 20px 20px;
-    }
+  div.edit-order-page h1 {
+    font-size: 25px;
+  }
 
-    div.edit-order-page h1{
-        font-size: 25px;
-    }
-
-    div.edit-order-page input {
-        padding: 6px;
-        margin: 5px 4px 7px;
-    }
-
+  div.edit-order-page input {
+    padding: 6px;
+    margin: 5px 4px 7px;
+  }
 }
 
-@media screen and (max-width:  470px){
+@media screen and (max-width: 470px) {
+  div.main-edit-order-page {
+    height: 100%;
+  }
 
-    div.main-edit-order-page{
-        height: 100%;
-    }
+  div.edit-order-page {
+    width: 100%;
+    padding: 5px 20px 10px;
+  }
 
-    div.edit-order-page{
-        width: 100%;
-        padding: 5px 20px 10px;
-    }
+  div.edit-order-page h1 {
+    font-size: 20px;
+  }
 
-    div.edit-order-page h1{
-        font-size: 20px;
-    }
+  div.edit-order-page label {
+    width: 100%;
+  }
 
-    div.edit-order-page label{
-        width: 100%;
-    }
-
-    div.edit-order-page input{
-        padding: 4px;
-        margin: 4px 3px 6px;
-    }
-
+  div.edit-order-page input {
+    padding: 4px;
+    margin: 4px 3px 6px;
+  }
 }
-
 
 /* USER PROFILE PAGE */
 
@@ -898,204 +878,198 @@ tr:nth-child(even) {
 
 /* MEDIA QUERIES */
 
-@media screen and (max-width: 786px){
+@media screen and (max-width: 786px) {
+  header nav .logged-in-nav li {
+    padding: 0 17%;
+  }
 
-    header nav .logged-in-nav li{
-        padding: 0 17%;
-    }
+  div.order-count {
+    height: 90px;
+    padding: 4px;
+    font-size: 16px;
+  }
 
-    div.order-count {
-        height: 90px;
-        padding: 4px;
-        font-size: 16px;
-    }
+  .create-order-btn a {
+    font-size: 16px;
+    border-radius: 7px;
+    padding: 8px 16px;
+  }
 
-    .create-order-btn a {
-        font-size: 16px;
-        border-radius: 7px;
-        padding: 8px 16px;
-    }
+  div.table-top {
+    padding: 9px 15px 20px;
+  }
 
-    div.table-top {
-        padding: 9px 15px 20px;
-    }
+  div.table-top span {
+    font-size: 17px;
+  }
 
-    div.table-top span {
-        font-size: 17px;
-    }
+  div.table-top input {
+    width: 80%;
+    font-size: 14px;
+    margin: 0 2px 8px;
+  }
 
-    div.table-top input {
-        width: 80%;
-        font-size: 14px;
-        margin: 0 2px 8px;
-    }
+  div.table-top .btn {
+    padding: 5px;
+  }
 
-    div.table-top .btn {
-        padding: 5px;
-    }
+  div.search-bar .fa-search {
+    font-size: 14px;
+  }
 
-    div.search-bar .fa-search {
-        font-size: 14px;
-    }
+  th {
+    font-size: 15px;
+    padding: 5px;
+  }
 
-    th {
-        font-size: 15px;
-        padding: 5px;
-    }
+  td {
+    font-size: 13px;
+    padding: 7px 5px;
+  }
 
-    td {
-        font-size: 13px;
-        padding: 7px 5px;
-    }
-
-    .remove-first{
-        display: none;
-    }
-
+  .remove-first {
+    display: none;
+  }
 }
 
-@media screen and (max-width: 615px){
-    
-    div.order-count {
-        height: 85px;
-        font-size: 15px;
-    }
+@media screen and (max-width: 615px) {
+  div.order-count {
+    height: 85px;
+    font-size: 15px;
+  }
 
-    .create-order-btn a {
-        font-size: 15px;
-        padding: 7px 14px;
-    }
+  .create-order-btn a {
+    font-size: 15px;
+    padding: 7px 14px;
+  }
 
-    div.table-top {
-        padding: 6px 12px 19px;
-    }
+  div.table-top {
+    padding: 6px 12px 19px;
+  }
 
-    div.table-top span {
-        font-size: 15px;
-    }
+  div.table-top span {
+    font-size: 15px;
+  }
 
-    div.search-bar {
-        float: right;
-        width: 35%;
-    }
+  div.search-bar {
+    float: right;
+    width: 35%;
+  }
 
-    div.table-top input {
-        width: 75%;
-        font-size: 13px;
-    }    
+  div.table-top input {
+    width: 75%;
+    font-size: 13px;
+  }
 
-    th {
-        font-size: 14px;
-    }
+  th {
+    font-size: 14px;
+  }
 
-    .remove-second{
-        display: none;
-    }
-
+  .remove-second {
+    display: none;
+  }
 }
 
-@media screen and (max-width: 520px){
+@media screen and (max-width: 520px) {
+  .navbar__header-in {
+    display: flex;
+    padding-left: 90%;
+  }
+  .navbar__btn-in {
+    border: 4px solid rgb(47, 28, 158);
+    cursor: pointer;
+  }
 
-    .navbar__header-in{
-        display: flex;
-        padding-left: 90%;
-    }
-    .navbar__btn-in{
-        border: 4px solid rgb(47, 28, 158);
-        cursor: pointer;
-    }
-    
-    .bar1-in,.bar2-in,.bar3-in{
-        width: 21px;
-        height: 4px;
-        margin: 0.3rem;
-        background:rgb(47, 28, 158);
-        transition: all 1s ease;
-    }
-    
-    .change .bar1-in{
-        transform: rotate(-45deg) translate(-7px,7px)
-    }
-    .change .bar2-in{
-        opacity: 0;
-    }
-    .change .bar3-in{
-        transform: rotate(45deg) translate(-5px,-6px)
-    }
+  .bar1-in,
+  .bar2-in,
+  .bar3-in {
+    width: 21px;
+    height: 4px;
+    margin: 0.3rem;
+    background: rgb(47, 28, 158);
+    transition: all 1s ease;
+  }
 
-    .logged-in-nav{
-        list-style-type: none;
-        transition: all 1s ease;
-        height: 0;
-        overflow: hidden;
-    }
-    .navbar__collapse{
-        height: 160px;
-    }
-    
-    .logged-in-nav-link{
-        display: block;
-        padding: 1rem;
-        font-size: 1.0rem;
-        text-decoration: none;
-        text-transform: capitalize;
-        color: rgb(47, 28, 158);
-        transition: all 1s ease;
-        border-bottom: 2px solid rgb(50, 32, 155);
-        cursor: pointer;
-        clear: right;
-    }
-    .logged-in-nav-link:hover{
-        background: #3b3b3b;
-    }
+  .change .bar1-in {
+    transform: rotate(-45deg) translate(-7px, 7px);
+  }
+  .change .bar2-in {
+    opacity: 0;
+  }
+  .change .bar3-in {
+    transform: rotate(45deg) translate(-5px, -6px);
+  }
 
-    div.user-profile-wrapper {
-        padding: 1% 1%;
-    }
+  .logged-in-nav {
+    list-style-type: none;
+    transition: all 1s ease;
+    height: 0;
+    overflow: hidden;
+  }
+  .navbar__collapse {
+    height: 160px;
+  }
 
-    div.order-count {
-        height: 75px;
-        font-size: 13px;
-    }
+  .logged-in-nav-link {
+    display: block;
+    padding: 1rem;
+    font-size: 1rem;
+    text-decoration: none;
+    text-transform: capitalize;
+    color: rgb(47, 28, 158);
+    transition: all 1s ease;
+    border-bottom: 2px solid rgb(50, 32, 155);
+    cursor: pointer;
+    clear: right;
+  }
+  .logged-in-nav-link:hover {
+    background: #3b3b3b;
+  }
 
-    .create-order-btn a {
-        font-size: 13px;
-        padding: 4px 10px;
-    }
+  div.user-profile-wrapper {
+    padding: 1% 1%;
+  }
 
-    div.table-top {
-        padding: 6px 0 19px;
-    }
+  div.order-count {
+    height: 75px;
+    font-size: 13px;
+  }
 
-    div.table-top span {
-        font-size: 13px;
-    }
+  .create-order-btn a {
+    font-size: 13px;
+    padding: 4px 10px;
+  }
 
-    div.search-bar {
-        float: right;
-        width: 55%;
-    }
+  div.table-top {
+    padding: 6px 0 19px;
+  }
 
-    div.table-top input {
-        width: 65%;
-        font-size: 12px;
-    }
+  div.table-top span {
+    font-size: 13px;
+  }
 
-    div.table-top .btn {
-        padding: 3px;
-    }
+  div.search-bar {
+    float: right;
+    width: 55%;
+  }
 
-    div.search-bar .fa-search {
-        font-size: 12px;
-    }
+  div.table-top input {
+    width: 65%;
+    font-size: 12px;
+  }
 
-    th {
-        font-size: 13px;
-    }
+  div.table-top .btn {
+    padding: 3px;
+  }
 
+  div.search-bar .fa-search {
+    font-size: 12px;
+  }
 
+  th {
+    font-size: 13px;
+  }
 }
-
 
 /* VIEW MODAL POPUP */
 .main-view-modal-wrapper {
@@ -1113,9 +1087,9 @@ tr:nth-child(even) {
 .view-modal-content {
   background-color: white;
   margin: 15% auto;
-  padding: 20px;
+  padding: 30px;
   border: 1px solid #aaa;
-  width: 50%;
+  width: 40%;
   align-self: center;
 }
 
@@ -1133,100 +1107,93 @@ tr:nth-child(even) {
 }
 
 .view-modal-content h3 {
-  font-size: 21px;
+  font-size: 23px;
+  text-align: center;
 }
 
 .view-details {
-  padding: 10px;
+  padding: 30px;
 }
 
 .view-details p {
-  font-size: 18px;
+  font-style: italic;
+  font-size: 16px;
   padding: 2px;
 }
 
 /* MEDIA QUERIES */
 
-@media screen and (max-width: 786px){
+@media screen and (max-width: 786px) {
+  .view-modal-content {
+    width: 70%;
+  }
 
-    .view-modal-content {
-        width: 60%;
-    }
+  .view-close {
+    font-size: 40px;
+  }
 
-    .view-close {
-        font-size: 40px;
-    }
+  .view-modal-content h3 {
+    font-size: 19px;
+  }
 
-    .view-modal-content h3{
-        font-size: 19px;
-    }
-
-    .view-details p{
-        font-size: 16px;
-    }
-
+  .view-details p {
+    font-size: 15px;
+  }
 }
 
-@media screen and (max-width: 615px){
+@media screen and (max-width: 615px) {
+  .view-modal-content {
+    width: 70%;
+  }
 
-    .view-modal-content {
-        width: 70%;
-    }
+  .view-close {
+    font-size: 36px;
+  }
 
-    .view-close {
-        font-size: 36px;
-    }
+  .view-modal-content h3 {
+    font-size: 18px;
+  }
 
-    .view-modal-content h3{
-        font-size: 18px;
-    }
-
-    .view-details p{
-        font-size: 14px;
-    }
-
+  .view-details p {
+    font-size: 14px;
+  }
 }
 
-@media screen and (max-width: 520px){
+@media screen and (max-width: 520px) {
+  .view-modal-content {
+    width: 80%;
+  }
 
-    .view-modal-content {
-        width: 80%;
-    }
+  .view-close {
+    font-size: 33px;
+  }
 
-    .view-close {
-        font-size: 33px;
-    }
+  .view-modal-content h3 {
+    font-size: 17px;
+  }
 
-    .view-modal-content h3{
-        font-size: 17px;
-    }
-
-    .view-details p{
-        font-size: 13px;
-    }
-
+  .view-details p {
+    font-size: 13px;
+  }
 }
 
-@media screen and (max-width: 480px){
+@media screen and (max-width: 480px) {
+  .view-modal-content {
+    width: 90%;
+  }
 
-    .view-modal-content {
-        width: 90%;
-    }
+  .view-close {
+    font-size: 31px;
+  }
 
-    .view-close {
-        font-size: 31px;
-    }
+  .view-modal-content h3 {
+    font-size: 16px;
+  }
 
-    .view-modal-content h3{
-        font-size: 16px;
-    }
-
-    .view-details p{
-        font-size: 13px;
-    }
-
+  .view-details p {
+    font-size: 13px;
+  }
 }
-
 
 /* CANCEL MODAL POPUP */
 
@@ -1246,9 +1213,9 @@ tr:nth-child(even) {
 .cancel-modal-content {
   background-color: white;
   margin: 15% auto;
-  padding: 20px;
+  padding: 30px 20px;
   border: 1px solid #aaa;
-  width: 50%;
+  width: 30%;
   align-self: center;
 }
 
@@ -1266,16 +1233,18 @@ tr:nth-child(even) {
 }
 
 .cancel-modal-content h3 {
-  font-size: 21px;
+  font-size: 23px;
   margin: 10px;
+  text-align: center;
 }
 
 .cancel-details form {
-  padding: 5px;
+  padding: 10px;
 }
 
 .cancel-details p {
-  font-size: 18px;
+  font-style: italic;
+  font-size: 16px;
   padding: 2px;
   margin: 5px;
 }
@@ -1296,148 +1265,136 @@ tr:nth-child(even) {
 
 /* MEDIA QUERIES */
 
-@media screen and (max-width: 786px){
+@media screen and (max-width: 786px) {
+  .cancel-close {
+    font-size: 40px;
+  }
 
-    .cancel-close {
-        font-size: 40px;
-    }
+  .cancel-modal-content h3 {
+    font-size: 19px;
+  }
 
-    .cancel-modal-content h3{
-        font-size: 19px;
-    }
+  .cancel-details p {
+    font-size: 16px;
+  }
 
-    .cancel-details p{
-        font-size: 16px;
-    }
-
-    .cancel-button{
-        font-size: 18px;
-        padding: 10px 22px;
-    }
-
+  .cancel-button {
+    font-size: 18px;
+    padding: 10px 22px;
+  }
 }
 
-@media screen and (max-width: 615px){
+@media screen and (max-width: 615px) {
+  .cancel-close {
+    font-size: 36px;
+  }
 
-    .cancel-close {
-        font-size: 36px;
-    }
+  .cancel-modal-content h3 {
+    font-size: 18px;
+  }
 
-    .cancel-modal-content h3{
-        font-size: 18px;
-    }
+  .cancel-details p {
+    font-size: 14px;
+  }
 
-    .cancel-details p{
-        font-size: 14px;
-    }
-
-    .cancel-button{
-        font-size: 16px;
-        padding: 9px 19px;
-    }
-
+  .cancel-button {
+    font-size: 16px;
+    padding: 9px 19px;
+  }
 }
 
-@media screen and (max-width: 520px){
+@media screen and (max-width: 520px) {
+  .cancel-close {
+    font-size: 33px;
+  }
 
-    .cancel-close {
-        font-size: 33px;
-    }
+  .cancel-modal-content h3 {
+    font-size: 17px;
+  }
 
-    .cancel-modal-content h3{
-        font-size: 17px;
-    }
+  .cancel-details p {
+    font-size: 13px;
+  }
 
-    .cancel-details p{
-        font-size: 13px;
-    }
-
-    .cancel-button{
-        font-size: 15px;
-        padding: 7px 17px;
-    }
-
+  .cancel-button {
+    font-size: 15px;
+    padding: 7px 17px;
+  }
 }
 
-@media screen and (max-width: 480px){
+@media screen and (max-width: 480px) {
+  .cancel-modal-content {
+    width: 60%;
+  }
 
-    .cancel-modal-content {
-        width: 60%;
-    }
+  .cancel-close {
+    font-size: 31px;
+  }
 
+  .cancel-modal-content h3 {
+    font-size: 16px;
+  }
 
-    .cancel-close {
-        font-size: 31px;
-    }
+  .cancel-details p {
+    font-size: 13px;
+  }
 
-    .cancel-modal-content h3{
-        font-size: 16px;
-    }
-
-    .cancel-details p{
-        font-size: 13px;
-    }
-
-    .cancel-button{
-        font-size: 14px;
-        padding: 6px 10px;
-    }
-
+  .cancel-button {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
 }
-
 
 /* ADMIN PROFILE PAGE */
 
 div.admin-profile-wrapper {
-    width: 100%;
-    padding: 1% 2% 2%;
-    margin: 10px;
+  width: 100%;
+  padding: 1% 2% 2%;
+  margin: 10px;
 }
 
-div.admin-profile-wrapper .order-count{
-    margin: 2px 5px 25px;
+div.admin-profile-wrapper .order-count {
+  margin: 2px 5px 25px;
 }
 
-.status{
-    width: 90%;
+.status {
+  width: 90%;
 }
 
-@media screen and (max-width: 520px){
-    div.admin-profile-wrapper {
-        padding: 1% 1%;
-    }
-
-    
+@media screen and (max-width: 520px) {
+  div.admin-profile-wrapper {
+    padding: 1% 1%;
+  }
 }
 
 /* LOCATION MODAL POPUP */
 
 .main-location-modal-wrapper {
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.7); 
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .location-modal-content {
-    background-color: white;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #aaa;
-    width: 50%; 
-    align-self: center;
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #aaa;
+  width: 40%;
+  align-self: center;
 }
 
 .location-close {
-    float: right;
-    font-size: 45px;
-    font-weight: bold;
-    transform: rotate(45deg);
+  float: right;
+  font-size: 45px;
+  font-weight: bold;
+  transform: rotate(45deg);
 }
 
 .location-close:hover {
@@ -1446,103 +1403,103 @@ div.admin-profile-wrapper .order-count{
   cursor: pointer;
 }
 
-.location-modal-content h3{
-    font-size: 20px;
-    margin: 10px;
+.location-modal-content h3 {
+  font-size: 20px;
+  margin: 10px;
+  text-align: center;
 }
 
-.location-details form{
-    padding: 5px;
+.location-details form {
+  padding: 5px;
 }
 
-.location-modal-content input{
-    width: 90%;
+.location-modal-content input {
+  width: 95%;
+  padding: 12px;
+  font-size: 15px;
 }
 
-.location-btn{
-    background: blue;
-    color: white;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-size: 20px;
-    border: none;
-    border-radius: 7px;
-    padding: 12px 24px;
-    margin: 2px auto;
-    display: block;
-    width: 50%;
+.location-btn {
+  background: blue;
+  color: white;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 18px;
+  border: none;
+  border-radius: 7px;
+  padding: 10px 20px;
+  margin: 2px auto;
+  display: block;
+  width: 50%;
 }
 
 /* MEDIA QUERIES */
 
-@media screen and (max-width: 786px){
+@media screen and (max-width: 786px) {
+  .location-close {
+    font-size: 40px;
+  }
 
-    .location-close {
-        font-size: 40px;
-    }
+  .location-modal-content h3 {
+    font-size: 18px;
+  }
 
-    .location-modal-content h3{
-        font-size: 18px;
-    }
+  .location-modal-content input {
+    padding: 10px;
+    font-size: 13px;
+  }
 
-    .location-btn{
-        font-size: 18px;
-        padding: 10px 22px;
-    }
-
+  .location-btn {
+    font-size: 16px;
+    padding: 10px 22px;
+  }
 }
 
-@media screen and (max-width: 615px){
+@media screen and (max-width: 615px) {
+  .location-close {
+    font-size: 36px;
+  }
 
-    .location-close {
-        font-size: 36px;
-    }
+  .location-modal-content h3 {
+    font-size: 17px;
+  }
 
-    .location-modal-content h3{
-        font-size: 17px;
-    }
-
-    .location-btn{
-        font-size: 16px;
-        padding: 9px 19px;
-    }
-
+  .location-btn {
+    font-size: 16px;
+    padding: 9px 19px;
+  }
 }
 
-@media screen and (max-width: 520px){
+@media screen and (max-width: 520px) {
+  .location-close {
+    font-size: 33px;
+  }
 
-    .location-close {
-        font-size: 33px;
-    }
+  .location-modal-content h3 {
+    font-size: 16px;
+  }
 
-    .location-modal-content h3{
-        font-size: 16px;
-    }
-
-    .location-btn{
-        font-size: 15px;
-        padding: 7px 17px;
-    }
-
+  .location-btn {
+    font-size: 15px;
+    padding: 7px 17px;
+  }
 }
 
-@media screen and (max-width: 480px){
+@media screen and (max-width: 480px) {
+  .location-modal-content {
+    width: 60%;
+  }
 
-    .location-modal-content {
-        width: 60%;
-    }
+  .location-close {
+    font-size: 31px;
+  }
 
+  .location-modal-content h3 {
+    font-size: 15px;
+  }
 
-    .location-close {
-        font-size: 31px;
-    }
-
-    .location-modal-content h3{
-        font-size: 15px;
-    }
-
-    .location-btn{
-        font-size: 14px;
-        padding: 6px 10px;
-    }
-
+  .location-btn {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
 }

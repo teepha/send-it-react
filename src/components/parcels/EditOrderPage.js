@@ -1,19 +1,17 @@
 import React from "react";
+import Spinner from "react-md-spinner";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
-import { updateParcelOrder, getSingleParcel } from "../actions/parcelsActions";
+import { updateParcelOrder, getSingleParcel } from "../../actions/parcelsActions";
 
 class EditOrder extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      pickupLocation: "",
-      newDestination: "",
-      recipientName: "",
-      recipientPhone: "",
-    };
-  }
+  state = {
+    pickupLocation: "",
+    destination: "",
+    recipientName: "",
+    recipientPhone: "",
+  };
 
   componentDidMount() {
     this.props.getSingleParcel(this.props.match.params.id);
@@ -23,7 +21,7 @@ class EditOrder extends React.Component {
     if (!this.state.pickupLocation) {
       this.setState({
         pickupLocation: nextProps.parcel.pickup_location,
-        newDestination: nextProps.parcel.destination,
+        destination: nextProps.parcel.destination,
         recipientName: nextProps.parcel.recipient_name,
         recipientPhone: nextProps.parcel.recipient_phone,
       });
@@ -32,7 +30,7 @@ class EditOrder extends React.Component {
         toast.success("Parcel Order Updated Successfully!");
         this.props.history.push("/user-profile");
       } else {
-        const errorString = nextProps.errors.join("\n");
+        const errorString = nextProps.error;
         toast.warn(errorString);
       }
     }
@@ -42,19 +40,7 @@ class EditOrder extends React.Component {
   handleEditOrder = (e) => {
     const { id } = this.props.match.params;
     e.preventDefault();
-    const {
-      pickupLocation,
-      newDestination,
-      recipientName,
-      recipientPhone,
-    } = this.state;
-    this.props.updateParcelOrder(
-      id,
-      pickupLocation,
-      newDestination,
-      recipientName,
-      recipientPhone,
-    );
+    this.props.updateParcelOrder(id, this.state);
   };
 
   handleInputChange = (e) => {
@@ -62,6 +48,7 @@ class EditOrder extends React.Component {
   };
 
   render() {
+    const { processing } = this.props;
     return (
       <div className="main-edit-order-page">
         <div className="edit-order-wrapper">
@@ -85,10 +72,10 @@ class EditOrder extends React.Component {
               <label>New Destination </label>
               <input
                 required
-                name="newDestination"
+                name="destination"
                 type="text"
                 minLength="10"
-                value={this.state.newDestination}
+                value={this.state.destination}
                 onChange={this.handleInputChange}
               />
               <br />
@@ -112,7 +99,18 @@ class EditOrder extends React.Component {
                 onChange={this.handleInputChange}
               />
               <br />
-              <button className="button">Proceed</button>
+              <button
+                className="button"
+                type="submit"
+                disabled={processing}
+              >
+                {processing ? (
+                  <Spinner
+                    size={18}
+                    singleColor="white"
+                  />
+                ) : "Proceed"}
+              </button>
               <h4 id="error-msg" />
             </form>
           </div>
@@ -122,11 +120,13 @@ class EditOrder extends React.Component {
   }
 }
 
-const mapStateToProps = (store, ownProps) => {
+const mapStateToProps = ({ user, parcels }, ownProps) => {
   const props = parseInt(ownProps.match.params.id, 10);
   return {
-    parcel: store.parcels.data.find(parcel => parcel.id === props),
-    errors: store.parcels.errors,
+    processing: user.isProcessing,
+    user: user.userData,
+    parcel: parcels.data.find(parcel => parcel.id === props),
+    error: parcels.error,
   };
 };
 

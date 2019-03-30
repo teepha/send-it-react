@@ -1,9 +1,15 @@
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
+import { toast } from "react-toastify";
 import { BASE_API_URL } from "../utils";
 import actionTypes from "./actionTypes";
 
-const userAuthSuccess = user => ({
+const isProcessing = bool => ({
+  type: actionTypes.IS_PROCESSING,
+  bool
+});
+
+export const userAuthSuccess = user => ({
   type: actionTypes.USER_AUTH_SUCCESS,
   user,
 });
@@ -13,86 +19,36 @@ const userAuthFailure = error => ({
   error
 });
 
+const userLogoutSuccess = () => ({
+  type: actionTypes.USER_LOG_OUT,
+});
 
-export const loginUser = (email, password) => async dispatch => {
+export const authUserRequest = user => async dispatch => {
+  let path = "login";
+  if (typeof user.firstName !== 'undefined') path = "signup";
+  
   try {
-    const response = await axios.post(`${BASE_API_URL}/api/v1/auth/login`, { email, password });
-    const { token } = response.data;
-    const user = (jwtDecode(token)).userInfo;
-
-    localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem("token", token)
-    dispatch(userAuthSuccess(user));
+    dispatch(isProcessing(true));
+    const response = await axios.post(`${BASE_API_URL}/api/v1/auth/${path}`, { ...user });
+    const { token, msg } = response.data;
+    const userData = (jwtDecode(token)).userInfo;
+    localStorage.setItem("token", token);
+    
+    toast.success(msg);
+    dispatch(userAuthSuccess(userData));
   } catch (error) {
+    toast.error(error.response.data.msg);
     dispatch(userAuthFailure(error.response.data.msg));
+  } finally {
+    dispatch(isProcessing(false));
   }
 };
 
-export const registerUser = (
-  firstName,
-  lastName,
-  phoneNumber,
-  email,
-  password,
-) => async dispatch => {
-
+export const logoutUser = () => dispatch => {
   try {
-    const response = await axios.post(`${BASE_API_URL}/api/v1/auth/signup`, {
-      firstName,
-      lastName,
-      phoneNumber,
-      email,
-      password,
-    });
-    // console.log("signupresss", response);
-    const { token } = response.data;
-    const user = (jwtDecode(token)).userInfo;
-
-    localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem("token", token)
-    dispatch(userAuthSuccess(user));
+    localStorage.clear();
+    dispatch(userLogoutSuccess());
   } catch (error) {
-    // console.log('cerrrttt', error.response.data);
-    dispatch(userAuthFailure(error.response.data.msg));
+    dispatch(userAuthFailure(error));
   }
-
-  // fetch(`${BASE_API_URL}/api/v1/auth/signup`, {
-  //   method: "POST",
-  //   body: JSON.stringify({
-  //     firstName,
-  //     lastName,
-  //     phoneNumber,
-  //     email,
-  //     password,
-  //   }),
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  // })
-  //   .then(res => res.json())
-  //   .then((signupRes) => {
-  //     if (!signupRes.token) {
-  //       dispatch(signupUserFailure(signupRes));
-  //     } else {
-  //       localStorage.setItem("token", signupRes.token);
-  //       localStorage.setItem("userId", signupRes.userId);
-
-  //       fetch(`${BASE_API_URL}/api/v1/me`, {
-  //         headers: {
-  //           Authorization: signupRes.token,
-  //         },
-  //       })
-  //         .then(res => res.json())
-  //         .then((data) => {
-  //           dispatch(signupUserSuccess(data));
-  //           // console.log(">>>>", data);
-  //         })
-  //         .catch((err) => {
-  //           dispatch(signupUserFailure(error));
-  //         });
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     dispatch(signupUserFailure(error));
-  //   });
 };
