@@ -1,49 +1,50 @@
-/* eslint-disable no-unused-expressions */
 import React from "react";
-import { Link } from "react-router-dom";
+import Spinner from "react-md-spinner";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { toast } from "react-toastify";
-import { registerUser } from "../actions/userActions";
+import { authUserRequest } from "../../actions/userActions";
+import { verifyToken } from "../../utils";
 
-class Signup extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      firstName: "",
-      lastName: "",
-      phoneNumber: "",
-      email: "",
-      password: "",
-    };
-  }
-
-  shouldComponentUpdate(nextProps) {
-    if (nextProps.errors.length && this.props.errors !== nextProps.errors) {
-      const errorString = nextProps.errors.join("\n");
-      toast.warn(errorString);
-    } else if (this.props.user !== nextProps.user) {
-      toast.success("Registration Successful!");
-      nextProps.user.role === "member"
-        ? this.props.history.replace("/user-profile")
-        : this.props.history.push("/admin-profile");
-    }
-    return true;
-  }
-
-  handleSignup = (e) => {
-    e.preventDefault();
-    const {
-      firstName, lastName, phoneNumber, email, password,
-    } = this.state;
-    this.props.registerUser(firstName, lastName, phoneNumber, email, password);
+class SignupPage extends React.Component {
+  state = {
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    email: "",
+    password: ""
   };
 
-  handleInputChange = (e) => {
+  componentDidMount() {
+    if (verifyToken() !== null) {
+      const { user } = this.props;
+      if (user.role === "member") {
+        this.props.history.push("/user-profile");
+      }
+      if (user.role === "admin") {
+        this.props.history.push("/admin-profile");
+      }
+    }
+  }
+
+  handleSignup = e => {
+    e.preventDefault();
+    this.props.authUserRequest(this.state).then(() => {
+      const { user } = this.props;
+      if (user.role === "member") {
+        this.props.history.push("/user-profile");
+      }
+      if (user.role === "admin") {
+        this.props.history.push("/admin-profile");
+      }
+    });
+  };
+
+  handleInputChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   render() {
+    const { processing } = this.props;
     return (
       <div>
         <div className="main-signup-page">
@@ -110,7 +111,13 @@ class Signup extends React.Component {
                   onChange={this.handleInputChange}
                 />
                 <br />
-                <button className="button">Sign Up</button>
+                <button className="button" type="submit" disabled={processing}>
+                  {processing ? (
+                    <Spinner size={18} singleColor="#fff" />
+                  ) : (
+                    "Sign Up"
+                  )}
+                </button>
                 <h4 id="error-msg" />
                 <div className="signup-login-btn">
                   <span>Already have an account?</span>
@@ -125,18 +132,21 @@ class Signup extends React.Component {
   }
 }
 
-const mapStateToProps = (store) => {
+const mapStateToProps = ({ user }) => {
   return {
-    user: store.user.data,
-    errors: store.user.errors,
+    processing: user.isProcessing,
+    user: user.userData,
+    error: user.userError
   };
 };
 
 const mapDispatchToProps = () => ({
-  registerUser,
+  authUserRequest
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps(),
-)(Signup);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps()
+  )(SignupPage)
+);

@@ -1,31 +1,27 @@
-import {
-  LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, SIGNUP_USER_SUCCESS, SIGNUP_USER_FAILURE,
-} from "../actions/actionTypes";
+import actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  data: {},
-  errors: [],
+  isProcessing: false,
+  userData: {},
+  userError: ""
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case LOGIN_USER_SUCCESS:
-      return Object.assign({}, state, { data: action.payload, errors: [] });
-    case LOGIN_USER_FAILURE:
-      return Object.assign({}, state, {
-        errors: state.errors.concat(action.payload.msg),
-        data: {},
-      });
-    case SIGNUP_USER_SUCCESS:
-      return Object.assign({}, state, {
-        data: action.payload,
-        errors: [],
-      });
-    case SIGNUP_USER_FAILURE:
-      if (!state.errors.includes(action.payload.msg)) {
-        state.errors.push(action.payload.msg);
+    case actionTypes.IS_PROCESSING:
+      return { ...state, isLoading: action.bool }
+
+    case actionTypes.USER_AUTH_SUCCESS:
+      return { ...state, userData: action.user, userError: "" }
+
+    case actionTypes.SET_USER_ERROR:
+      return {
+        ...state, userError: action.error, userData: {}
       }
-      return JSON.parse(JSON.stringify(state));
+
+    case actionTypes.USER_LOG_OUT:
+      return initialState;
+
     default:
       return state;
   }

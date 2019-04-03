@@ -1,25 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Spinner from "react-md-spinner";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
-import { createParcelOrder } from "../actions/parcelsActions";
+import { createParcelOrder } from "../../actions/parcelsActions";
 
 class CreateOrder extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      pickupLocation: "",
-      destination: "",
-      recipientName: "",
-      recipientPhone: "",
-    };
-  }
+  state = {
+    pickupLocation: "",
+    destination: "",
+    recipientName: "",
+    recipientPhone: "",
+  };
 
   shouldComponentUpdate(nextProps) {
     if (this.props.parcels.length !== nextProps.parcels.length) {
-      if (nextProps.errors.length) {
-        const errorString = nextProps.errors.join("\n");
+      if (this.props.error !== nextProps.error) {
+        const errorString = nextProps.error;
         toast.warn(errorString);
       } else {
         toast.success("Parcel Order Created Successfully!");
@@ -31,18 +28,9 @@ class CreateOrder extends React.Component {
 
   handleCreateOrder = (e) => {
     e.preventDefault();
-    const {
-      pickupLocation,
-      destination,
-      recipientName,
-      recipientPhone,
-    } = this.state;
-    this.props.createParcelOrder(
-      pickupLocation,
-      destination,
-      recipientName,
-      recipientPhone,
-    );
+    const { user } = this.props;
+    const userId = user.id
+    this.props.createParcelOrder(userId, this.state);
   };
 
   handleInputChange = (e) => {
@@ -50,6 +38,7 @@ class CreateOrder extends React.Component {
   };
 
   render() {
+    const { processing } = this.props;
     return (
       <div className="main-create-order-page">
         <div className="create-order-wrapper">
@@ -101,7 +90,18 @@ class CreateOrder extends React.Component {
                 onChange={this.handleInputChange}
               />
               <br />
-              <button className="button">Create Order</button>
+              <button
+                className="button"
+                type="submit"
+                disabled={processing}
+              >
+                {processing ? (
+                  <Spinner
+                    size={18}
+                    singleColor="#fff"
+                  />
+                ) : "Create Order"}
+              </button>
               <h4 id="error-msg" />
             </form>
           </div>
@@ -112,15 +112,17 @@ class CreateOrder extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  processing: state.user.isProcessing,
+  user: state.user.userData,
   parcels: state.parcels.data,
-  errors: state.parcels.errors,
+  error: state.parcels.error,
 });
 
 const mapDispatchToProps = {
   createParcelOrder,
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(CreateOrder);
+)(CreateOrder));

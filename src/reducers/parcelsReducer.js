@@ -1,56 +1,49 @@
-import {
-  CREATE_PARCEL_SUCCESS,
-  CREATE_PARCEL_FAILURE,
-  GET_SINGLE_PARCEL_SUCCESS,
-  GET_SINGLE_PARCEL_FAILURE,
-  UPDATE_PARCEL_SUCCESS,
-  UPDATE_PARCEL_FAILURE,
-  GET_PARCELS_SUCCESS,
-  GET_PARCELS_FAILURE
-} from "../actions/actionTypes";
+import actionTypes from "../actions/actionTypes";
 
 const initalState = {
   data: [],
-  errors: [],
+  error: "",
+  isProcessing: false,
+  isFetching: false
 };
 
 export default (state = initalState, action) => {
   switch (action.type) {
-    case CREATE_PARCEL_SUCCESS:
-      return Object.assign({}, state, {
-        data: state.data.concat(action.payload),
-      });
-    case CREATE_PARCEL_FAILURE:
-      return Object.assign({}, state, {
-        errors: state.errors.concat(action.payload.errors),
-      });
-    case GET_PARCELS_SUCCESS:
-      return JSON.parse(JSON.stringify({ errors: [], data: action.payload }));
-    case GET_PARCELS_FAILURE:
-      return Object.assign({}, state, {
-        errors: state.errors.concat(action.payload.msg),
-      });
-    case GET_SINGLE_PARCEL_SUCCESS:
+    case actionTypes.IS_PROCESSING:
+      return { ...state, isProcessing: action.bool }
+
+    case actionTypes.IS_FETCHING:
+      return { ...state, isFetching: action.bool }
+
+    case actionTypes.CREATE_PARCEL_SUCCESS:
+      return { ...state, data: [...state.data, action.parcel], error: "" }
+
+    case actionTypes.SET_PARCEL_ERROR:
+      return {
+        ...state, error: action.error.msg, data: []
+      }
+
+    case actionTypes.GET_PARCELS_SUCCESS:
+      return { ...state, data: action.parcels, error: "" }
+
+    case actionTypes.UPDATE_PARCEL_SUCCESS:
+      const mappedData = state.data.map(parcel => {
+        if (parcel.id === action.parcel.id) {
+          parcel = action.parcel
+        }
+        return parcel;
+      })
+      return {
+        ...state,
+        data: mappedData
+      }
+
+    case actionTypes.GET_SINGLE_PARCEL_SUCCESS:
       if (!state.data.length) {
-        return Object.assign({}, state, {
-          data: state.data.concat(action.payload),
-        });
+        return { ...state, data: state.data.concat(action.parcel), error: "" }
       }
       return JSON.parse(JSON.stringify(state));
-    case GET_SINGLE_PARCEL_FAILURE:
-      return Object.assign({}, state, {
-        errors: state.errors.concat(action.payload.msg),
-      });
-    case UPDATE_PARCEL_SUCCESS:
-      const parcelIndex = state.data.findIndex(
-        parcel => parcel.id === action.payload.id,
-      );
-      state.data.splice(parcelIndex, 1, action.payload);
-      return JSON.parse(JSON.stringify(state));
-    case UPDATE_PARCEL_FAILURE:
-      return Object.assign({}, state, {
-        errors: state.errors.concat(action.payload.errors),
-      });
+
     default:
       return state;
   }
