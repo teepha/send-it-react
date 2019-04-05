@@ -7,11 +7,19 @@
     }
   },
   "globals": {
-    // "React": true
+    "moxios": true,
+    "storeMock": true,
+    "shallow": true,
+    "mount": true,
+    "React": true,
+    "MemoryRouter": true,
+    "toJson": true
   },
   "env": {
     "node": true,
     "es6": true,
+    "browser": true,
+    "jest": true,
     "mocha": true
   },
   "parser": "babel-eslint",
@@ -21,6 +29,8 @@
     "class-methods-use-this": 1,
     "quotes": [2, "double"],
     "no-undef": 0,
-    "arrow-body-style": 0
+    "arrow-body-style": 0,
+    "semi": [1, "always"],
+    "no-trailing-spaces": 1
   }
 }
