@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { authUserRequest } from "../../actions/userActions";
 import { verifyToken } from "../../utils";
 
-class SignupPage extends React.Component {
+export class SignupPage extends React.Component {
   state = {
     firstName: "",
     lastName: "",
@@ -134,7 +134,7 @@ class SignupPage extends React.Component {
 
 const mapStateToProps = ({ user }) => {
   return {
-    processing: user.isProcessing,
+    processing: user.isLoading,
     user: user.userData,
     error: user.userError
   };
