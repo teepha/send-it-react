@@ -51,7 +51,7 @@ export class EditOrder extends React.Component {
   };
 
   render() {
-    const { processing } = this.props;
+    const { loading } = this.props;
     return (
       <div className="main-edit-order-page">
         <div className="edit-order-wrapper">
@@ -102,8 +102,8 @@ export class EditOrder extends React.Component {
                 onChange={this.handleInputChange}
               />
               <br />
-              <button className="button" type="submit" disabled={processing}>
-                {processing ? (
+              <button className="button" type="submit" disabled={loading}>
+                {loading ? (
                   <Spinner size={18} singleColor="white" />
                 ) : (
                   "Proceed"
@@ -121,7 +121,7 @@ export class EditOrder extends React.Component {
 const mapStateToProps = ({ user, parcels }, ownProps) => {
   const props = parseInt(ownProps.match.params.id, 10);
   return {
-    processing: user.isLoading,
+    loading: user.isLoading,
     user: user.userData,
     parcel: parcels.data.find(parcel => parcel.id === props),
     error: parcels.error

@@ -38,7 +38,7 @@ export class CreateOrder extends React.Component {
   };
 
   render() {
-    const { processing } = this.props;
+    const { loading } = this.props;
     return (
       <div className="main-create-order-page">
         <div className="create-order-wrapper">
@@ -90,8 +90,8 @@ export class CreateOrder extends React.Component {
                 onChange={this.handleInputChange}
               />
               <br />
-              <button className="button" type="submit" disabled={processing}>
-                {processing ? (
+              <button className="button" type="submit" disabled={loading}>
+                {loading ? (
                   <Spinner size={18} singleColor="#fff" />
                 ) : (
                   "Create Order"
@@ -107,7 +107,7 @@ export class CreateOrder extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  processing: state.user.isLoading,
+  loading: state.user.isLoading,
   user: state.user.userData,
   parcels: state.parcels.data,
   error: state.parcels.error

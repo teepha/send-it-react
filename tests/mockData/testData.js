@@ -1,4 +1,4 @@
-export default {
+export const userData = {
   authResponse: {
     msg: "Registration successful",
     userId: 2,
@@ -27,7 +27,10 @@ export default {
   },
   userErrorResponse: {
     msg: "Invalid User credentials"
-  },
+  }
+};
+
+export const parcelData = {
   createParcelRequestData: {
     userId: 1,
     pickupLocation: "Amity, Mende",
@@ -63,7 +66,7 @@ export default {
     user_id: 1,
     date: "2019-04-04T23:00:00.000Z",
     pickup_location: "15 Idowu Taylor, VI",
-    destination: "Arowojobe",
+    destination: "11 Sunmola, Mende",
     recipient_name: "Tiku",
     recipient_phone: "08123456789",
     status: "ready_for_pickup",

@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import configureMockStore from "redux-mock-store";
 import { authUserRequest, logoutUser } from "../../src/actions/userActions";
 import actionTypes from "../../src/actions/actionTypes";
-import userData from "../mockData/userData";
+import { userData } from "../mockData/testData";
 
 const middleware = [thunk];
 const storeMock = configureMockStore(middleware);

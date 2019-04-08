@@ -12,7 +12,7 @@ import {
   cancelParcelOrder
 } from "../../src/actions/parcelsActions";
 import actionTypes from "../../src/actions/actionTypes";
-import userData from "../mockData/userData";
+import { userData, parcelData } from "../mockData/testData";
 
 const middleware = [thunk];
 const storeMock = configureMockStore(middleware);
@@ -32,7 +32,7 @@ describe("user authentication actions", () => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
         status: 201,
-        response: userData.parcels[0]
+        response: parcelData.parcels[0]
       });
     });
     const expectedActions = [
@@ -42,7 +42,7 @@ describe("user authentication actions", () => {
       },
       {
         type: actionTypes.CREATE_PARCEL_SUCCESS,
-        parcel: userData.parcels[0]
+        parcel: parcelData.parcels[0]
       },
       {
         type: actionTypes.IS_LOADING,
@@ -50,7 +50,10 @@ describe("user authentication actions", () => {
       }
     ];
     await store.dispatch(
-      createParcelOrder(userData.newUser.id, userData.createParcelRequestData)
+      createParcelOrder(
+        userData.newUser.id,
+        parcelData.createParcelRequestData
+      )
     );
     expect(store.getActions()).toEqual(expectedActions);
     done();
@@ -61,7 +64,7 @@ describe("user authentication actions", () => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
         status: 422,
-        response: userData.createParcelErrorResponse
+        response: parcelData.createParcelErrorResponse
       });
     });
     const expectedActions = [
@@ -71,7 +74,7 @@ describe("user authentication actions", () => {
       },
       {
         type: actionTypes.SET_PARCEL_ERROR,
-        error: userData.createParcelErrorResponse
+        error: parcelData.createParcelErrorResponse
       },
       {
         type: actionTypes.IS_LOADING,
@@ -79,16 +82,19 @@ describe("user authentication actions", () => {
       }
     ];
     await store.dispatch(
-      createParcelOrder(userData.newUser.id, userData.invalidCreateParcelData)
+      createParcelOrder(
+        userData.newUser.id,
+        parcelData.invalidCreateParcelData
+      )
     );
     expect(store.getActions()).toEqual(expectedActions);
     done();
   });
 
   it("should update the details of a parcel delivery order", async done => {
-    const parcelId = userData.parcels[0].id;
-    const data = userData.updateParcelRequestData;
-    const response = userData.updateParcelResponse;
+    const parcelId = parcelData.parcels[0].id;
+    const data = parcelData.updateParcelRequestData;
+    const response = parcelData.updateParcelResponse;
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
@@ -120,7 +126,7 @@ describe("user authentication actions", () => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
         status: 422,
-        response: userData.createParcelErrorResponse
+        response: parcelData.createParcelErrorResponse
       });
     });
     const expectedActions = [
@@ -130,7 +136,7 @@ describe("user authentication actions", () => {
       },
       {
         type: actionTypes.SET_PARCEL_ERROR,
-        error: userData.createParcelErrorResponse
+        error: parcelData.createParcelErrorResponse
       },
       {
         type: actionTypes.IS_LOADING,
@@ -138,16 +144,19 @@ describe("user authentication actions", () => {
       }
     ];
     await store.dispatch(
-      updateParcelOrder(userData.newUser.id, userData.invalidCreateParcelData)
+      updateParcelOrder(
+        userData.newUser.id,
+        parcelData.invalidCreateParcelData
+      )
     );
     expect(store.getActions()).toEqual(expectedActions);
     done();
   });
 
   it("should update the status of a parcel delivery order", async done => {
-    const parcelId = userData.parcels[0].id;
+    const parcelId = parcelData.parcels[0].id;
     const value = "in-transit";
-    const response = userData.updateStatusResponse;
+    const response = parcelData.updateStatusResponse;
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
@@ -167,19 +176,19 @@ describe("user authentication actions", () => {
   });
 
   it("should call update parcel status error dispatch function", async done => {
-    const parcelId = userData.parcels[3].id;
+    const parcelId = parcelData.parcels[3].id;
     const value = "delivered";
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
         status: 401,
-        response: userData.updateStatusErrorResponse
+        response: parcelData.updateStatusErrorResponse
       });
     });
     const expectedActions = [
       {
         type: actionTypes.SET_PARCEL_ERROR,
-        error: userData.updateStatusErrorResponse
+        error: parcelData.updateStatusErrorResponse
       }
     ];
     await store.dispatch(updateParcelStatus(parcelId, value));
@@ -188,9 +197,9 @@ describe("user authentication actions", () => {
   });
 
   it("should update the present location of a parcel delivery order", async done => {
-    const parcelId = userData.parcels[0].id;
+    const parcelId = parcelData.parcels[0].id;
     const newLocation = "Victoria Island";
-    const response = userData.updateStatusResponse;
+    const response = parcelData.updateStatusResponse;
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
@@ -210,34 +219,29 @@ describe("user authentication actions", () => {
   });
 
   it("should call update parcel location error dispatch function", async done => {
-    const parcelId = userData.parcels[0].id;
+    const parcelId = parcelData.parcels[0].id;
     const newLocation = "";
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
         status: 422,
-        response: userData.updateLocationErrorResponse
+        response: parcelData.updateLocationErrorResponse
       });
     });
     const expectedActions = [
       {
         type: actionTypes.SET_PARCEL_ERROR,
-        error: userData.updateLocationErrorResponse
+        error: parcelData.updateLocationErrorResponse
       }
     ];
-    await store.dispatch(
-      updateParcelLocation(
-        parcelId,
-        newLocation
-      )
-    );
+    await store.dispatch(updateParcelLocation(parcelId, newLocation));
     expect(store.getActions()).toEqual(expectedActions);
     done();
   });
 
   it("should cancel a parcel delivery order", async done => {
-    const parcelId = userData.parcels[4].id;
-    const response = userData.cancelledParcelResponse;
+    const parcelId = parcelData.parcels[4].id;
+    const response = parcelData.cancelledParcelResponse;
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
@@ -257,18 +261,18 @@ describe("user authentication actions", () => {
   });
 
   it("should call cancel parcel error dispatch function", async done => {
-    const parcelId = userData.parcels[2].id;
+    const parcelId = parcelData.parcels[2].id;
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
         status: 401,
-        response: userData.cancelParcelErrorResponse
+        response: parcelData.cancelParcelErrorResponse
       });
     });
     const expectedActions = [
       {
         type: actionTypes.SET_PARCEL_ERROR,
-        error: userData.cancelParcelErrorResponse
+        error: parcelData.cancelParcelErrorResponse
       }
     ];
     await store.dispatch(cancelParcelOrder(parcelId));
@@ -276,20 +280,19 @@ describe("user authentication actions", () => {
     done();
   });
 
-
   it("should get a single parcel by a user", async done => {
-    const parcelId = userData.parcels[0].id;
+    const parcelId = parcelData.parcels[0].id;
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
         status: 200,
-        response: userData.parcels[0]
+        response: parcelData.parcels[0]
       });
     });
     const expectedActions = [
       {
         type: actionTypes.GET_SINGLE_PARCEL_SUCCESS,
-        parcel: userData.parcels[0]
+        parcel: parcelData.parcels[0]
       }
     ];
     await store.dispatch(getSingleParcel(parcelId));
@@ -303,7 +306,7 @@ describe("user authentication actions", () => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
         status: 200,
-        response: userData.parcels
+        response: parcelData.parcels
       });
     });
     const expectedActions = [
@@ -313,7 +316,7 @@ describe("user authentication actions", () => {
       },
       {
         type: actionTypes.GET_PARCELS_SUCCESS,
-        parcels: userData.parcels
+        parcels: parcelData.parcels
       },
       {
         type: actionTypes.IS_LOADING,
@@ -330,7 +333,7 @@ describe("user authentication actions", () => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
         status: 200,
-        response: userData.parcels
+        response: parcelData.parcels
       });
     });
     const expectedActions = [
@@ -340,7 +343,7 @@ describe("user authentication actions", () => {
       },
       {
         type: actionTypes.GET_PARCELS_SUCCESS,
-        parcels: userData.parcels
+        parcels: parcelData.parcels
       },
       {
         type: actionTypes.IS_LOADING,

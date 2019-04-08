@@ -1,13 +1,14 @@
 import React from "react";
 import { shallow } from "enzyme";
 import { EditOrder } from "../../../src/components/parcels/EditOrderPage";
+import { parcelData } from "../../mockData/testData";
 
 describe("EditOrder Component Test", () => {
   const setUp = () => {
     const props = {
       updateParcelOrder: jest.fn(() => Promise.resolve()),
       getSingleParcel: jest.fn(() => Promise.resolve()),
-      processing: false,
+      loading: false,
       user: {
         id: 1,
         role: "admin"
@@ -24,16 +25,18 @@ describe("EditOrder Component Test", () => {
       }
     };
     const state = {
-      pickupLocation: "",
-      destination: "",
-      recipientName: "",
-      recipientPhone: ""
+      value: ""
     };
     return {
       shallowWrapper: shallow(<EditOrder {...props} />),
       state,
       props
     };
+  };
+
+  const nextProps = {
+    parcel: parcelData.updateParcelResponse,
+    error: ""
   };
 
   const event = {
@@ -48,11 +51,11 @@ describe("EditOrder Component Test", () => {
     expect(toJson(shallowWrapper)).toMatchSnapshot();
   });
 
-  it("should display <Spinner /> component when `isProcessing` is set to true", () => {
+  it("should display <Spinner /> component when `isLoading` is set to true", () => {
     const { shallowWrapper, props } = setUp();
     shallowWrapper.setProps({
       ...props,
-      processing: true
+      loading: true
     });
     expect(shallowWrapper.find("MDSpinner")).toHaveLength(1);
   });
@@ -75,5 +78,41 @@ describe("EditOrder Component Test", () => {
     );
     shallowWrapper.instance().handleEditOrder(event);
     expect(handleEditOrderSpy).toHaveBeenCalledWith(event);
+  });
+
+  it("invokes shouldComponentUpdate method", () => {
+    const { shallowWrapper, props } = setUp();
+    const shouldComponentUpdateSpy = jest.spyOn(
+      shallowWrapper.instance(),
+      "shouldComponentUpdate"
+    );
+    shallowWrapper.setState({
+      ...parcelData.updateParcelRequestData
+    });
+
+    shallowWrapper.instance().shouldComponentUpdate(nextProps);
+    expect(shouldComponentUpdateSpy).toHaveBeenCalled();
+  });
+
+  it("invokes shouldComponentUpdate method", () => {
+    const { shallowWrapper } = setUp();
+    const shouldComponentUpdateSpy = jest.spyOn(
+      shallowWrapper.instance(),
+      "shouldComponentUpdate"
+    );
+
+    shallowWrapper.setState({
+      ...parcelData.updateParcelRequestData
+    });
+
+    shallowWrapper.setProps({
+      ...nextProps,
+      error: parcelData.createParcelErrorResponse
+    });
+
+    nextProps.parcel = null;
+
+    shallowWrapper.instance().shouldComponentUpdate(nextProps);
+    expect(shouldComponentUpdateSpy).toHaveBeenCalled();
   });
 });

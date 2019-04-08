@@ -41,7 +41,7 @@ export class LoginPage extends React.Component {
   };
 
   render() {
-    const { processing } = this.props;
+    const { loading } = this.props;
     return (
       <div className="main-page">
         <div className="login-wrapper">
@@ -71,12 +71,8 @@ export class LoginPage extends React.Component {
                 onChange={this.handleInputChange}
               />
               <br />
-              <button className="button" type="submit" disabled={processing}>
-                {processing ? (
-                  <Spinner size={18} singleColor="#fff" />
-                ) : (
-                  "Log In"
-                )}
+              <button className="button" type="submit" disabled={loading}>
+                {loading ? <Spinner size={18} singleColor="#fff" /> : "Log In"}
               </button>
               <h4 id="error-msg" />
             </form>
@@ -92,7 +88,7 @@ export class LoginPage extends React.Component {
 }
 
 export const mapStateToProps = ({ user }) => ({
-  processing: user.isLoading,
+  loading: user.isLoading,
   user: user.userData,
   error: user.userError
 });

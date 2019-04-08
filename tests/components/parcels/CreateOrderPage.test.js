@@ -1,12 +1,13 @@
 import React from "react";
 import { shallow } from "enzyme";
 import { CreateOrder } from "../../../src/components/parcels/CreateOrderPage";
+import { parcelData} from "../../mockData/testData";
 
 describe("CreateOrder Component Test", () => {
   const setUp = () => {
     const props = {
       createParcelOrder: jest.fn(() => Promise.resolve()),
-      processing: false,
+      loading: false,
       user: {
         id: 1,
         role: "admin"
@@ -18,10 +19,7 @@ describe("CreateOrder Component Test", () => {
       }
     };
     const state = {
-      pickupLocation: "",
-      destination: "",
-      recipientName: "",
-      recipientPhone: ""
+      value: ""
     };
     return {
       shallowWrapper: shallow(<CreateOrder {...props} />),
@@ -30,21 +28,12 @@ describe("CreateOrder Component Test", () => {
     };
   };
   const nextProps = {
-    parcels: [{
-      userId: 1,
-      pickupLocation: "Amity, Mende",
-      destination: "Arowojobe",
-      recipientName: "Tiku",
-      recipientPhone: "08123456789"
-        }],
+    parcels: [],
     error: ""
   };
   const event = {
     target: {
-      pickupLocation: "",
-      destination: "",
-      recipientName: "",
-      recipientPhone: ""
+      value: ""
     },
     preventDefault: jest.fn()
   };
@@ -54,11 +43,11 @@ describe("CreateOrder Component Test", () => {
     expect(toJson(shallowWrapper)).toMatchSnapshot();
   });
 
-  it("should display <Spinner /> component when `isProcessing` is set to true", () => {
+  it("should display <Spinner /> component when `isLoading` is set to true", () => {
     const { shallowWrapper, props } = setUp();
     shallowWrapper.setProps({
       ...props,
-      processing: true
+      loading: true
     });
     expect(shallowWrapper.find("MDSpinner")).toHaveLength(1);
   });
@@ -83,29 +72,24 @@ describe("CreateOrder Component Test", () => {
     expect(handleCreateOrderSpy).toHaveBeenCalledWith(event);
   });
 
-  // it("invokes shouldComponentUpdate method", () => {
-  //   const { shallowWrapper, props } = setUp();
-  //   const shouldComponentUpdateSpy = jest.spyOn(
-  //     shallowWrapper.instance(),
-  //     "shouldComponentUpdate"
-  //   );
-  //   // shallowWrapper.instance().shouldComponentUpdate(nextProps);
-  //   // expect(shouldComponentUpdateSpy).toHaveBeenCalled(nextProps);
+  it("invokes shouldComponentUpdate method", () => {
+    const { shallowWrapper } = setUp();
+    const shouldComponentUpdateSpy = jest.spyOn(
+      shallowWrapper.instance(),
+      "shouldComponentUpdate"
+    );
+    shallowWrapper.setProps({
+      ...nextProps,
+      parcels: parcelData.parcels
+    });
+    shallowWrapper.instance().shouldComponentUpdate(nextProps);
+    expect(shouldComponentUpdateSpy).toHaveBeenCalled();
 
-  //   shallowWrapper.setProps({
-  //     ...props,
-  //     parcels: {
-  //       ...props.parcels,
-  //       // data: {
-  //         userId: 1,
-  //         pickupLocation: "Amity, Mende",
-  //         destination: "Arowojobe",
-  //         recipientName: "Tiku",
-  //         recipientPhone: "08123456789"
-  //       // }
-  //     }
-  //   });
-  //   shallowWrapper.instance().shouldComponentUpdate();
-  //   expect(shouldComponentUpdateSpy).toHaveBeenCalled();
-  // });
+    shallowWrapper.setProps({
+      ...nextProps,
+      error: parcelData.createParcelErrorResponse
+    });
+    shallowWrapper.instance().shouldComponentUpdate(nextProps);
+    expect(shouldComponentUpdateSpy).toHaveBeenCalled();
+  });
 });

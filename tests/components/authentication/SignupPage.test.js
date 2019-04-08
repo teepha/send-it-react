@@ -8,7 +8,7 @@ describe("LoginPage Component Test", () => {
   const setUp = () => {
     const props = {
       authUserRequest: jest.fn(() => Promise.resolve()),
-      processing: false,
+      loading: false,
       user: {
         id: 1,
         role: "admin"
@@ -48,11 +48,11 @@ describe("LoginPage Component Test", () => {
     expect(toJson(shallowWrapper)).toMatchSnapshot();
   });
 
-  it("should display <Spinner /> component when `isProcessing` is set to true", () => {
+  it("should display <Spinner /> component when `isLoading` is set to true", () => {
     const { shallowWrapper, props } = setUp();
     shallowWrapper.setProps({
       ...props,
-      processing: true
+      loading: true
     });
     expect(shallowWrapper.find("MDSpinner")).toHaveLength(1);
   });
