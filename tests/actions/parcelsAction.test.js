@@ -50,10 +50,7 @@ describe("user authentication actions", () => {
       }
     ];
     await store.dispatch(
-      createParcelOrder(
-        userData.newUser.id,
-        parcelData.createParcelRequestData
-      )
+      createParcelOrder(userData.newUser.id, parcelData.createParcelRequestData)
     );
     expect(store.getActions()).toEqual(expectedActions);
     done();
@@ -82,10 +79,7 @@ describe("user authentication actions", () => {
       }
     ];
     await store.dispatch(
-      createParcelOrder(
-        userData.newUser.id,
-        parcelData.invalidCreateParcelData
-      )
+      createParcelOrder(userData.newUser.id, parcelData.invalidCreateParcelData)
     );
     expect(store.getActions()).toEqual(expectedActions);
     done();
@@ -144,10 +138,7 @@ describe("user authentication actions", () => {
       }
     ];
     await store.dispatch(
-      updateParcelOrder(
-        userData.newUser.id,
-        parcelData.invalidCreateParcelData
-      )
+      updateParcelOrder(userData.newUser.id, parcelData.invalidCreateParcelData)
     );
     expect(store.getActions()).toEqual(expectedActions);
     done();
@@ -300,6 +291,26 @@ describe("user authentication actions", () => {
     done();
   });
 
+  it("should call get single parcel error dispatch function", async done => {
+    const parcelId = parcelData.parcels[0].id;
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 500,
+        response: parcelData.parcelsErrorResponse
+      });
+    });
+    const expectedActions = [
+      {
+        type: actionTypes.SET_PARCEL_ERROR,
+        error: parcelData.parcelsErrorResponse
+      }
+    ];
+    await store.dispatch(getSingleParcel(parcelId));
+    expect(store.getActions()).toEqual(expectedActions);
+    done();
+  });
+
   it("should get all parcels by a single user", async done => {
     const userId = userData.newUser.id;
     moxios.wait(() => {
@@ -328,6 +339,34 @@ describe("user authentication actions", () => {
     done();
   });
 
+  it("should call get user parcels error dispatch function", async done => {
+    const userId = userData.newUser.id;
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 500,
+        response: parcelData.parcelsErrorResponse
+      });
+    });
+    const expectedActions = [
+      {
+        type: actionTypes.IS_LOADING,
+        bool: true
+      },
+      {
+        type: actionTypes.SET_PARCEL_ERROR,
+        error: parcelData.parcelsErrorResponse
+      },
+      {
+        type: actionTypes.IS_LOADING,
+        bool: false
+      }
+    ];
+    await store.dispatch(getUserParcels(userId));
+    expect(store.getActions()).toEqual(expectedActions);
+    done();
+  });
+
   it("should get all parcels by all users for the admin", async done => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
@@ -344,6 +383,33 @@ describe("user authentication actions", () => {
       {
         type: actionTypes.GET_PARCELS_SUCCESS,
         parcels: parcelData.parcels
+      },
+      {
+        type: actionTypes.IS_LOADING,
+        bool: false
+      }
+    ];
+    await store.dispatch(getAllParcels());
+    expect(store.getActions()).toEqual(expectedActions);
+    done();
+  });
+
+  it("should call get all parcels error dispatch function", async done => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 500,
+        response: parcelData.parcelsErrorResponse
+      });
+    });
+    const expectedActions = [
+      {
+        type: actionTypes.IS_LOADING,
+        bool: true
+      },
+      {
+        type: actionTypes.SET_PARCEL_ERROR,
+        error: parcelData.parcelsErrorResponse
       },
       {
         type: actionTypes.IS_LOADING,

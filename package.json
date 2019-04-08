@@ -8,6 +8,7 @@
     "prestart": "rm -rf ./dist && webpack --config ./webpack.config.js --mode production",
     "start": "nodemon ./dist/server.js",
     "test": "jest --coverage -u",
+    "build": "rm -rf dist && webpack --env.mode production",
     "coverage": "cat ./coverage/lcov.info | coveralls",
     "test:watch": "npm test -- --watch",
     "test:unit": "mocha --require '@babel/register, ./test/helpers.js, ./test/dom.js, ignore-styles' 'src/**/*.spec.js'",

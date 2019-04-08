@@ -110,6 +110,9 @@ export const parcelData = {
   cancelParcelErrorResponse: {
     msg: "Sorry, can not cancel Order. Parcel already Cancelled"
   },
+  parcelsErrorResponse: {
+    msg: "Sorry an error occurred!"
+  },
   parcels: [
     {
       id: 8,
