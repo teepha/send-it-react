@@ -16,7 +16,6 @@ export class UserProfile extends React.Component {
   state = {
     parcels: [],
     noParcelsErrMsg: "",
-    cancelModalIsOpen: "",
     search: "",
     parcelsCopy: [],
     viewModalIsOpen: false,

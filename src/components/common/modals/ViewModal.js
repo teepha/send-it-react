@@ -37,9 +37,9 @@ const ViewModal = ({
           </p>
           <p>
             Status:{" "}
-            {parcel.status &&
-              capitalizeStatus(
-                parcel.status.replace(/_/g, " ")
+            {parcel.status
+              && capitalizeStatus(
+                parcel.status.replace(/_/g, " "),
               )}
           </p>
           <p>Present Location: {parcel.present_location}</p>
@@ -54,7 +54,7 @@ ViewModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onRequestClose: PropTypes.func.isRequired,
   parcel: PropTypes.object.isRequired,
-  handleClick: PropTypes.func.isRequired
-}
+  handleClick: PropTypes.func.isRequired,
+};
 
 export default ViewModal;

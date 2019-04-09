@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
 import { CreateOrder } from "../../../src/components/parcels/CreateOrderPage";
-import { parcelData} from "../../mockData/testData";
+import { parcelData } from "../../mockData/testData";
 
 describe("CreateOrder Component Test", () => {
   const setUp = () => {

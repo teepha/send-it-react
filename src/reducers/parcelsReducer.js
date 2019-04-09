@@ -25,7 +25,7 @@ export default (state = initalState, action) => {
       return { ...state, data: action.parcels, error: "" };
 
     case actionTypes.UPDATE_PARCEL_SUCCESS:
-      const mappedData = state.data.map(parcel => {
+      const mappedData = state.data.map((parcel) => {
         if (parcel.id === action.parcel.id) {
           parcel = action.parcel;
         }
