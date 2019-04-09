@@ -3,15 +3,18 @@ export const userData = {
     msg: "Registration successful",
     userId: 2,
     token:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6MSwiZmlyc3RfbmFtZSI6ImxhdGVlZmF0IiwibGFzdF9uYW1lIjoiQW11ZGEiLCJlbWFpbCI6ImxhdGVlcGhhMDZAZW1haWwuY29tIiwicGhvbmVfbnVtYmVyIjoiMDgwMzQ1MjEyMzIiLCJwYXNzd29yZCI6ImxhdGVlZmF0Iiwicm9sZSI6Im1lbWJlciJ9LCJpYXQiOjE1NTQ0MDE5NTZ9.aBiq657Ouxikgq9TJaYDrgKslj5EcmxXNP5f0l_ClkU"
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6MiwiZmlyc3RfbmFt" 
+      + "ZSI6IlNoYXJvbiIsImxhc3RfbmFtZSI6IkZhdm9yIiwiZW1haWwiOiJzaGFyb25AZW1haWwuY29t"
+      + "IiwicGhvbmVfbnVtYmVyIjoiMDgwMzQ1MjEyMzIiLCJwYXNzd29yZCI6InNoYXJvbiIsInJvbGUiO"
+      + "iJtZW1iZXIifSwiaWF0IjoxNTU0MTI0NDYxfQ.2jXQ0Dpt6BHIyioFS5p6ZD9k-g14xK_FRprP_xuBapQ"
   },
   newUser: {
-    id: 1,
-    first_name: "lateefat",
-    last_name: "Amuda",
-    email: "lateepha06@email.com",
+    id: 2,
+    first_name: "Sharon",
+    last_name: "Favor",
+    email: "sharon@email.com",
     phone_number: "08034521232",
-    password: "lateefat",
+    password: "sharon",
     role: "member"
   },
   userRequestData: {

@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { verifyToken } from "./utils";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { BrowserRouter } from "react-router-dom";
+import { verifyToken } from "./utils";
 import { userAuthSuccess } from "./actions/userActions";
 import "./css/styles.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -25,5 +25,5 @@ ReactDOM.render(
     </BrowserRouter>
     <ToastContainer autoClose={2500} />
   </Provider>,
-  document.getElementById("app")
+  document.getElementById("app"),
 );

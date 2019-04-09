@@ -29,8 +29,18 @@
     "class-methods-use-this": 1,
     "quotes": [2, "double"],
     "no-undef": 0,
+    "no-console": 0,
+    "no-underscore-dangle": "off",
     "arrow-body-style": 0,
     "semi": [1, "always"],
-    "no-trailing-spaces": 1
+    "no-trailing-spaces": 1,
+    "max-len": ["error", 150, 2],
+    "import/prefer-default-export": 0,
+    "import/no-unresolved": 0,
+    "import/no-extraneous-dependencies": "off",
+    "import/no-named-as-default": 0,
+    "no-param-reassign": "off",
+    "no-case-declarations": "off",
+    "prefer-destructuring": "off"
   }
 }

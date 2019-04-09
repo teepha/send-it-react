@@ -4,15 +4,13 @@
   "description": "SendIT is a delivery service that allow users to send parcels to different destinations.",
   "main": "index.js",
   "scripts": {
-    "start-dev": "webpack-dev-server --config ./webpack.config.js --mode development",
     "prestart": "rm -rf ./dist && webpack --config ./webpack.config.js --mode production",
     "start": "nodemon ./dist/server.js",
-    "test": "jest --coverage -u",
-    "build": "rm -rf dist && webpack --env.mode production",
+    "start-dev": "webpack-dev-server --config ./webpack.config.js --mode development",
+    "build": "rm -rf dist && webpack --mode production",
     "coverage": "cat ./coverage/lcov.info | coveralls",
+    "test": "NODE_ENV=test jest --coverage -u",
     "test:watch": "npm test -- --watch",
-    "test:unit": "mocha --require '@babel/register, ./test/helpers.js, ./test/dom.js, ignore-styles' 'src/**/*.spec.js'",
-    "test-watch": "npm run test:unit -- --watch",
     "lint": "eslint . --fix --ignore-path .eslintignore"
   },
   "jest": {
@@ -85,6 +83,7 @@
     "axios": "^0.18.0",
     "express": "^4.16.4",
     "jwt-decode": "^2.2.0",
+    "prop-types": "^15.7.2",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-md-spinner": "^0.3.0",

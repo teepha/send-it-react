@@ -58,7 +58,7 @@ export class NavBar extends React.Component {
                   </Link>
                       </li>
                     </Fragment>
-                  )}
+                )}
               </ul>
             </nav>
 
@@ -77,11 +77,11 @@ export class NavBar extends React.Component {
 }
 
 export const mapStateToProps = ({ user }) => ({
-  user: user.userData
+  user: user.userData,
 });
 
 export const mapDispatchToProps = dispatch => ({
-  logout: () => dispatch(logoutUser())
+  logout: () => dispatch(logoutUser()),
 });
 
 export default withRouter(connect(

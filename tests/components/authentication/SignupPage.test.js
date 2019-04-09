@@ -34,7 +34,7 @@ describe("LoginPage Component Test", () => {
 
   const event = {
     target: {
-     value: ""
+      value: ""
     },
     preventDefault: jest.fn()
   };
