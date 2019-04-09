@@ -3,27 +3,30 @@ import Spinner from "react-md-spinner";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
-import { updateParcelOrder, getSingleParcel } from "../../actions/parcelsActions";
+import {
+  updateParcelOrder,
+  getSingleParcel
+} from "../../actions/parcelsActions";
 
-class EditOrder extends React.Component {
+export class EditOrder extends React.Component {
   state = {
     pickupLocation: "",
     destination: "",
     recipientName: "",
-    recipientPhone: "",
+    recipientPhone: ""
   };
 
   componentDidMount() {
     this.props.getSingleParcel(this.props.match.params.id);
   }
 
-  shouldComponentUpdate = (nextProps) => {
+  shouldComponentUpdate = nextProps => {
     if (!this.state.pickupLocation) {
       this.setState({
         pickupLocation: nextProps.parcel.pickup_location,
         destination: nextProps.parcel.destination,
         recipientName: nextProps.parcel.recipient_name,
-        recipientPhone: nextProps.parcel.recipient_phone,
+        recipientPhone: nextProps.parcel.recipient_phone
       });
     } else if (this.props.parcel !== nextProps.parcel) {
       if (nextProps.parcel) {
@@ -37,18 +40,18 @@ class EditOrder extends React.Component {
     return true;
   };
 
-  handleEditOrder = (e) => {
+  handleEditOrder = e => {
     const { id } = this.props.match.params;
     e.preventDefault();
     this.props.updateParcelOrder(id, this.state);
   };
 
-  handleInputChange = (e) => {
+  handleInputChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   render() {
-    const { processing } = this.props;
+    const { loading } = this.props;
     return (
       <div className="main-edit-order-page">
         <div className="edit-order-wrapper">
@@ -99,17 +102,12 @@ class EditOrder extends React.Component {
                 onChange={this.handleInputChange}
               />
               <br />
-              <button
-                className="button"
-                type="submit"
-                disabled={processing}
-              >
-                {processing ? (
-                  <Spinner
-                    size={18}
-                    singleColor="white"
-                  />
-                ) : "Proceed"}
+              <button className="button" type="submit" disabled={loading}>
+                {loading ? (
+                  <Spinner size={18} singleColor="white" />
+                ) : (
+                  "Proceed"
+                )}
               </button>
               <h4 id="error-msg" />
             </form>
@@ -123,19 +121,19 @@ class EditOrder extends React.Component {
 const mapStateToProps = ({ user, parcels }, ownProps) => {
   const props = parseInt(ownProps.match.params.id, 10);
   return {
-    processing: user.isProcessing,
+    loading: user.isLoading,
     user: user.userData,
     parcel: parcels.data.find(parcel => parcel.id === props),
-    error: parcels.error,
+    error: parcels.error
   };
 };
 
 const mapDispatchToProps = id => ({
   updateParcelOrder,
-  getSingleParcel,
+  getSingleParcel
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps(),
+  mapDispatchToProps()
 )(EditOrder);

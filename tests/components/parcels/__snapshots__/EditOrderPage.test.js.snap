@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditOrder Component Test render without crashing 1`] = `
+<div
+  className="main-edit-order-page"
+>
+  <div
+    className="edit-order-wrapper"
+  >
+    <div
+      className="edit-order-page"
+    >
+      <Link
+        replace={false}
+        to="/user-profile"
+      >
+        <i
+          className="fas fa-arrow-left"
+        />
+      </Link>
+      <h1>
+        Edit Order
+      </h1>
+      <form
+        id="edit-order-form"
+        onSubmit={[Function]}
+      >
+        <label>
+          Pick Up Location 
+        </label>
+        <input
+          minLength="10"
+          name="pickupLocation"
+          onChange={[Function]}
+          required={true}
+          type="text"
+          value=""
+        />
+        <br />
+        <label>
+          New Destination 
+        </label>
+        <input
+          minLength="10"
+          name="destination"
+          onChange={[Function]}
+          required={true}
+          type="text"
+          value=""
+        />
+        <br />
+        <label>
+          Recipient Name 
+        </label>
+        <input
+          name="recipientName"
+          onChange={[Function]}
+          pattern="^[A-Za-z]+$"
+          required={true}
+          type="text"
+          value=""
+        />
+        <br />
+        <label>
+          Recipient Phone Number 
+        </label>
+        <input
+          minLength="10"
+          name="recipientPhone"
+          onChange={[Function]}
+          required={true}
+          type="text"
+          value=""
+        />
+        <br />
+        <button
+          className="button"
+          disabled={false}
+          type="submit"
+        >
+          Proceed
+        </button>
+        <h4
+          id="error-msg"
+        />
+      </form>
+    </div>
+  </div>
+</div>
+`;
