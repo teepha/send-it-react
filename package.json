@@ -7,28 +7,9 @@
     "start-dev": "webpack-dev-server --config ./webpack.config.js --mode development",
     "prestart": "rm -rf ./dist && webpack --config ./webpack.config.js --mode production",
     "start": "nodemon ./dist/server.js",
-    "test": "jest --coverage -u",
-    "build": "rm -rf dist && webpack --env.mode production",
-    "coverage": "cat ./coverage/lcov.info | coveralls",
-    "test:watch": "npm test -- --watch",
     "test:unit": "mocha --require '@babel/register, ./test/helpers.js, ./test/dom.js, ignore-styles' 'src/**/*.spec.js'",
-    "test-watch": "npm run test:unit -- --watch",
+    "test:watch": "npm run test:unit -- --watch",
     "lint": "eslint . --fix --ignore-path .eslintignore"
-  },
-  "jest": {
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
-    "setupFiles": [
-      "./setup.config.js"
-    ],
-    "moduleNameMapper": {
-      ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "jest-transform-stub",
-      ".+\\.(css|less|scss)$": "identity-obj-proxy"
-    },
-    "transform": {
-      "^.+\\.(js|jsx)$": "babel-jest"
-    }
   },
   "repository": {
     "type": "git",
@@ -44,22 +25,17 @@
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
     "@babel/plugin-proposal-class-properties": "^7.3.4",
-    "@babel/plugin-transform-runtime": "^7.4.3",
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
-    "@babel/runtime": "^7.4.3",
     "babel-eslint": "^10.0.1",
-    "babel-jest": "^24.7.0",
     "babel-loader": "^8.0.5",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.2.0",
     "copy-webpack-plugin": "^5.0.0",
-    "coveralls": "^3.0.3",
     "css-loader": "^2.1.0",
     "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.11.2",
-    "enzyme-to-json": "^3.3.5",
+    "enzyme-adapter-react-16": "^1.10.0",
     "eslint": "^5.14.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-loader": "^2.1.2",
@@ -67,15 +43,10 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
     "file-loader": "^3.0.1",
-    "identity-obj-proxy": "^3.0.0",
     "ignore-styles": "^5.0.1",
-    "jest": "^24.7.0",
-    "jest-transform-stub": "^2.0.0",
     "jsdom": "^13.2.0",
     "mocha": "^6.0.2",
-    "moxios": "^0.4.0",
-    "redux-mock-store": "^1.5.3",
-    "sinon": "^7.3.1",
+    "sinon": "^7.2.5",
     "style-loader": "^0.23.1",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3",

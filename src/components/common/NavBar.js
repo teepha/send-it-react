@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import Logo from "../../images/logo0.png";
 import { logoutUser } from "../../actions/userActions";
 
-export class NavBar extends React.Component {
+class NavBar extends React.Component {
+
   handleLogout = () => {
     this.props.logout();
   }
@@ -76,11 +77,11 @@ export class NavBar extends React.Component {
   }
 }
 
-export const mapStateToProps = ({ user }) => ({
+const mapStateToProps = ({ user }) => ({
   user: user.userData
 });
 
-export const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(logoutUser())
 });
 

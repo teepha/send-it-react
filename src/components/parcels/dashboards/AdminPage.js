@@ -2,29 +2,35 @@ import React from "react";
 import Spinner from "react-md-spinner";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import Modal from "react-modal";
 import { toast } from "react-toastify";
 import {
   getAllParcels,
   updateParcelStatus,
   updateParcelLocation
 } from "../../../actions/parcelsActions";
-import ViewModal from "../../common/modals/ViewModal";
-import LocationModal from "../../common/modals/LocationModal";
+import ViewModal from "../../common/Modals/ViewModal";
+import LocationModal from "../../common/Modals/LocationModal";
 
-export class AdminProfile extends React.Component {
-  state = {
-    parcels: [],
-    noParcelsErrMsg: "",
-    search: "",
-    parcelsCopy: [],
-    viewModalIsOpen: false,
-    parcelToView: {},
-    locationModalIsOpen: false,
-    parcelToUpdate: {},
-    parcelToUpdateId: "",
-    newLocation: "",
-    presentLocation: ""
-  };
+Modal.setAppElement("#app");
+
+class AdminProfile extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      parcels: [],
+      noParcelsErrMsg: "",
+      search: "",
+      parcelsCopy: [],
+      viewModalIsOpen: false,
+      parcelToView: {},
+      locationModalIsOpen: false,
+      parcelToUpdate: {},
+      parcelToUpdateId: "",
+      newLocation: "",
+      presentLocation: ""
+    };
+  }
 
   componentDidMount() {
     this.props.getAllParcels();
@@ -101,15 +107,15 @@ export class AdminProfile extends React.Component {
       parcelToView,
       parcelToUpdate
     } = this.state;
-    const { loading } = this.props;
+    const { fetching } = this.props;
 
-    return loading ? (
+    return fetching ? (
       <div
         style={{
           display: "flex",
           justifyContent: "center",
           marginTop: "15%",
-          marginBottom: "15%"
+          marginBottom: "15%",
         }}
       >
         <Spinner singleColor="blue" size={70} />
@@ -283,7 +289,7 @@ export class AdminProfile extends React.Component {
 
 const mapStateToProps = ({ parcels }) => {
   return {
-    loading: parcels.isLoading,
+    fetching: parcels.isFetching,
     parcels: parcels.data,
     error: parcels.error
   };
