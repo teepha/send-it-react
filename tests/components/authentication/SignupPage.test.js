@@ -34,11 +34,7 @@ describe("LoginPage Component Test", () => {
 
   const event = {
     target: {
-      firstName: "Seyi",
-      lastName: "Adeolu",
-      phoneNumber: "08012345678",
-      email: "seyi@email.com",
-      pasword: "password"
+     value: ""
     },
     preventDefault: jest.fn()
   };

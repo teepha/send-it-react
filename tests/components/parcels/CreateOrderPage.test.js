@@ -19,7 +19,10 @@ describe("CreateOrder Component Test", () => {
       }
     };
     const state = {
-      value: ""
+      pickupLocation: "",
+      destination: "",
+      recipientName: "",
+      recipientPhone: ""
     };
     return {
       shallowWrapper: shallow(<CreateOrder {...props} />),
