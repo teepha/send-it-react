@@ -1,7 +1,5 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import NavBar from "./common/NavBar";
 import Footer from "./common/Footer";
 import HomePage from "./HomePage";
@@ -13,8 +11,6 @@ import CreateOrder from "./parcels/CreateOrderPage";
 import EditOrder from "./parcels/EditOrderPage";
 
 const Routes = () => {
-  const token = localStorage.getItem("token");
-
   return (
     <div >
       <NavBar />
@@ -25,9 +21,8 @@ const Routes = () => {
       <Route path="/admin-profile" component={AdminPage} />
       <Route path="/create-order" component={CreateOrder} />
       <Route path="/parcels/:id" component={EditOrder} />
-      <ToastContainer autoClose={2500} />
       <Footer />
-    </div >
+    </div>
   )
 }
 

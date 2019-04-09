@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { authUserRequest } from "../../actions/userActions";
 import { verifyToken } from "../../utils";
 
-class SignupPage extends React.Component {
+export class SignupPage extends React.Component {
   state = {
     firstName: "",
     lastName: "",
@@ -44,7 +44,7 @@ class SignupPage extends React.Component {
   };
 
   render() {
-    const { processing } = this.props;
+    const { loading } = this.props;
     return (
       <div>
         <div className="main-signup-page">
@@ -111,8 +111,8 @@ class SignupPage extends React.Component {
                   onChange={this.handleInputChange}
                 />
                 <br />
-                <button className="button" type="submit" disabled={processing}>
-                  {processing ? (
+                <button className="button" type="submit" disabled={loading}>
+                  {loading ? (
                     <Spinner size={18} singleColor="#fff" />
                   ) : (
                     "Sign Up"
@@ -134,7 +134,7 @@ class SignupPage extends React.Component {
 
 const mapStateToProps = ({ user }) => {
   return {
-    processing: user.isProcessing,
+    loading: user.isLoading,
     user: user.userData,
     error: user.userError
   };

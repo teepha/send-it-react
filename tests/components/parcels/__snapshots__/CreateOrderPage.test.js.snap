@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateOrder Component Test render without crashing 1`] = `
+<div
+  className="main-create-order-page"
+>
+  <div
+    className="create-order-wrapper"
+  >
+    <div
+      className="create-order-page"
+    >
+      <Link
+        replace={false}
+        to="./user-profile"
+      >
+        <i
+          className="fas fa-arrow-left"
+        />
+      </Link>
+      <h1>
+        New Order
+      </h1>
+      <form
+        id="create-order-form"
+        onSubmit={[Function]}
+      >
+        <label>
+          Pick Up Location 
+        </label>
+        <input
+          minLength="10"
+          name="pickupLocation"
+          onChange={[Function]}
+          pattern="[a-zA-Z0-9_&-]+([ ]?[a-zA-Z0-9_&-]+)*"
+          required={true}
+          type="text"
+        />
+        <br />
+        <label>
+          Destination 
+        </label>
+        <input
+          minLength="10"
+          name="destination"
+          onChange={[Function]}
+          pattern="[a-zA-Z0-9_&-]+([ ]?[a-zA-Z0-9_&-]+)*"
+          required={true}
+          type="text"
+          value=""
+        />
+        <br />
+        <label>
+          Recipient Name 
+        </label>
+        <input
+          name="recipientName"
+          onChange={[Function]}
+          pattern="^[A-Za-z]+$"
+          required={true}
+          type="text"
+        />
+        <br />
+        <label>
+          Recipient Phone Number 
+        </label>
+        <input
+          minLength="10"
+          name="recipientPhone"
+          onChange={[Function]}
+          required={true}
+          type="text"
+        />
+        <br />
+        <button
+          className="button"
+          disabled={false}
+          type="submit"
+        >
+          Create Order
+        </button>
+        <h4
+          id="error-msg"
+        />
+      </form>
+    </div>
+  </div>
+</div>
+`;

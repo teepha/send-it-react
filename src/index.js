@@ -2,9 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { verifyToken } from "./utils";
 import { Provider } from "react-redux";
+import { ToastContainer } from "react-toastify";
 import { BrowserRouter } from "react-router-dom";
 import { userAuthSuccess } from "./actions/userActions";
 import "./css/styles.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import Routes from "./components/Routes";
 import store from "./store";
@@ -17,10 +19,11 @@ if (verifyToken() !== null) {
 }
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={store()}>
     <BrowserRouter>
       <Routes />
     </BrowserRouter>
+    <ToastContainer autoClose={2500} />
   </Provider>,
   document.getElementById("app")
 );

@@ -5,12 +5,12 @@ import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import { createParcelOrder } from "../../actions/parcelsActions";
 
-class CreateOrder extends React.Component {
+export class CreateOrder extends React.Component {
   state = {
     pickupLocation: "",
     destination: "",
     recipientName: "",
-    recipientPhone: "",
+    recipientPhone: ""
   };
 
   shouldComponentUpdate(nextProps) {
@@ -26,19 +26,19 @@ class CreateOrder extends React.Component {
     return true;
   }
 
-  handleCreateOrder = (e) => {
+  handleCreateOrder = e => {
     e.preventDefault();
     const { user } = this.props;
-    const userId = user.id
+    const userId = user.id;
     this.props.createParcelOrder(userId, this.state);
   };
 
-  handleInputChange = (e) => {
+  handleInputChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   render() {
-    const { processing } = this.props;
+    const { loading } = this.props;
     return (
       <div className="main-create-order-page">
         <div className="create-order-wrapper">
@@ -90,17 +90,12 @@ class CreateOrder extends React.Component {
                 onChange={this.handleInputChange}
               />
               <br />
-              <button
-                className="button"
-                type="submit"
-                disabled={processing}
-              >
-                {processing ? (
-                  <Spinner
-                    size={18}
-                    singleColor="#fff"
-                  />
-                ) : "Create Order"}
+              <button className="button" type="submit" disabled={loading}>
+                {loading ? (
+                  <Spinner size={18} singleColor="#fff" />
+                ) : (
+                  "Create Order"
+                )}
               </button>
               <h4 id="error-msg" />
             </form>
@@ -112,17 +107,19 @@ class CreateOrder extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  processing: state.user.isProcessing,
+  loading: state.user.isLoading,
   user: state.user.userData,
   parcels: state.parcels.data,
-  error: state.parcels.error,
+  error: state.parcels.error
 });
 
 const mapDispatchToProps = {
-  createParcelOrder,
+  createParcelOrder
 };
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CreateOrder));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(CreateOrder)
+);
