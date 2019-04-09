@@ -33,7 +33,7 @@ const CancelModal = ({
         </div>
       )}
     </Modal>
-  );
+);
 
 CancelModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
@@ -41,6 +41,6 @@ CancelModal.propTypes = {
   parcel: PropTypes.object.isRequired,
   handleClick: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-}
+};
 
 export default CancelModal;

@@ -12,7 +12,7 @@ import EditOrder from "./parcels/EditOrderPage";
 
 const Routes = () => {
   return (
-    <div >
+    <div>
       <NavBar />
       <Route path="/" component={HomePage} exact />
       <Route path="/login" component={LoginPage} />
@@ -23,7 +23,7 @@ const Routes = () => {
       <Route path="/parcels/:id" component={EditOrder} />
       <Footer />
     </div>
-  )
-}
+  );
+};
 
 export default Routes;

@@ -3,8 +3,6 @@ import Adapter from "enzyme-adapter-react-16";
 import moxios from "moxios";
 import toJson from "enzyme-to-json";
 
-// global.MemoryRouter = MemoryRouter;
-// global.storeMock = storeMock;
 global.moxios = moxios;
 global.toJson = toJson;
 global.mount = mount;
