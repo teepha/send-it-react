@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/teepha/send-it-react.svg?style=svg)](https://circleci.com/gh/teepha/send-it-react)
+[![CircleCI](https://circleci.com/gh/teepha/send-it-react.svg?style=svg)](https://circleci.com/gh/teepha/send-it-react) [![Coverage Status](https://coveralls.io/repos/github/teepha/send-it-react/badge.svg?branch=develop)](https://coveralls.io/github/teepha/send-it-react?branch=develop)
 
 # SendIT - A Parcel Delivery Service
 
