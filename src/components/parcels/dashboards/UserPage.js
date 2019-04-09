@@ -9,10 +9,10 @@ import {
   cancelParcelOrder
 } from "../../../actions/parcelsActions";
 import { capitalizeStatus } from "../../../utils";
-import CancelModal from "../../common/Modals/CancelModal";
-import ViewModal from "../../common/Modals/ViewModal";
+import CancelModal from "../../common/modals/CancelModal";
+import ViewModal from "../../common/modals/ViewModal";
 
-class UserProfile extends React.Component {
+export class UserProfile extends React.Component {
   state = {
     parcels: [],
     noParcelsErrMsg: "",
@@ -84,8 +84,8 @@ class UserProfile extends React.Component {
 
   render() {
     const { noParcelsErrMsg, parcels, parcelToView } = this.state;
-    const { fetching } = this.props;
-    return fetching ? (
+    const { loading } = this.props;
+    return loading ? (
       <div
         style={{
           display: "flex",
@@ -257,7 +257,7 @@ class UserProfile extends React.Component {
 
 const mapStateToProps = ({ user, parcels }) => {
   return {
-    fetching: parcels.isFetching,
+    loading: parcels.isLoading,
     user: user.userData,
     parcels: parcels.data,
     error: parcels.error

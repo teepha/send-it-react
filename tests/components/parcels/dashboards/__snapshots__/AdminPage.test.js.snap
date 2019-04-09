@@ -1,0 +1,156 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginPage Component Test render without crashing 1`] = `
+<div>
+  <div
+    className="main-content"
+  >
+    <div
+      className="admin-profile-wrapper"
+    >
+      <div
+        className="order-count"
+      >
+        <div>
+          Ready for Pickup:
+           
+          <span
+            id="pickup-status"
+          >
+            0
+          </span>
+        </div>
+        <div
+          className="status-count"
+        >
+          In-Transit:
+           
+          <span
+            id="transit-status"
+          >
+            0
+          </span>
+        </div>
+        <div
+          className="status-count"
+        >
+          Delivered:
+           
+          <span
+            id="deliver-status"
+          >
+            0
+          </span>
+        </div>
+        <div
+          className="status-count"
+        >
+          Cancelled:
+           
+          <span
+            id="cancel-status"
+          >
+            0
+          </span>
+        </div>
+      </div>
+      <div
+        className="table-top"
+      >
+        <span
+          className="table-title"
+        >
+          All Orders
+        </span>
+        <div
+          className="search-bar"
+        >
+          <input
+            id="search-user-id"
+            name="search"
+            onChange={[Function]}
+            placeholder="Enter User ID..."
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+      <table
+        className="orders"
+      >
+        <thead>
+          <tr>
+            <th
+              scope="row"
+            >
+              ID
+            </th>
+            <th
+              className="remove-first"
+              scope="row"
+            >
+              User ID
+            </th>
+            <th
+              className="remove-second"
+              scope="row"
+            >
+              Date
+            </th>
+            <th
+              className="remove-first"
+              scope="row"
+            >
+              Pick Up Location
+            </th>
+            <th
+              scope="row"
+            >
+              Destination
+            </th>
+            <th
+              className="remove-second"
+              scope="row"
+            >
+              Recipient Name
+            </th>
+            <th
+              scope="row"
+            >
+              Status
+            </th>
+            <th
+              scope="row"
+            >
+              Present Location
+            </th>
+            <th
+              scope="row"
+            />
+            <th
+              scope="row"
+            />
+          </tr>
+        </thead>
+        <tbody
+          className="orders-data"
+        />
+      </table>
+      <ViewModal
+        handleClick={[Function]}
+        isOpen={false}
+        onRequestClose={[Function]}
+        parcel={Object {}}
+      />
+      <LocationModal
+        handleChange={[Function]}
+        handleClick={[Function]}
+        handleSubmit={[Function]}
+        isOpen={false}
+        onRequestClose={[Function]}
+        parcel={Object {}}
+      />
+    </div>
+  </div>
+</div>
+`;

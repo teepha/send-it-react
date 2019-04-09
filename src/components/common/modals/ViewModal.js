@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import PropTypes from "prop-types";
 import { capitalizeStatus } from "../../../utils";
 
-Modal.setAppElement("#app");
+if (process.env.NODE_ENV !== "test") Modal.setAppElement("#app");
 
 const ViewModal = ({
   isOpen,

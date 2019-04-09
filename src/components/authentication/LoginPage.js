@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { authUserRequest } from "../../actions/userActions";
 import { verifyToken } from "../../utils";
 
-class LoginPage extends React.Component {
+export class LoginPage extends React.Component {
   state = {
     email: "",
     password: ""
@@ -41,7 +41,7 @@ class LoginPage extends React.Component {
   };
 
   render() {
-    const { processing } = this.props;
+    const { loading } = this.props;
     return (
       <div className="main-page">
         <div className="login-wrapper">
@@ -71,12 +71,8 @@ class LoginPage extends React.Component {
                 onChange={this.handleInputChange}
               />
               <br />
-              <button className="button" type="submit" disabled={processing}>
-                {processing ? (
-                  <Spinner size={18} singleColor="#fff" />
-                ) : (
-                  "Log In"
-                )}
+              <button className="button" type="submit" disabled={loading}>
+                {loading ? <Spinner size={18} singleColor="#fff" /> : "Log In"}
               </button>
               <h4 id="error-msg" />
             </form>
@@ -91,13 +87,13 @@ class LoginPage extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({
-  processing: user.isProcessing,
+export const mapStateToProps = ({ user }) => ({
+  loading: user.isLoading,
   user: user.userData,
   error: user.userError
 });
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   login: userData => dispatch(authUserRequest(userData))
 });
 
