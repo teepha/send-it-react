@@ -1,8 +1,9 @@
 import React from "react";
+import Spinner from "react-md-spinner";
 import Modal from "react-modal";
 import PropTypes from "prop-types";
 
-if (process.env.NODE_ENV !== "test") Modal.setAppElement("#app");
+Modal.setAppElement("#app");
 
 const LocationModal = ({
   isOpen,
