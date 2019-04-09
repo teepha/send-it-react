@@ -42,7 +42,7 @@ export const createParcelOrder = (userId, data) => async dispatch => {
     const response = await axios.post(
       `${BASE_API_URL}/api/v1/parcels`,
       { ...data, userId },
-      { headers: headers }
+      { headers }
     );
     dispatch(createParcelSuccess(response.data));
   } catch (error) {
@@ -61,7 +61,7 @@ export const updateParcelOrder = (id, data) => async dispatch => {
     const response = await axios.put(
       `${BASE_API_URL}/api/v1/parcels/${id}`,
       { ...data },
-      { headers: headers }
+      { headers }
     );
     dispatch(updateParcelSuccess(response.data));
   } catch (error) {
@@ -78,7 +78,7 @@ export const getSingleParcel = id => async dispatch => {
 
   try {
     const response = await axios.get(`${BASE_API_URL}/api/v1/parcels/${id}`, {
-      headers: headers
+      headers
     });
     dispatch(getSingleParcelSuccess(response.data));
   } catch (error) {
@@ -95,7 +95,7 @@ export const getUserParcels = userId => async dispatch => {
     dispatch(isLoading(true));
     const response = await axios.get(
       `${BASE_API_URL}/api/v1/users/${userId}/parcels`,
-      { headers: headers }
+      { headers }
     );
     const sortedData = response.data.sort((a, b) => a.id - b.id);
     dispatch(getParcelsSuccess(sortedData));
@@ -114,7 +114,7 @@ export const getAllParcels = () => async dispatch => {
   try {
     dispatch(isLoading(true));
     const response = await axios.get(`${BASE_API_URL}/api/v1/parcels`, {
-      headers: headers
+      headers
     });
     const sortedData = response.data.sort((a, b) => a.id - b.id);
     dispatch(getParcelsSuccess(sortedData));
@@ -134,7 +134,7 @@ export const updateParcelStatus = (id, value) => async dispatch => {
     const response = await axios.put(
       `${BASE_API_URL}/api/v1/parcels/${id}/status`,
       { status: value },
-      { headers: headers }
+      { headers }
     );
 
     dispatch(updateParcelSuccess(response.data));
@@ -152,7 +152,7 @@ export const updateParcelLocation = (id, newLocation) => async dispatch => {
     const response = await axios.put(
       `${BASE_API_URL}/api/v1/parcels/${id}/presentLocation`,
       { presentLocation: newLocation },
-      { headers: headers }
+      { headers }
     );
 
     dispatch(updateParcelSuccess(response.data));
@@ -170,7 +170,7 @@ export const cancelParcelOrder = id => async dispatch => {
     const response = await axios.put(
       `${BASE_API_URL}/api/v1/parcels/${id}/cancel`,
       {},
-      { headers: headers }
+      { headers }
     );
 
     dispatch(updateParcelSuccess(response.data));

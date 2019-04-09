@@ -1,7 +1,7 @@
 import jwtDecode from "jwt-decode";
 
 export const verifyToken = () => {
-  const token = localStorage.token;
+  const { token } = localStorage;
   let verified = {};
   if (token) {
     const userData = jwtDecode(token);

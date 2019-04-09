@@ -33,7 +33,6 @@ const renderRoutes = path =>
     </MemoryRouter>
   );
 
-
 describe("<Routes /> Component test", () => {
   it("should render <HomePage /> component", () => {
     const component = renderRoutes("/");

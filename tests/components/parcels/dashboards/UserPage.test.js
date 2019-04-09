@@ -20,7 +20,6 @@ describe("LoginPage Component Test", () => {
     const state = {
       parcels: [],
       noParcelsErrMsg: "",
-      cancelModalIsOpen: "",
       search: "",
       parcelsCopy: [],
       viewModalIsOpen: false,
