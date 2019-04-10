@@ -83,12 +83,12 @@ export class NavBar extends React.Component {
   }
 }
 
-export const mapStateToProps = ({ user }) => {
-  return { user: user.userData };
-};
+export const mapStateToProps = ({ user }) => ({
+  user: user.userData,
+});
 
 export const mapDispatchToProps = dispatch => ({
-  logout: () => dispatch(logoutUser())
+  logout: () => dispatch(logoutUser()),
 });
 
 export default withRouter(
