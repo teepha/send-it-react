@@ -7,7 +7,7 @@ import { logoutUser } from "../../actions/userActions";
 export class NavBar extends React.Component {
   handleLogout = () => {
     this.props.logout();
-  }
+  };
 
   render() {
     const { user } = this.props;
@@ -22,7 +22,7 @@ export class NavBar extends React.Component {
               <h1 className="logo">
                 <Link to="/" className="sendIT">
                   SendIT
-            </Link>
+                </Link>
               </h1>
             </div>
 
@@ -31,9 +31,16 @@ export class NavBar extends React.Component {
                 {user.id ? (
                   <Fragment>
                     <li>
-                      <Link className="navigation-link" to={user.role === "member" ? "/user-profile" : "/admin-profile"}>
+                      <Link
+                        className="navigation-link"
+                        to={
+                          user.role === "member"
+                            ? "/user-profile"
+                            : "/admin-profile"
+                        }
+                      >
                         My Profile
-                  </Link>
+                      </Link>
                     </li>
                     <li>
                       <Link
@@ -42,22 +49,22 @@ export class NavBar extends React.Component {
                         to="/"
                       >
                         Logout
-                  </Link>
+                      </Link>
                     </li>
                   </Fragment>
                 ) : (
-                    <Fragment>
-                      <li>
-                        <Link className="navigation-link" to="/login">
-                          Login
-                  </Link>
-                      </li>
-                      <li>
-                        <Link className="navigation-link" to="/register">
-                          SignUp
-                  </Link>
-                      </li>
-                    </Fragment>
+                  <Fragment>
+                    <li>
+                      <Link className="navigation-link" to="/login">
+                        Login
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="navigation-link" to="/register">
+                        SignUp
+                      </Link>
+                    </li>
+                  </Fragment>
                 )}
               </ul>
             </nav>
@@ -76,15 +83,17 @@ export class NavBar extends React.Component {
   }
 }
 
-export const mapStateToProps = ({ user }) => ({
-  user: user.userData,
-});
+export const mapStateToProps = ({ user }) => {
+  return { user: user.userData };
+};
 
 export const mapDispatchToProps = dispatch => ({
-  logout: () => dispatch(logoutUser()),
+  logout: () => dispatch(logoutUser())
 });
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(NavBar));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(NavBar)
+);

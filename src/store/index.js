@@ -4,16 +4,19 @@ import reduxImmutableStateInvariant from "redux-immutable-state-invariant";
 import indexReducer from "../reducers";
 
 const env = process.env.NODE_ENV || "development";
+const middleware = [thunk, reduxImmutableStateInvariant()];
 
-let middleware = compose(
-  applyMiddleware(thunk, reduxImmutableStateInvariant()),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const composeEnhancers =
+  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
+
+let enhancer = composeEnhancers(applyMiddleware(...middleware));
 
 if (env === "production") {
-  middleware = applyMiddleware(thunk);
+  enhancer = applyMiddleware(thunk);
 }
 
-const store = () => createStore(indexReducer, middleware);
+const store = createStore(indexReducer, enhancer);
 
 export default store;

@@ -4,8 +4,7 @@
   "description": "SendIT is a delivery service that allow users to send parcels to different destinations.",
   "main": "index.js",
   "scripts": {
-    "prestart": "rm -rf ./dist && webpack --config ./webpack.config.js --mode production",
-    "start": "nodemon ./dist/server.js",
+    "start": "node ./dist/server.js",
     "start-dev": "webpack-dev-server --config ./webpack.config.js --mode development",
     "build": "rm -rf dist && webpack --mode production",
     "coverage": "cat ./coverage/lcov.info | coveralls",
