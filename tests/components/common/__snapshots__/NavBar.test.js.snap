@@ -36,7 +36,7 @@ exports[`NavBar Component test render navbar without crashing 1`] = `
       </div>
       <nav>
         <ul
-          className="navigation"
+          className="navigation "
         >
           <li>
             <Link
@@ -63,7 +63,8 @@ exports[`NavBar Component test render navbar without crashing 1`] = `
         className="navbar__header"
       >
         <div
-          className="navbar__btn"
+          className="navbar__btn "
+          onClick={[Function]}
         >
           <div
             className="bar bar1"
@@ -117,7 +118,7 @@ exports[`NavBar Component test should redirect when role is user role is admin 1
       </div>
       <nav>
         <ul
-          className="navigation"
+          className="navigation "
         >
           <li>
             <Link
@@ -143,7 +144,8 @@ exports[`NavBar Component test should redirect when role is user role is admin 1
         className="navbar__header"
       >
         <div
-          className="navbar__btn"
+          className="navbar__btn "
+          onClick={[Function]}
         >
           <div
             className="bar bar1"

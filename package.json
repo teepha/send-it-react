@@ -8,6 +8,7 @@
     "start-dev": "webpack-dev-server --config ./webpack.config.js --mode development",
     "build": "rm -rf dist && webpack --mode production",
     "coverage": "cat ./coverage/lcov.info | coveralls && rm -rf coverage",
+    "pretest": "rm -rf __snapshots__",
     "test": "NODE_ENV=test jest --coverage -u",
     "test:watch": "npm test -- --watch",
     "lint": "eslint . --fix --ignore-path .eslintignore"

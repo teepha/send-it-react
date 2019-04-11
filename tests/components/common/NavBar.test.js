@@ -6,24 +6,38 @@ import {
   mapDispatchToProps
 } from "../../../src/components/common/NavBar";
 
-const props = {
-  logout: jest.fn(),
-  user: {
-    id: 1,
-    role: "admin"
-  }
+const setUp = () => {
+  const props = {
+    logout: jest.fn(),
+    user: {
+      id: 1,
+      role: "admin"
+    }
+  };
+  const state = {
+    showHambugger: false
+  };
+  return {
+    shallowWrapper: shallow(<NavBar {...props} />),
+    state,
+    props
+  };
 };
-const wrapper = shallow(<NavBar {...props} />);
 
 describe("NavBar Component test", () => {
   it("render navbar without crashing", () => {
-    expect(wrapper).toMatchSnapshot();
+    const { shallowWrapper } = setUp();
+    expect(shallowWrapper).toMatchSnapshot();
   });
 
   it("handlelogout should call props.logout", () => {
-    const handleLogoutSpy = jest.spyOn(wrapper.instance(), "handleLogout");
+    const { shallowWrapper } = setUp();
+    const handleLogoutSpy = jest.spyOn(
+      shallowWrapper.instance(),
+      "handleLogout"
+    );
     handleLogoutSpy();
-    expect(wrapper.instance().props.logout).toBeCalled();
+    expect(shallowWrapper.instance().props.logout).toBeCalled();
   });
 
   it("mapdispatch to props should call logout", () => {
@@ -35,11 +49,22 @@ describe("NavBar Component test", () => {
   });
 
   it("should redirect when role is user role is admin", () => {
-    wrapper.setProps({
+    const { shallowWrapper } = setUp();
+    shallowWrapper.setProps({
       user: {
         role: "admin"
       }
     });
-    expect(wrapper).toMatchSnapshot();
+    expect(shallowWrapper).toMatchSnapshot();
+  });
+
+  it("invokes handleNavbarClick method", () => {
+    const { shallowWrapper } = setUp();
+    const handleNavbarClickSpy = jest.spyOn(
+      shallowWrapper.instance(),
+      "handleNavbarClick"
+    );
+    shallowWrapper.instance().handleNavbarClick();
+    expect(handleNavbarClickSpy).toHaveBeenCalledWith();
   });
 });

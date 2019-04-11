@@ -5,12 +5,22 @@ import Logo from "../../images/logo0.png";
 import { logoutUser } from "../../actions/userActions";
 
 export class NavBar extends React.Component {
+  state = {
+    showHambugger: false
+  };
   handleLogout = () => {
     this.props.logout();
   };
 
+  handleNavbarClick = () => {
+    this.setState({
+      showHambugger: !this.state.showHambugger
+    });
+  };
+
   render() {
     const { user } = this.props;
+    const { showHambugger } = this.state;
     return (
       <div>
         <header>
@@ -27,7 +37,11 @@ export class NavBar extends React.Component {
             </div>
 
             <nav>
-              <ul className="navigation">
+              <ul
+                className={`navigation ${
+                  showHambugger ? "navbar__collapse" : ""
+                }`}
+              >
                 {user.id ? (
                   <Fragment>
                     <li>
@@ -70,7 +84,12 @@ export class NavBar extends React.Component {
             </nav>
 
             <div className="navbar__header">
-              <div className="navbar__btn">
+              <div
+                onClick={this.handleNavbarClick}
+                className={`navbar__btn ${
+                  showHambugger ? "change" : ""
+                }`}
+              >
                 <div className="bar bar1" />
                 <div className="bar bar2" />
                 <div className="bar bar3" />
