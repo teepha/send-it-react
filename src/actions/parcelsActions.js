@@ -32,11 +32,11 @@ const parcelsFailure = error => ({
   error
 });
 
-export const createParcelOrder = (userId, data) => async dispatch => {
-  const headers = {
-    Authorization: localStorage.getItem("token")
-  };
+const headers = {
+  Authorization: localStorage.getItem("token")
+}
 
+export const createParcelOrder = (userId, data) => async dispatch => {
   try {
     dispatch(isLoading(true));
     const response = await axios.post(
@@ -53,9 +53,6 @@ export const createParcelOrder = (userId, data) => async dispatch => {
 };
 
 export const updateParcelOrder = (id, data) => async dispatch => {
-  const headers = {
-    Authorization: localStorage.getItem("token")
-  };
   try {
     dispatch(isLoading(true));
     const response = await axios.put(
@@ -72,10 +69,6 @@ export const updateParcelOrder = (id, data) => async dispatch => {
 };
 
 export const getSingleParcel = id => async dispatch => {
-  const headers = {
-    Authorization: localStorage.getItem("token")
-  };
-
   try {
     const response = await axios.get(`${BASE_API_URL}/api/v1/parcels/${id}`, {
       headers
@@ -87,10 +80,6 @@ export const getSingleParcel = id => async dispatch => {
 };
 
 export const getUserParcels = userId => async dispatch => {
-  const headers = {
-    Authorization: localStorage.getItem("token")
-  };
-
   try {
     dispatch(isLoading(true));
     const response = await axios.get(
@@ -107,10 +96,6 @@ export const getUserParcels = userId => async dispatch => {
 };
 
 export const getAllParcels = () => async dispatch => {
-  const headers = {
-    Authorization: localStorage.getItem("token")
-  };
-
   try {
     dispatch(isLoading(true));
     const response = await axios.get(`${BASE_API_URL}/api/v1/parcels`, {
@@ -126,10 +111,6 @@ export const getAllParcels = () => async dispatch => {
 };
 
 export const updateParcelStatus = (id, value) => async dispatch => {
-  const headers = {
-    Authorization: localStorage.getItem("token")
-  };
-
   try {
     const response = await axios.put(
       `${BASE_API_URL}/api/v1/parcels/${id}/status`,
@@ -144,10 +125,6 @@ export const updateParcelStatus = (id, value) => async dispatch => {
 };
 
 export const updateParcelLocation = (id, newLocation) => async dispatch => {
-  const headers = {
-    Authorization: localStorage.getItem("token")
-  };
-
   try {
     const response = await axios.put(
       `${BASE_API_URL}/api/v1/parcels/${id}/presentLocation`,
@@ -162,10 +139,6 @@ export const updateParcelLocation = (id, newLocation) => async dispatch => {
 };
 
 export const cancelParcelOrder = id => async dispatch => {
-  const headers = {
-    Authorization: localStorage.getItem("token")
-  };
-
   try {
     const response = await axios.put(
       `${BASE_API_URL}/api/v1/parcels/${id}/cancel`,
