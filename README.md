@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/teepha/send-it-react.svg?style=svg)](https://circleci.com/gh/teepha/send-it-react) [![Coverage Status](https://coveralls.io/repos/github/teepha/send-it-react/badge.svg?branch=develop)](https://coveralls.io/github/teepha/send-it-react?branch=develop)
+[![CircleCI](https://circleci.com/gh/teepha/send-it-react.svg?style=svg)](https://circleci.com/gh/teepha/send-it-react) [![Coverage Status](https://coveralls.io/repos/github/teepha/send-it-react/badge.svg?branch=develop)](https://coveralls.io/github/teepha/send-it-react?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/2fc3b766accc27916688/maintainability)](https://codeclimate.com/github/teepha/send-it-react/maintainability)
 
 # SendIT - A Parcel Delivery Service
 

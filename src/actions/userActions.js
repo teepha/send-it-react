@@ -39,8 +39,12 @@ export const authUserRequest = user => async dispatch => {
     toast.success(msg);
     dispatch(userAuthSuccess(userData));
   } catch (error) {
-    toast.error(error.response.data.msg);
-    dispatch(userAuthFailure(error.response.data.msg));
+    if (error.response === undefined) {
+      toast.error("Sorry, an error occured. Please try again in a few minutes");
+    } else {
+      toast.error(error.response.data.msg);
+      dispatch(userAuthFailure(error.response.data.msg));
+    }
   } finally {
     dispatch(isLoading(false));
   }
